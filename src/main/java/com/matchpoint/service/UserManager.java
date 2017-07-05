@@ -9,4 +9,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserManager {
     public User findByEmail(String email);
+    public User save(User user);
 }

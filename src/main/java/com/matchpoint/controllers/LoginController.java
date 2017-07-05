@@ -1,20 +1,26 @@
 package com.matchpoint.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/rest/hello")
+@Controller
 public class LoginController {
 
-    @GetMapping("/all")
-    public String hello() {
-        return "Hello Youtube";
+    @GetMapping("/")
+    public String showHomePage() {
+        return "index";
+    }
+
+    @GetMapping("/register")
+    public String showRegisterForm(){
+        return "register";
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("/secured/all")
+    @GetMapping("/u/all")
     public String securedHello() {
         return "Secured Hello";
     }

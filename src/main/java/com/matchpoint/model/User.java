@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="active")
-    private int active;
+    private boolean active;
     @NotNull
     @Column(name="email",unique = true)
     private String email;
@@ -24,13 +24,13 @@ public class User {
     @Column(name="password")
     private String password;
     @NotNull
-    @Column(name="firstName")
+    @Column(name="first_name")
     private String firstName;
-    @Column(name="lastName")
+    @Column(name="last_name")
     private String lastName;
     @NotNull
-    @Column(name="phoneNumber")
-    private String phoneNumber;
+    @Column(name="mobile")
+    private String mobile;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn)
@@ -39,23 +39,23 @@ public class User {
     public User() {
     }
 
-    public User(int active, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles) {
+    public User(boolean active, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles) {
         this.active = active;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.mobile = mobile;
         this.roles = roles;
     }
 
     public User(User user) {
-        this.active=user.getActive();
+        this.active=user.isActive();
         this.email=user.getEmail();
         this.password=user.getPassword();
         this.firstName=user.getFirstName();
         this.lastName=user.getLastName();
-        this.phoneNumber=user.getPhoneNumber();
+        this.mobile=user.getMobile();
         this.roles=user.getRoles();
 
     }
@@ -65,11 +65,15 @@ public class User {
         return id;
     }
 
-    public int getActive() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
@@ -105,12 +109,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public Set<Role> getRoles() {
@@ -134,7 +138,7 @@ public class User {
         if (!password.equals(user.password)) return false;
         if (!firstName.equals(user.firstName)) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (!phoneNumber.equals(user.phoneNumber)) return false;
+        if (!mobile.equals(user.mobile)) return false;
         return roles.equals(user.roles);
 
     }
@@ -142,12 +146,11 @@ public class User {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + active;
         result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + phoneNumber.hashCode();
+        result = 31 * result + mobile.hashCode();
         result = 31 * result + roles.hashCode();
         return result;
     }
@@ -161,7 +164,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", phoneNumber='" + mobile + '\'' +
                 ", roles=" + roles +
                 '}';
     }

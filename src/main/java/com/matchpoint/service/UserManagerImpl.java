@@ -21,4 +21,9 @@ public class UserManagerImpl implements UserManager {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
