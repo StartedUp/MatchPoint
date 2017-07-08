@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Machtpoint Users</title>
-</head>
-<body>
-Welcome Member!!
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/header :: head"></head>
+
+<body id="page-top" class="index">
+<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+<!-- Navigation -->
+<div th:include="fragments/header :: header"></div>
+<!-- Header -->
+<header>
+    <div class="container" id="maincontent" tabindex="-1">
+        <div class="row">
+            <div class="col-lg-12">
+                <img class="img-responsive" th:src="@{/img/TT1.jpg}" alt="MatchPointLogo" height="256" width="256">
+                <div class="intro-text">
+                    <h1 class="name">Welcome Member!!</h1>
+                    <hr class="star-light">
+                    <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Footer -->
+<div th:include="fragments/footer :: footer"></div>
 </body>
 </html>
