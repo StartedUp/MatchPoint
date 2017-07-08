@@ -39,7 +39,7 @@ public class User {
     public User() {
     }
 
-    public User(boolean active, String email, String password, String firstName, String lastName, String phoneNumber, Set<Role> roles) {
+    public User(boolean active, String email, String password, String firstName, String lastName, String mobile, Set<Role> roles) {
         this.active = active;
         this.email = email;
         this.password = password;

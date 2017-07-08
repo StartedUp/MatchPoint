@@ -41,7 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/u/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/u/home")
+                .usernameParameter("email")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
                 .and()
                 .csrf();
     }

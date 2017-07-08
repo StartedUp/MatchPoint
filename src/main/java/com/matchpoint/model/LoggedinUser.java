@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -25,26 +26,24 @@ public class LoggedinUser extends User implements UserDetails {
         super(user);
         this.password=user.getPassword();
         this.username=user.getEmail();
-        this.authorities=user.getRoles().stream().map(role -> new SimpleGrantedAuthority("Role"+role.getRolename())).collect(Collectors.toList());
+        this.isEnabled=user.isActive();
+        this.authorities=new ArrayList<GrantedAuthority>();
 
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("Role"+role.getRolename()))
-                .collect(Collectors.toList());
+        return new ArrayList<GrantedAuthority>();
     }
 
     @Override
     public String getPassword() {
-        return super.getPassword();
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return super.getEmail();
+        return this.username;
     }
 
     @Override
@@ -64,6 +63,6 @@ public class LoggedinUser extends User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.isEnabled;
     }
 }
