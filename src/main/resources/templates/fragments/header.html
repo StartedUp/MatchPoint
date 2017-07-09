@@ -83,6 +83,9 @@
                             <li><a href="#">Events</a></li>
                         </ul>
                     </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact us</a>
+                    </li>
                     <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
                 </ul>
                 <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
