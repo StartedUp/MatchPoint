@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -31,6 +32,9 @@ public class User {
     @NotNull
     @Column(name="mobile")
     private String mobile;
+    @NotNull
+    @Column(name = "dob")
+    private Date dob;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn)
