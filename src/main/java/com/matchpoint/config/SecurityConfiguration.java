@@ -1,5 +1,6 @@
 package com.matchpoint.config;
 
+import com.matchpoint.handler.*;
 import com.matchpoint.repository.UserRepository;
 import com.matchpoint.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * Created by gokul on 22/6/17.
  */
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -27,6 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    authSuccessHandler successHandler ;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -39,17 +43,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/u/**").authenticated()
+                .antMatchers("/a/**").access("hasRole('ROLE_admin')")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .failureUrl("/login-error")
                 .defaultSuccessUrl("/u/home")
                 .usernameParameter("email")
                 .permitAll()
+               // .successHandler(successHandler)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/logout")
                 .and()
                 .csrf();
     }

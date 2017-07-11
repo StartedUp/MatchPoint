@@ -12,6 +12,7 @@
 
 <div class="container">
     <h2>User Login</h2>
+    <p th:if="${loginError}" class="error">Wrong user or password</p>
     <form role="form" th:action="@{/login}" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>

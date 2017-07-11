@@ -58,7 +58,7 @@
                         data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">Match Point</a>
+                <a class="navbar-brand" href="/">Match Point</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -83,7 +83,11 @@
                             <li><a href="#">Events</a></li>
                         </ul>
                     </li>
-                    <li class="page-scroll">
+                    <li sec:authorize="hasRole('ROLE_admin')" class="page-scroll">
+                   <!-- <li  sec:authorize="isAuthenticated()" class="page-scroll">-->
+                        <a href="/a/admin">Admin Tasks</a>
+                    </li>
+                    <li  class="page-scroll">
                         <a href="#contact">Contact us</a>
                     </li>
                     <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>

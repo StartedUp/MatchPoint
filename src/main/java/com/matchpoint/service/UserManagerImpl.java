@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optional;
 
 /**
@@ -25,5 +27,9 @@ public class UserManagerImpl implements UserManager {
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+    @Override
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

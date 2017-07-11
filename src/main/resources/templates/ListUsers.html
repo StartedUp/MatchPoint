@@ -1,0 +1,56 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:include="fragments/header :: head"></head>
+
+    <body id="page-top" class="index">
+    <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <div th:include="fragments/header :: header"></div>
+    <body>
+    <div class="container-fluid">
+        <style rel="stylesheet">
+            th{
+                text-align: center;
+            }
+        </style>
+        <header>
+            <div class="container" id="maincontent" tabindex="2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>MatchPoint Members</h2>
+                        <div class="table-responsive">
+                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${!users.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>E-mail</th>
+                                    <th>Mobile</th>
+                                    <th>Activity Status</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="color: #122b40" th:each="user,stat : ${users}">
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.mobile}"></td>
+                                    <td th:text="${user.active?'Active':'InActive'}">
+                                    <td th:text="${user.roles}"></td>
+                                    <td th:value="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    </body>
+    </html>

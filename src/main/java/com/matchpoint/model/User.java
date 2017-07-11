@@ -32,7 +32,7 @@ public class User {
     @Column(name="mobile")
     private String mobile;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn)
     private Set<Role> roles;
 
@@ -134,24 +134,25 @@ public class User {
 
         if (id != user.id) return false;
         if (active != user.active) return false;
-        if (!email.equals(user.email)) return false;
-        if (!password.equals(user.password)) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (!mobile.equals(user.mobile)) return false;
-        return roles.equals(user.roles);
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (mobile != null ? !mobile.equals(user.mobile) : user.mobile != null) return false;
+        return roles != null ? roles.equals(user.roles) : user.roles == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + email.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + mobile.hashCode();
-        result = 31 * result + roles.hashCode();
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
 

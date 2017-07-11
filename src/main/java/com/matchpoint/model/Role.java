@@ -11,12 +11,11 @@ import java.util.Set;
 @Table(name = "role")
 public class Role {
     @Id
-    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
-    @Column(name = "role_name")
-    private String rolename;
+    @Column(name = "name")
+    private String name;
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
@@ -24,12 +23,12 @@ public class Role {
         return id;
     }
 
-    public String getRolename() {
-        return rolename;
+    public String getName() {
+        return name;
     }
 
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<User> getUsers() {
@@ -40,4 +39,8 @@ public class Role {
         this.users = users;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

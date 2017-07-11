@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -25,15 +27,20 @@ public class LoggedinUser extends User implements UserDetails {
     public LoggedinUser(User user) {
         super(user);
         this.password=user.getPassword();
-        this.username=user.getEmail();
+        this.username=user.getFirstName();
         this.isEnabled=user.isActive();
-        this.authorities=new ArrayList<GrantedAuthority>();
+        this.authorities=getAuthorities();
 
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<GrantedAuthority>();
+        List<SimpleGrantedAuthority> list =getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+                .collect(Collectors.toList());
+        System.out.println(list.get(0));
+        return list;
     }
 
     @Override

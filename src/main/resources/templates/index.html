@@ -7,6 +7,8 @@
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
     <!-- Navigation -->
   <div th:include="fragments/header :: header"></div>
+<h3 th:if="${registerSuccess}" class="error">Registered Successfully</h3>
+<h3 th:if="${logoutSuccess}" class="error">You are Logged off Successfully</h3>
     <!-- Header -->
     <header>
         <div class="container" id="maincontent" tabindex="-1">
@@ -16,7 +18,7 @@
                     <div class="intro-text">
                         <h1 class="name">Match Point</h1>
                         <hr class="star-light">
-                        <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+                        <span class="skills">Amateur - Player - Professional - Legend </span>
                     </div>
                 </div>
             </div>
