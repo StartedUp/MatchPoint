@@ -1,7 +1,11 @@
 package com.matchpoint.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.ws.rs.DefaultValue;
 import java.util.Date;
 
 /**
@@ -22,6 +26,7 @@ public class EventRegistration {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
     @Column(name = "user_dob")
+    @NotNull
     private Date userDob;
     @Column(name = "nms")
     private boolean nms;

@@ -23,10 +23,14 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user")User user, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
+            System.out.println(user.toString());
+            System.out.println(bindingResult);
             return "register";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
+        user.setLastName(user.getLastName());
+        System.out.println(user.toString());
         userManager.save(user);
         return "redirect:/";
     }
