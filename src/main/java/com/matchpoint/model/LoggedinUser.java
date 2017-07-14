@@ -27,7 +27,7 @@ public class LoggedinUser extends User implements UserDetails {
     public LoggedinUser(User user) {
         super(user);
         this.password=user.getPassword();
-        this.username=user.getFirstName();
+        this.username=user.getEmail();
         this.isEnabled=user.isActive();
         this.authorities=getAuthorities();
 
@@ -35,11 +35,10 @@ public class LoggedinUser extends User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> list =getRoles()
+        List<SimpleGrantedAuthority> list = getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
                 .collect(Collectors.toList());
-        System.out.println(list.get(0));
         return list;
     }
 

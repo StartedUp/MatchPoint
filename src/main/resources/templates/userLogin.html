@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Match Point</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,6 +13,7 @@
 <div class="container">
     <h2>User Login</h2>
     <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <p th:if="${registerSuccess}" class="registerSuccess">Thank You. Registration has been done Successfully.<br>Please login to Continue. Thanks!!!</p>
     <form role="form" th:action="@{/login}" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>

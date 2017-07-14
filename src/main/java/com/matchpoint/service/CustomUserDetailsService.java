@@ -19,9 +19,24 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    UserManager userManager;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user=userRepository.findByEmail(email);
-        return new LoggedinUser(user);
+        try {
+            System.out.println("user email :" + email);
+            User user = userRepository.findByEmail(email);
+           /* System.out.println("user " + user.getEmail());
+            System.out.println("user " + user.getPassword());
+            System.out.println("user " + user.getRoles());*/
+            if (user == null) {
+                System.out.println("user " + email + " not found");
+            }
+            return new LoggedinUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new UsernameNotFoundException("user Email not found");
+        }
     }
 }

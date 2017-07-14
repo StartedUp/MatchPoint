@@ -58,6 +58,7 @@ public class User {
     }
 
     public User(User user) {
+
         this.active=user.isActive();
         this.email=user.getEmail();
         this.password=user.getPassword();

@@ -21,7 +21,7 @@ public class RegisterController {
     @Autowired
     private UserManager userManager;
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute("user")User user, BindingResult bindingResult){
+    public String register(@ModelAttribute("user")User user, BindingResult bindingResult,Model model){
         if (bindingResult.hasErrors()){
             System.out.println(user.toString());
             System.out.println(bindingResult);
@@ -32,6 +32,7 @@ public class RegisterController {
         user.setLastName(user.getLastName());
         System.out.println(user.toString());
         userManager.save(user);
-        return "redirect:/";
+        model.addAttribute("registerSuccess",true);
+        return "redirect:/login";
     }
 }
