@@ -30,7 +30,10 @@
     <![endif]-->
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}"></script>
-
+    <!--jquery UI-->
+`   <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+          rel = "stylesheet">
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js" th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
@@ -43,6 +46,19 @@
 
     <!-- Theme JavaScript -->
     <script src="js/freelancer.min.js" th:src="@{/js/freelancer.min.js}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $( ".datepicker" ).datepicker({changeYear: true, dateFormat: "yyyy-mm-dd" });
+        });
+    </script>
+
+    <style>
+        .ui-datepicker select.ui-datepicker-year {
+            width: 49%;
+            background-color: #18BC9C;
+        }
+    </style>
 </head>
 
 <body id="page-top" class="index">
