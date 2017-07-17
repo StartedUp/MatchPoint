@@ -7,8 +7,9 @@ import java.util.Date;
  * Created by root on 8/7/17.
  */
 @Entity
-@Table(name = "event")
+@Table(name = "event",uniqueConstraints = {@UniqueConstraint(columnNames={"name", "start_date"})})
 public class Event {
+    //name startDate endDate location notificationDate registrationLastDate
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

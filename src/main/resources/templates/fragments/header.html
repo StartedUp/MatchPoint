@@ -49,7 +49,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $( ".datepicker" ).datepicker({changeYear: true, dateFormat: "yyyy-mm-dd" });
+            $( ".datepicker" ).datepicker({changeYear: true, yearRange: "-80:+0", dateFormat: 'dd/mm/yy' });
         });
     </script>
 
@@ -93,10 +93,10 @@
                         <a href="/register">Register</a>
                     </li>
                     <li class="page-scroll" sec:authorize="isAuthenticated()">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span sec:authentication="name"></span><b style="margin-left: 10px;" class="caret"></b></a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="${#authentication.getPrincipal().getFirstName()}"></span><b style="margin-left: 10px;" class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class=""><a href="#">Profile</a></li>
-                            <li><a href="#">Events</a></li>
+                            <li><a href="/events">Events</a></li>
                         </ul>
                     </li>
                     <li sec:authorize="hasRole('ROLE_admin')" class="page-scroll">

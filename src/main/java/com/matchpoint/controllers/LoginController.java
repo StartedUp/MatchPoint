@@ -33,12 +33,6 @@ public class LoginController {
         model.addAttribute("loginError", true);
         return "userLogin";
     }
-    @GetMapping("/logout")
-    public String showLogout(Model model) {
-        model.addAttribute("logoutSuccess",true);
-        return "index";
-    }
-
     @GetMapping("/register")
     public String showRegisterForm(){
         return "register";
