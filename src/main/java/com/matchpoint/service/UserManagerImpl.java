@@ -32,4 +32,13 @@ public class UserManagerImpl implements UserManager {
     public List<User> findAll(){
         return userRepository.findAll();
     }
+
+    @Override
+    public String updatePassword(String email,String password) {
+        User user=userRepository.findByEmail(email);
+        user.setPassword(password);
+        userRepository.save(user);
+        System.out.println(user.toString());
+        return "success";
+    }
 }

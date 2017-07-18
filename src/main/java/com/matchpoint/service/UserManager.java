@@ -13,4 +13,5 @@ public interface UserManager {
     public User findByEmail(String email);
     public User save(User user);
     public List<User> findAll();
+    public String updatePassword(String email,String password);
 }

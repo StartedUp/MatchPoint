@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/header :: head"></head>
+
+<body id="page-top" class="index">
+<!-- Navigation -->
+<div th:include="fragments/header :: header"></div>
+<div class="container-fluid center-block">
+<section>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <label for="firstName">Firstname</label>
+                <input name="firstName" class="form-control"  type="text" th:value="${#authentication.getPrincipal().getFirstName()}" readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <label for="lastName">Lastname</label>
+                <input name="lastName" class="form-control" th:value="${#authentication.getPrincipal().getLastName()}" type="text"  readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4"><br>
+                <label for="dob">Date of Birth</label>
+                <input name="dob" type="text" th:value="${#dates.format(#authentication.getPrincipal().getDob(), 'dd-MM-yyyy')}"  readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <label for="email">Email</label>
+                <input name="email" class="form-control" th:value="${#authentication.getPrincipal().getEmail()}" type="email" readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <label for="mobile">Mobile</label>
+                <input name="mobile" class="form-control" th:value="${#authentication.getPrincipal().getMobile()}" type="text" readonly/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                <a th:href="@{/u/home}" class="btn btn-default logbutton"/>Back to Home
+            </div>
+        </div>
+    </section>
+<div th:include="/fragments/footer :: copyright"></div>
+</body>
+</html>
