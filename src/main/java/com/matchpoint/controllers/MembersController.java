@@ -66,4 +66,9 @@ public class MembersController {
         e.printStackTrace();
         return "exceptionError";}
     }
+    @GetMapping("/registerEvent")
+    public String showRegisterEventPage(){
+        return "registerEvent";
+    }
+
 }

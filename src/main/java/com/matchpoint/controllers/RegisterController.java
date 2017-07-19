@@ -29,9 +29,9 @@ public class RegisterController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setLastName(user.getLastName());
         System.out.println(user.toString());
         userManager.save(user);
+        userManager.grantMemberAccess(user.getEmail());
         model.addAttribute("registerSuccess",true);
         return "redirect:/login";
     }

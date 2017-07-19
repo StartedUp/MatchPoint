@@ -9,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -61,5 +58,19 @@ public class AdminController {
         events = eventManager.findAll();
         model.addAttribute("events", events);
         return "listEvents";
+    }
+    @RequestMapping("/grantAdmin")
+    public String grantAdminAccess(@RequestParam("userEmail") String email, Model model){
+        System.out.println(email);
+        userManager.grantAdminAccess(email);
+        model.addAttribute("Granted",true);
+        return "listUsers";
+    }
+    @RequestMapping("/revokeAdmin")
+    public String revokeAdminAccess(@RequestParam("userEmail") String email, Model model){
+        System.out.println(email);
+        userManager.grantMemberAccess(email);
+        model.addAttribute("revoked",true);
+        return "listUsers";
     }
 }

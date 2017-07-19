@@ -30,19 +30,25 @@
                                     <th>Mobile</th>
                                     <th>Activity Status</th>
                                     <th>Role</th>
-                                    <th>Last Login</th>
+                                    <th>Access</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr style="color: #122b40" th:each="user,stat : ${users}">
+                                    <form name="adminAccessForm" th:action="@{/a/grantAdmin}" method="post" th:hidden="true">
                                     <td th:text="${user.firstName}"></td>
                                     <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.mobile}"></td>
                                     <td th:text="${user.active?'Active':'InActive'}">
                                     <td th:text="${user.roles}"></td>
-                                    <td th:value="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
-                                    </td>
+                                        <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="grantAction" >Grant Admin Access</button><br>
+                                            <!--<input th:id="r" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="revokeAction" >Revoke Admin Access</button>--></td>
+                                    <!--<td><a class="btn" style="color:#262626" href="javascript: document.adminAccessForm.submit()">Grant Admin Access</a></li></td>
+                                    &lt;!&ndash;<td><a style="color:#262626" th:href="@{/a/grantAdmin}">Grant Admin Access </a></td>&ndash;&gt;
+                                    <input hidden id="adminAccess" name="" type="text" th:value="${}">
+                                    <input hidden class="glyphicon glyphicon-log-out" type="submit"/>-->
+                                </form>
                                 </tr>
                                 </tbody>
                             </table>

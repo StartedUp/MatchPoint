@@ -42,7 +42,7 @@
                                     <td th:text="${event.location}"></td>
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
-                                    <td sec:authorize="isAuthenticated()"><a th:href="@{/registerEvent}" >Click to register</a></td>
+                                    <td sec:authorize="isAuthenticated()"><a th:href="@{/u/registerEvent}" >Click to register</a></td>
                                     </td>
                                 </tr>
                                 </tbody>
