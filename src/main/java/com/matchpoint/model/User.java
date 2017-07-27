@@ -159,20 +159,6 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + email.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + mobile.hashCode();
-        result = 31 * result + dob.hashCode();
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
