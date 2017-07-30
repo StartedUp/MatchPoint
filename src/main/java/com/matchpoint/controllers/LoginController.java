@@ -1,5 +1,6 @@
 package com.matchpoint.controllers;
 
+import com.matchpoint.model.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,7 +43,8 @@ public class LoginController {
         return "userLogin";
     }
     @GetMapping("/register")
-    public String showRegisterForm(){
+    public String showRegisterForm(Model model){
+        model.addAttribute("user", new User());
         return "register";
     }
 
