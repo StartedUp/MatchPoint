@@ -1,5 +1,6 @@
 package com.matchpoint.controllers;
 
+import com.matchpoint.model.Role;
 import com.matchpoint.model.User;
 import com.matchpoint.service.UserManager;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class RegisterController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
+        Role role = new Role();
         LOGGER.info(user.toString());
         userManager.save(user);
         userManager.grantMemberAccess(user.getEmail());

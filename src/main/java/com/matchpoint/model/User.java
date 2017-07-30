@@ -58,7 +58,7 @@ public class User {
     }
 
     public User(User user) {
-
+        this.id=user.getId();
         this.active=user.isActive();
         this.email=user.getEmail();
         this.password=user.getPassword();
