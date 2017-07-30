@@ -2,7 +2,9 @@ package com.matchpoint.service;
 
 import com.matchpoint.model.Role;
 import com.matchpoint.model.User;
+import com.matchpoint.model.UserQuery;
 import com.matchpoint.model.User_Role;
+import com.matchpoint.repository.UserQueryRepository;
 import com.matchpoint.repository.UserRepository;
 import com.matchpoint.repository.User_RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class UserManagerImpl implements UserManager {
     UserRepository userRepository;
     @Autowired
     User_RoleRepository user_roleRepository;
+    @Autowired
+    UserQueryRepository userQueryRepository;
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -79,5 +83,10 @@ public class UserManagerImpl implements UserManager {
         user_roleRepository.save(user_role);
         System.out.println("In JPA REPOSITORY"+user.toString());
         return "listUsers";
+    }
+
+    @Override
+    public UserQuery save(UserQuery userQuery) {
+        return userQueryRepository.save(userQuery);
     }
 }

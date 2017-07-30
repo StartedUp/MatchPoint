@@ -1,6 +1,7 @@
 package com.matchpoint.service;
 
 import com.matchpoint.model.User;
+import com.matchpoint.model.UserQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface UserManager {
     public String updatePassword(String email,String password);
     public String grantMemberAccess(String email);
     public String grantAdminAccess(String email);
+    public UserQuery save(UserQuery userQuery);
 }
