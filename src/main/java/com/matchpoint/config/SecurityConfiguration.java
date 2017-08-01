@@ -1,6 +1,5 @@
 package com.matchpoint.config;
 
-import com.matchpoint.handler.*;
 import com.matchpoint.repository.UserRepository;
 import com.matchpoint.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    authSuccessHandler successHandler ;
+    /*@Autowired
+    authSuccessHandler successHandler ;*/
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -42,8 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/u/**").authenticated()
                 .antMatchers("/a/**").access("hasRole('ROLE_admin')")
+                .antMatchers("/u/**").access("hasAnyRole('ROLE_member', 'ROLE_admin')")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

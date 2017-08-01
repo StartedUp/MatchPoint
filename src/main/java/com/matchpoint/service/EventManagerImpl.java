@@ -30,4 +30,8 @@ public class EventManagerImpl implements EventManager {
     public List<Event> findByEndDateAfter(Date endDate) {
         return eventRepository.findByEndDateAfter(endDate);
     }
+    @Override
+    public Event findById(Integer eventId) {
+        return eventRepository.findOne(eventId);
+    }
 }

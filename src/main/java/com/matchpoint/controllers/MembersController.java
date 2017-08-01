@@ -1,9 +1,11 @@
 package com.matchpoint.controllers;
 
 import com.matchpoint.model.Event;
+import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.LoggedinUser;
 import com.matchpoint.model.User;
 import com.matchpoint.service.EventManager;
+import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,10 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,7 +31,9 @@ public class MembersController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    EventManager eventManager;
+    private EventManager eventManager;
+    @Autowired
+    private EventRegistrationManager eventRegistrationManager;
     @GetMapping("/home")
     public String showMemberHome(){
         return "memberHome";
@@ -66,9 +69,38 @@ public class MembersController {
         e.printStackTrace();
         return "exceptionError";}
     }
-    @GetMapping("/registerEvent")
-    public String showRegisterEventPage(){
+    @GetMapping("/eventRegistration/{eventId}")
+    public String showRegisterEventPage(Model model, @PathVariable("eventId") Integer eventId){
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userManager.findByEmail(user.getEmail());
+        Event event=eventManager.findById(eventId);
+        model.addAttribute("event",event);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("eventRegistration", new EventRegistration());
         return "registerEvent";
     }
-
+    @RequestMapping(value = "/registerEvent",method = RequestMethod.POST)
+    public String registerEvent(@ModelAttribute("eventRegistration") EventRegistration eventRegistration, BindingResult
+                                bindingResult, Model model) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userManager.findByEmail(user.getEmail());
+        eventRegistration.setUser(currentUser);
+        eventRegistration.setUserDob(currentUser.getDob());
+        if (bindingResult.hasErrors()){
+            return "registerEvent";
+        }
+        eventRegistrationManager.save(eventRegistration);
+        return "redirect:/u/myRegisteredEvents";
+    }
+    @GetMapping("/myRegisteredEvents")
+    public String showMyEvents(Model model) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<EventRegistration> eventRegistrations = eventRegistrationManager.findByUser(user);
+        List<Event> events=new ArrayList<Event>();
+        for (EventRegistration eventRegistration: eventRegistrations) {
+            events.add(eventRegistration.getEvent());
+        }
+        model.addAttribute("registeredEvents",events);
+        return "myEvents";
+    }
 }

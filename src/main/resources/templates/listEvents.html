@@ -8,7 +8,6 @@
 
     <!-- Navigation -->
     <div th:include="fragments/header :: header"></div>
-    <body>
     <div class="container-fluid">
         <style rel="stylesheet">
             th{
@@ -42,7 +41,7 @@
                                     <td th:text="${event.location}"></td>
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
-                                    <td sec:authorize="isAuthenticated()"><a th:href="@{/u/registerEvent}" >Click to register</a></td>
+                                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/u/eventRegistration/'+${event.id}}" >Click to register</a></td>
                                     </td>
                                 </tr>
                                 </tbody>

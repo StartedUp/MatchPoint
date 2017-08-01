@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+/*
 @Component
 public class authSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -19,4 +20,4 @@ public class authSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("/adminHome.html");
         }
     }
-}
+}*/

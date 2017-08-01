@@ -9,69 +9,90 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body id="page-top" class="index">
-<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
-<div th:include="fragments/header :: header"></div>
-<section id="registration" th:name="register">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>Member Registration</h2>
-                <hr class="star-primary">
+<body>
+<div class="container-fluid">
+    <div th:include="fragments/header :: header"></div>
+    <br>
+    <!-- Contact Section -->
+    <section id="memberSignup">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Member Registration</h2>
+                    <hr class="star-primary">
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-
-                <form th:object="${user}" action="/register" method="post" class="register-form">
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="firstName">First Name</label>
-                            <input name="firstName" class="form-control" type="text" placeholder="First Name" required data-validation-required-message="Please enter your name."/>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                    <form th:object="${user}" action="/register" method="post"
+                          id="signupForm" novalidate>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="firstName">FirstName</label>
+                                <input type="text" name="firstName" class="form-control" placeholder="FirstName" id="firstName"
+                                       required data-validation-required-message="Please enter your name.">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="lastName">Last Name</label>
-                            <input name="lastName" class="form-control" type="text" placeholder="Last Name"/>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="lastName">LastName</label>
+                                <input rows="5" class="form-control" name="lastName"
+                                       placeholder="LastName" id="lastName"
+                                       required data-validation-required-message="Please enter a LastName.">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="dob">Date of Birth</label>
-                            <input name="dob" type="text"  class="form-control datepicker" placeholder="Date of Birth" required data-validation-required-message="Please enter your Date of Birth."/>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="email">Email Address</label>
+                                <input type="email" name="email" class="form-control" placeholder="Email Address" id="email"
+                                       required data-validation-required-message="Please enter your email address.">
+                                <p class="help-block text-danger"></p>
+                                <p hidden th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="email">Email</label>
-                            <p hidden th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                            <input name="email" class="form-control" type="email" placeholder="Email" required data-validation-required-message="Please enter your Email."/>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" name="mobile" class="form-control"
+                                       placeholder="Phone Number" id="phone"
+                                       required data-validation-required-message="Please enter your phone number.">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="mobile">Mobile</label>
-                            <input name="mobile" class="form-control" type="text" placeholder="Mobile Number" required data-validation-required-message="Please enter your Mobile number."/>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password"
+                                       placeholder="Password" id="password"
+                                       required data-validation-required-message="Please enter a Password.">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="password">Password</label>
-                            <input name="password" class="form-control" type="password" placeholder="Set Password" required data-validation-required-message="Please enter Password."/>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="dob">Date of Birth</label>
+                                <input class="form-control datepicker" placeholder="dob"
+                                      name="dob" id="dob" required data-validation-required-message="Please enter a dob.">
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-                            <input value="Register" type="submit" class="btn btn-success btn-lg"/>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <input type="submit" value="Submit" class="btn btn-success btn-lg">
+                            </div>
                         </div>
-                    </div>
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                </form>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </form>
                 </div>
             </div>
         </div>
     </section>
+</div>
 </body>
 </html>
