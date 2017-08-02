@@ -12,4 +12,5 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event,Integer> {
     public List<Event> findAllByOrderByIdDesc();
     public List<Event> findByEndDateAfter(Date endDate);
+
 }

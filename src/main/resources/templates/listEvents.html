@@ -31,9 +31,10 @@
                                     <th>Notification Date</th>
                                     <th>Registration LastDate</th>
                                     <th sec:authorize="isAuthenticated()">Status</th>
+                                    <th sec:authorize="hasRole('ROLE_admin')">Registration Count</th>
+
                                 </tr>
                                 </thead>
-                                <tbody>
                                 <tr style="color: #122b40" th:each="event,stat : ${events}">
                                     <td th:text="${event.name}"></td>
                                     <td th:text="${#dates.format(event.startDate,'dd-MMM-yyyy')}"></td>
@@ -42,7 +43,7 @@
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
                                     <td sec:authorize="isAuthenticated()"><a th:href="@{'/u/eventRegistration/'+${event.id}}" >Click to register</a></td>
-                                    </td>
+                                    <td sec:authorize="hasRole('ROLE_admin')" th:text="${count}"></td>
                                 </tr>
                                 </tbody>
                             </table>

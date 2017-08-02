@@ -14,4 +14,5 @@ public interface EventManager {
     public List<Event> findAll();
     public List<Event> findByEndDateAfter(Date endDate);
     public Event findById(Integer eventId);
+
 }

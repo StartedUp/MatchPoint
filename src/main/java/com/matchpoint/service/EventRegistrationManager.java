@@ -1,5 +1,6 @@
 package com.matchpoint.service;
 
+import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.User;
 import org.springframework.stereotype.Service;
@@ -11,5 +12,7 @@ import java.util.List;
  */
 public interface EventRegistrationManager {
     public void save(EventRegistration eventRegistration);
+    public List<EventRegistration> findAll();
     public List<EventRegistration> findByUser(User user);
+    public List<Integer> registrationCount(List<Event> eventList);
 }
