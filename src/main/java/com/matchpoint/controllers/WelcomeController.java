@@ -1,11 +1,18 @@
 package com.matchpoint.controllers;
 
 import com.matchpoint.model.Event;
+import com.matchpoint.model.User;
+import com.matchpoint.model.UserQuery;
 import com.matchpoint.service.EventManager;
+import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
 import java.util.List;
@@ -15,7 +22,12 @@ import java.util.List;
  */
 @Controller
 public class WelcomeController {
-   @Autowired
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserManager userManager;
+
+    @Autowired
    private EventManager eventManager;
     @GetMapping("/events")
     public String showMemberHome(Model model){
@@ -28,5 +40,20 @@ public class WelcomeController {
         events = eventManager.findByEndDateAfter(cal.getTime());
         model.addAttribute("events", events);
         return "listEvents";
+    }
+    @RequestMapping("/userQuery")
+    public String saveUserQuery(@ModelAttribute("userQuery")UserQuery userQuery, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            System.out.println(userQuery.toString());
+            System.out.println(bindingResult);
+            return "/#contact";
+        }
+        try {
+            userManager.save(userQuery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("QueryUpdateSuccess",true);
+        return "redirect:/";
     }
 }

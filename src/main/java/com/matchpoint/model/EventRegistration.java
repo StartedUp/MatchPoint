@@ -200,4 +200,28 @@ public class EventRegistration {
     public void setYg(boolean yg) {
         this.yg = yg;
     }
+
+    @Override
+    public String toString() {
+        return "EventRegistration{" +
+                "id=" + id +
+                ", user=" + user +
+                ", event=" + event +
+                ", userDob=" + userDob +
+                ", nms=" + nms +
+                ", nmd=" + nmd +
+                ", ms=" + ms +
+                ", ws=" + ws +
+                ", mcb=" + mcb +
+                ", mcg=" + mcg +
+                ", cb=" + cb +
+                ", cg=" + cg +
+                ", sjb=" + sjb +
+                ", sjg=" + sjg +
+                ", jb=" + jb +
+                ", jg=" + jg +
+                ", yb=" + yb +
+                ", yg=" + yg +
+                '}';
+    }
 }

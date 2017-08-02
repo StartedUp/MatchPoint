@@ -1,8 +1,10 @@
 package com.matchpoint.controllers;
 
 import com.matchpoint.model.Event;
+import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.User;
 import com.matchpoint.service.EventManager;
+import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +25,8 @@ public class AdminController {
     private UserManager userManager;
     @Autowired
     private EventManager eventManager;
+    @Autowired
+    private EventRegistrationManager eventRegistrationManager;
 
     /*@PreAuthorize("hasAnyRole('admin')")*/
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -54,9 +58,13 @@ public class AdminController {
     }
     @RequestMapping(value = "/listEvents", method = RequestMethod.GET)
     public String showEvents(Model model){
-        List<Event> events;
+        List<Event> events; List<EventRegistration> eventRegistrations;List<Integer> usersCount;
         events = eventManager.findAll();
+        eventRegistrations=eventRegistrationManager.findAll();
+       usersCount = eventRegistrationManager.registrationCount(events);
+        System.out.println("registered users count "+usersCount.toString());
         model.addAttribute("events", events);
+        model.addAttribute("registrationCount",usersCount);
         return "listEvents";
     }
     @RequestMapping("/grantAdmin")
