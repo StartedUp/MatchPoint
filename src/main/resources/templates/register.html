@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body id="page-top" class="index">
-<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 <div th:include="fragments/header :: header"></div>
 <section id="registration" th:name="register">
     <div class="container">
@@ -22,7 +21,6 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-
                 <form th:object="${user}" action="/register" method="post" class="register-form">
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
