@@ -95,7 +95,7 @@
                     <li class="page-scroll" sec:authorize="isAuthenticated()">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="${#authentication.getPrincipal().getFirstName()}"></span><b style="margin-left: 10px;" class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class=""><a href="userProfile">My Profile</a></li>
+                            <li class=""><a href="/u/userProfile">My Profile</a></li>
                             <li><a href="/u/changePassword">Change Password</a></li>
                         </ul>
                     </li>

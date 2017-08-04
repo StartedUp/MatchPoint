@@ -7,13 +7,15 @@
 <body id="page-top" class="index">
 <!-- Navigation -->
 <div th:include="fragments/header :: header"></div>
-<div class="container-fluid center-block">
 <section>
+    <div class="container">
         <div class="row">
+            <div class="col-lg-12 text-center">
+            <h3 style="text-align: center;color: #398439">MY PROFILE</h3><br></div>
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <label for="firstName">Firstname</label>
                 <input name="firstName" class="form-control"  type="text" th:value="${#authentication.getPrincipal().getFirstName()}" readonly/>
-            </div>
+            </div><br>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
@@ -25,27 +27,28 @@
             <div class="col-md-4 col-sm-4 col-lg-4"><br>
                 <label for="dob">Date of Birth</label>
                 <input name="dob" type="text" th:value="${#dates.format(#authentication.getPrincipal().getDob(), 'dd-MM-yyyy')}"  readonly/>
-            </div>
+            </div><br>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <label for="email">Email</label>
                 <input name="email" class="form-control" th:value="${#authentication.getPrincipal().getEmail()}" type="email" readonly/>
-            </div>
+            </div><br>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <label for="mobile">Mobile</label>
                 <input name="mobile" class="form-control" th:value="${#authentication.getPrincipal().getMobile()}" type="text" readonly/>
-            </div>
+            </div><br>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
                 <a th:href="@{/u/home}" class="btn btn-default logbutton"/>Back to Home
-            </div>
+            </div><br>
+        </div>
         </div>
     </section>
-<div th:include="/fragments/footer :: copyright"></div>
+    <div th:include="fragments/footer :: footer"></div>
 </body>
 </html>
