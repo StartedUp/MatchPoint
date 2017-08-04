@@ -59,14 +59,10 @@ public class AdminController {
     @RequestMapping(value = "/listEvents", method = RequestMethod.GET)
     public String showEvents(Model model){
         List<Event> events; List<EventRegistration> eventRegistrations;List<String> usersCount;
-        String test="gokul";
         events = eventManager.findAll();
-        eventRegistrations=eventRegistrationManager.findAll();
-       usersCount = eventRegistrationManager.registrationCount(events);
-        System.out.println("registered users count "+usersCount.toString());
+        usersCount = eventRegistrationManager.registrationCount(events);
         model.addAttribute("events", events);
         model.addAttribute("registrationCount",usersCount);
-        model.addAttribute("test",test);
         return "listEvents";
     }
     @RequestMapping("/grantAdmin")

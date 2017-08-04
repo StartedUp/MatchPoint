@@ -92,11 +92,11 @@
                     <li sec:authorize="isAnonymous()" class="page-scroll">
                         <a href="/register">Register</a>
                     </li>
-                    <li class="page-scroll" sec:authorize="isAuthenticated()">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="${#authentication.getPrincipal().getFirstName()}"></span><b style="margin-left: 10px;" class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li class=""><a href="/u/userProfile">My Profile</a></li>
-                            <li><a href="/u/changePassword">Change Password</a></li>
+                    <li  class="page-scroll" sec:authorize="isAuthenticated()">
+                        <a  data-toggle="dropdown" href="#"><span th:text="${#authentication.getPrincipal().getFirstName()}"></span><b style="margin-left: 10px;" class="caret"></b></a>
+                        <ul style="background-color: #2C3E50" class="dropdown-menu">
+                            <li class="page-scroll"><a href="/u/userProfile">My Profile</a></li>
+                            <li class="page-scroll" ><a href="/u/changePassword">Change Password</a></li>
                         </ul>
                     </li>
                     <li sec:authorize="hasRole('ROLE_admin')" class="page-scroll">
@@ -106,7 +106,7 @@
                     <li  class="page-scroll">
                         <a href="#contact">Contact us</a>
                     </li>
-                    <li sec:authorize="isAuthenticated()"><a class="btn" href="javascript: document.logoutForm.submit()">Logout</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="javascript: document.logoutForm.submit()">Logout</a></li>
                 </ul>
                 <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
                     <input hidden class="glyphicon glyphicon-log-out" type="submit" value="Sign Out"/>
