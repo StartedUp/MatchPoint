@@ -16,19 +16,31 @@
                     <h3 style="text-align: center;color: #398439">MatchPoint Members Login</h3>
     <p th:if="${param.registerSuccess}" class="registerSuccess">Thank You. Registration has been done Successfully.<br>Please login to Continue. Thanks!!!</p>
     <form role="form" th:action="@{/login}" method="POST">
-        <div class="form-group">
+        <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" text-center>
             <label for="email">Email:</label>
             <input required name="email" type="email" class="form-control" id="email" data-error="Please fill this field" placeholder="Enter email">
+        <br>
         </div>
-        <div class="form-group">
+        <div class="col-sm-4"></div></div>
+            <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" text-center>
             <label for="pwd">Password:</label>
             <input required name="password" type="password" class="form-control" id="pwd" data-error="Please fill this field"placeholder="Enter password">
+        <br>
         </div>
+                <div class="col-sm-4"></div></div>
         <!--<div class="checkbox">
             <label><input type="checkbox"> Remember me</label>
         </div>-->
+        <div class="row" text-center>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4"><br>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button type="submit" class="btn btn-default">Submit</button>
+                <div class="col-sm-4"></div></div></div>
     </form>
 </div></div></div>
 </section>

@@ -30,14 +30,14 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
         return eventRegistrationRepository.findByUser(user);
     }
     @Override
-    public List<Integer> registrationCount(List<Event> eventList) {
-        List<Integer> usersCount=new ArrayList<Integer>();
+    public List<String> registrationCount(List<Event> eventList) {
+        List<String> usersCount=new ArrayList<String>();
         for (Event event:eventList) {
            int eventId;
             eventId=event.getId();
             System.out.println(event.toString());
             System.out.println("event id is "+eventId);
-            usersCount.add(eventRegistrationRepository.findByEvent_id(eventId).size());
+            usersCount.add(eventRegistrationRepository.findByEvent_id(eventId).size()+"");
         }
         return usersCount;
     }
