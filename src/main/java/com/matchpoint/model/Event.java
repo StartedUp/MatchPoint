@@ -1,5 +1,7 @@
 package com.matchpoint.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,14 +18,18 @@ public class Event {
     @Column(name = "name")
     private String name;
     @Column(name = "start_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date startDate;
     @Column(name = "end_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
     @Column(name = "location")
     private String location;
     @Column(name = "nofication_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date notificationDate;
     @Column(name = "registration_last_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date registrationLastDate;
 
     public int getId() {
