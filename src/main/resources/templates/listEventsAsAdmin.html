@@ -30,7 +30,8 @@
                                     <th>Location</th>
                                     <th>Notification Date</th>
                                     <th>Registration LastDate</th>
-                                    <th sec:authorize="isAuthenticated()">Status</th>
+                                    <th sec:authorize="hasRole('ROLE_admin')">Registration Count</th>
+                                    <th sec:authorize="hasRole('ROLE_admin')">Print</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -41,8 +42,9 @@
                                     <td th:text="${event.location}"></td>
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
-                                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/u/eventRegistration/'+${event.id}}" >Click to register</a></td>
-                                    </tr>
+                                    <td sec:authorize="hasRole('ROLE_admin')" th:text="${registrationCount[stat.index] + ' Users are Registered'}"></td>
+                                    <td sec:authorize="hasRole('ROLE_admin')"><a th:href="@{'/a/eventRegistrationList/'+${event.id}}" >Display and Print</a></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

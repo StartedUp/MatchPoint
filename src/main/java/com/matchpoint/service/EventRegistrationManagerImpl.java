@@ -41,4 +41,9 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
         }
         return usersCount;
     }
+
+    @Override
+    public List<EventRegistration> findByEvent_id(Integer eventId) {
+        return eventRegistrationRepository.findByEvent_id(eventId);
+    }
 }

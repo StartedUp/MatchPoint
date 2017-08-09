@@ -1,0 +1,57 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:include="fragments/header :: head"></head>
+
+    <body id="page-top" class="index">
+    <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <div th:include="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <style rel="stylesheet">
+            th{
+                text-align: center;
+            }
+        </style>
+
+        <section>
+            <div class="container" id="maincontent" tabindex="2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>MatchPoint->Registration list <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/createEvent}" style="float: right" class="btn btn-info btn-lg">Print</a><br></h2>
+                        <br><div class="table-responsive">
+                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${!eventRegistrations.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>S.NO</th>
+                                    <th>Member Name</th>
+                                    <th>DOB</th>
+                                    <th>Playing Categories</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="color: #122b40" th:each="eventReg,stat : ${eventRegistrations}">
+                                    <td th:text="${stat.count}">1</td>
+                                    <td th:text="${eventReg.user.getFirstName()} +'  '+ ${eventReg.user.getLastName()} "></td>
+                                    <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
+                                    <td th:text="${eventReg.nms?'NMS,':''} + ${eventReg.nmd?'NMD, ':''}
+                                                 + ${eventReg.ms?'MS, ':''} + ${eventReg.ws?'WS, ':''}
+                                                  + ${eventReg.mcb?'MCB,':''} + ${ eventReg.mcg?'MCG, ':''}
+                                                   + ${eventReg.cb?'CB, ':''} + ${eventReg.cg?'CG, ':''}
+                                                    + ${eventReg.sjb?'SJB, ':''} + ${eventReg.sjg?'SJG, ':''}
+                                                     + ${eventReg.jb?'JB, ':''} + ${eventReg.jg?'JG, ':''}
+                                                      + ${eventReg.yb?'YB, ':''} + ${eventReg.yg?'YG ':''} ">
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>

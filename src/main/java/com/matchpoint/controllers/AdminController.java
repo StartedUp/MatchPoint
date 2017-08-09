@@ -8,6 +8,7 @@ import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,7 +64,14 @@ public class AdminController {
         usersCount = eventRegistrationManager.registrationCount(events);
         model.addAttribute("events", events);
         model.addAttribute("registrationCount",usersCount);
-        return "listEvents";
+        return "listEventsAsAdmin";
+    }
+    @GetMapping("/eventRegistrationList/{eventId}")
+    public String showRegisteredUsersList(Model model, @PathVariable("eventId") Integer eventId){
+        List<EventRegistration> eventRegistrations;
+        eventRegistrations=eventRegistrationManager.findByEvent_id(eventId);
+        model.addAttribute("eventRegistrations",eventRegistrations);
+        return "registeredUsers";
     }
     @RequestMapping("/grantAdmin")
     public String grantAdminAccess(@RequestParam("userEmail") String email, Model model){
