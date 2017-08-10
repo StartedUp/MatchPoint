@@ -16,4 +16,5 @@ public interface EventRegistrationManager {
     public List<EventRegistration> findByUser(User user);
     public List<EventRegistration> findByEvent_id(Integer eventId);
     public List<String> registrationCount(List<Event> eventList);
+    public EventRegistration findByEventAndUser(Event event,User user);
 }

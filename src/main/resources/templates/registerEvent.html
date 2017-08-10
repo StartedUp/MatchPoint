@@ -15,15 +15,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Register Event</h2>
+                <h2 th:text="${eventRegistration.id!=0?'Update Registration':'Register to '+ event.name}"></h2>
                 <hr class="star-primary">
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                     <form th:object="${eventRegistration}" action="/u/registerEvent" method="post" class="form-horizontal">
-                        <fieldset>
                         <input type="hidden" name="event" th:value="${event.id}">
+                        <input type="hidden" name="eventRegistration" th:if="${eventRegistration.id!=0}" th:value="${eventRegistration.id}">
                         <div class="row control-group">
                             <div class="form-group col-xs-12">
                                 <label for="userDob">User Dob
@@ -35,71 +35,86 @@
                         <div class="row">
                                 <div class="col-sm-1" >
                                     <label for="nms">NMS</label>
-                                    <input name="nms" class="form-control" type="checkbox"/>
+                                    <!--<input id=nms2 type="hidden" value="0" name="nms">-->
+                                    <input id="nms" name="nms" class="category form-control"
+                                           th:checked="${eventRegistration.nms}" type="checkbox"/>
                                 </div>
                                 <div  class="col-sm-1" >
                                     <label for="nmd">NMD</label>
-                                    <input name="nmd" class="form-control" type="checkbox"/>
+                                    <input name="nmd" class="category form-control"
+                                           th:checked="${eventRegistration.nmd} ? 'checked'" type="checkbox"/>
                                 </div>
                                 <div class="col-sm-1" >
                                     <label for="ms">MS</label>
-                                    <input name="ms" class="form-control" type="checkbox"/>
+                                    <input name="ms" class="category form-control"
+                                           th:checked="${eventRegistration.ms}? 'checked'" type="checkbox"/>
                                 </div>
                                 <div class="col-sm-1" >
                                     <label for="ws">WS</label>
-                                    <input name="ws" class="form-control" type="checkbox"/>
+                                    <input name="ws" class="category form-control"
+                                           th:checked="${eventRegistration.ws}? 'checked'" type="checkbox"/>
                                 </div>
                             <div class="col-sm-1" >
                                 <label  for="mcb">MCB</label>
-                                <input name="mcb" class="form-control" type="checkbox"/>
+                                <input name="mcb" class="category form-control" th:checked="${eventRegistration.mcb}"
+                                       type="checkbox"/>
                             </div>
                             </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-1" >
                                 <label  for="mcg">MCG</label>
-                                <input name="mcg" class="form-control" type="checkbox"/>
+                                <input name="mcg" class="category form-control" th:checked="${eventRegistration.mcg}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="cb">CB</label>
-                                <input name="cb" class="form-control" type="checkbox"/>
+                                <input name="cb" class="category form-control" th:checked="${eventRegistration.cb}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="cg">CG</label>
-                                <input name="cg" class="form-control" type="checkbox"/>
+                                <input name="cg" class="category form-control" th:checked="${eventRegistration.cg}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="sjb">SJB</label>
-                                <input name="sjb" class="form-control" type="checkbox"/>
+                                <input name="sjb" class="category form-control" th:checked="${eventRegistration.sjb}"
+                                       type="checkbox"/>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-sm-1" >
                                 <label for="sjg">SJG</label>
-                                <input name="sjg" class="form-control" type="checkbox"/>
+                                <input name="sjg" class="category form-control" th:checked="${eventRegistration.sjg}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="jb">JB</label>
-                                <input name="jb" class="form-control" type="checkbox"/>
+                                <input name="jb" class="category form-control" th:checked="${eventRegistration.jb}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="jg">JG</label>
-                                <input name="jg" class="form-control" type="checkbox"/>
+                                <input name="jg" class="category form-control" th:checked="${eventRegistration.jg}"
+                                       type="checkbox"/>
                             </div>
                             <div class="col-sm-1" >
                                 <label for="yb">YB</label>
-                                <input name="yb" class="form-control" type="checkbox"/>
+                                <input name="yb" class="category form-control" th:checked="${eventRegistration.yb}"
+                                       type="checkbox"/>
                                 </div>
                             <div class="col-sm-1" >
                                 <label for="yg">YG</label>
-                                <input name="yg" class="form-control" type="checkbox"/>
+                                <input name="yg" class="category form-control" th:checked="${eventRegistration.yg}"
+                                       type="checkbox"/>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <input value="Register" type="submit" class="btn btn-success btn-lg"/>
+                                <input th:value="${eventRegistration.id!=0?'Update':'Register'}" type="submit" class="btn btn-success btn-lg"/>
                             </div>
                         </div>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -107,6 +122,43 @@
                 </div>
             </div>
         </div>
-        </section>
+
+</section>
+<script type="text/javascript">
+  /*  $(document).ready(function () {
+
+        $('.category').click(function () {
+            if(!$(this).is(':checked')){
+                $(this).val("off");
+                console.log($(this).val())
+            }
+        })
+    })*/
+
+    $(document).ready(function () {
+
+        $("form").submit(function () {
+
+            var this_master = $(this);
+
+            this_master.find('input[type="checkbox"]').each( function () {
+                var checkbox_this = $(this);
+
+
+                if( checkbox_this.is(":checked") == true ) {
+                    checkbox_this.attr('value','1');
+                } else {
+                    checkbox_this.prop('checked',true);
+                    //DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
+                    checkbox_this.attr('value','0');
+                }
+            })
+        })
+    })
+
+
+
+
+</script>
 </body>
 </html>

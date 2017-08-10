@@ -53,9 +53,7 @@ public class MembersController {
              Authentication auth = SecurityContextHolder.getContext().getAuthentication();
              if (auth.isAuthenticated()) {
                  String email=auth.getName();
-                 System.out.println("logged in email is "+email);
                  User user = userManager.findByEmail(email);
-                 System.out.println(user.toString());
                 if (password!=null && !password.equals("")) {
                     user.setPassword(passwordEncoder.encode(password));
                     userManager.updatePassword(email,user.getPassword());
@@ -71,12 +69,14 @@ public class MembersController {
     }
     @GetMapping("/eventRegistration/{eventId}")
     public String showRegisterEventPage(Model model, @PathVariable("eventId") Integer eventId){
+        EventRegistration eventRegistration=null;
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userManager.findByEmail(user.getEmail());
         Event event=eventManager.findById(eventId);
+        eventRegistration=eventRegistrationManager.findByEventAndUser(event,user);
+        model.addAttribute("eventRegistration", eventRegistration!=null?eventRegistration:new EventRegistration());
         model.addAttribute("event",event);
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("eventRegistration", new EventRegistration());
         return "registerEvent";
     }
     @RequestMapping(value = "/registerEvent",method = RequestMethod.POST)

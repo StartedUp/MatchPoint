@@ -19,7 +19,12 @@
             <div class="container" id="maincontent" tabindex="2">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>MatchPoint->Events list <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/createEvent}" style="float: right" class="btn btn-info btn-lg">Create Event</a><br></h2>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>MatchPoint Upcoming Events<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/createEvent}" style="float: right" class="btn btn-info btn-lg">Create Event</a><br></h2>
+                                <hr class="star-primary">
+                            </div>
+                        </div>
                         <br><div class="table-responsive">
                             <table style="border-style: solid" class="table table-hover table-bordered" th:if="${!events.isEmpty()}">
                                 <thead>
@@ -41,7 +46,7 @@
                                     <td th:text="${event.location}"></td>
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
-                                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/u/eventRegistration/'+${event.id}}" >Click to register</a></td>
+                                    <td sec:authorize="isAuthenticated()"><a th:href="@{'/u/eventRegistration/'+${event.id}}" >Click to register/ Update</a></td>
                                     </tr>
                                 </tbody>
                             </table>
