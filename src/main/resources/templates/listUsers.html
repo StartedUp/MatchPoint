@@ -2,28 +2,29 @@
     <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
     <head th:include="fragments/header :: head"></head>
-
-    <body id="page-top" class="index">
-    <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
-
-    <!-- Navigation -->
-    <div th:include="fragments/header :: header"></div>
     <body>
+    <div th:include="fragments/header :: header"></div>
     <div class="container-fluid">
         <style rel="stylesheet">
             th{
                 text-align: center;
             }
         </style>
-        <header>
+        <section>
             <div class="container" id="maincontent" tabindex="2">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>MatchPoint Members</h2>
-                        <div class="table-responsive">
-                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${!users.isEmpty()}">
-                                <thead>
-                                <tr style="color:#c7254e">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>MatchPoint Members</h2>
+                                <hr class="star-primary">
+                            </div>
+                        </div>
+                        <br><div class="table-responsive">
+                            <table style="border-style: solid;background-color:#67b168"  class="table table-hover table-inverse table-bordered" th:if="${!users.isEmpty()}">
+                                <thead class="thead-inverse">
+                                <tr style="color:#c7254e" align="center">
+                                    <th>S.NO</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>E-mail</th>
@@ -35,19 +36,18 @@
                                 </thead>
                                 <tbody>
                                 <tr style="color: #122b40" th:each="user,stat : ${users}">
-                                    <form name="adminAccessForm" th:action="@{/a/grantAdmin}" method="post" th:hidden="true">
+                                    <form name="adminAccessForm" th:action="@{/a/adminAccess}" method="post" th:hidden="true">
+                                        <td th:text="${stat.count}">1</td>
                                     <td th:text="${user.firstName}"></td>
                                     <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.mobile}"></td>
                                     <td th:text="${user.active?'Active':'InActive'}">
                                     <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
-                                        <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="grantAction" >Grant Admin Access</button><br>
-                                            <!--<input th:id="r" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="revokeAction" >Revoke Admin Access</button>--></td>
-                                    <!--<td><a class="btn" style="color:#262626" href="javascript: document.adminAccessForm.submit()">Grant Admin Access</a></li></td>
-                                    &lt;!&ndash;<td><a style="color:#262626" th:href="@{/a/grantAdmin}">Grant Admin Access </a></td>&ndash;&gt;
-                                    <input hidden id="adminAccess" name="" type="text" th:value="${}">
-                                    <input hidden class="glyphicon glyphicon-log-out" type="submit"/>-->
+                                        <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/>
+                                            <button type="submit" class="removebutton" name="action" value="grantAction">Grant Admin Access</button></div><br>
+                                            <button type="submit" class="removebutton" name="action" value="revokeAction">Revoke Admin Access</button>
+                                        </td>
                                 </form>
                                 </tr>
                                 </tbody>
@@ -55,8 +55,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </header>
-    </div>
+    </section>
+        </div>
     </body>
     </html>

@@ -71,24 +71,15 @@ public class AdminController {
         model.addAttribute("eventRegistrations",eventRegistrations);
         return "registeredUsers";
     }
-    @RequestMapping("/grantAdmin")
-    public String grantAdminAccess(@RequestParam("userEmail") String email, Model model){
-        System.out.println(email);
-        userManager.grantAdminAccess(email);
-        model.addAttribute("Granted",true);
-        List<User> users;
-        users = userManager.findAll();
-        model.addAttribute("users", users);
-        return "listUsers";
-    }
-    @RequestMapping("/revokeAdmin")
-    public String revokeAdminAccess(@RequestParam("userEmail") String email, Model model){
-        System.out.println(email);
-        /*userManager.grantMemberAccess(email);*/
-        model.addAttribute("revoked",true);
-        List<User> users;
-        users = userManager.findAll();
-        model.addAttribute("users", users);
-        return "listUsers";
+    @RequestMapping("/adminAccess")
+    public String adminAccess(@RequestParam("userEmail") String email,@RequestParam("action") String action, Model model){
+        if (action.equals("revokeAction")) {
+            userManager.revokeAdminAccess(email);
+            model.addAttribute("revoked",true);}
+        if (action.equals("grantAction")){
+            userManager.grantAdminAccess(email);
+            model.addAttribute("Granted",true);
+        }
+        return "redirect:/a/listUsers";
     }
 }

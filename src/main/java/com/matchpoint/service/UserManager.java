@@ -16,5 +16,6 @@ public interface UserManager {
     public String updatePassword(String email,String password);
     /*public String grantMemberAccess(String email);*/
     public String grantAdminAccess(String email);
+    public String revokeAdminAccess(String email);
     public UserQuery save(UserQuery userQuery);
 }

@@ -60,14 +60,24 @@ public class UserManagerImpl implements UserManager {
         //INSERT INTO `matchpoint`.`user_role` (`users_id`, `roles_id`) VALUES ('8', '1');
         User user=userRepository.findByEmail(email);
         Role role=roleRepository.findByName("admin");
-        Set<Role> roles =new HashSet<Role>();
+        Set<Role> roles =user.getRoles();
         roles.add(role);
         user.setRoles(roles);
         userRepository.save(user);
         return "listUsers";
     }
 
-    /*@Override
+    @Override
+    public String revokeAdminAccess(String email) {
+        User user=userRepository.findByEmail(email);
+        Role role=roleRepository.findByName("admin");
+        Set<Role> roles =user.getRoles();
+        roles.remove(role);
+        user.setRoles(roles);
+        userRepository.save(user);
+        return "listUsers";
+    }
+/*@Override
     public String grantMemberAccess(String email) {
         //Query to grant Member access. Role id -> 2
         //INSERT INTO `matchpoint`.`user_role` (`users_id`, `roles_id`) VALUES ('8', '2');
