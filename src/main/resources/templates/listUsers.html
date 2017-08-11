@@ -41,7 +41,7 @@
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.mobile}"></td>
                                     <td th:text="${user.active?'Active':'InActive'}">
-                                    <td th:text="${user.roles}"></td>
+                                    <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
                                         <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="grantAction" >Grant Admin Access</button><br>
                                             <!--<input th:id="r" type="hidden" th:value="${user.email}" name="userEmail"/><button type="submit" class="removebutton" name="revokeAction" >Revoke Admin Access</button>--></td>
                                     <!--<td><a class="btn" style="color:#262626" href="javascript: document.adminAccessForm.submit()">Grant Admin Access</a></li></td>

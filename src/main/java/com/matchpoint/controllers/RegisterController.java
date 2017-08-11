@@ -43,7 +43,7 @@ public class RegisterController {
         Role role = new Role();
         LOGGER.info(user.toString());
         userManager.save(user);
-        userManager.grantMemberAccess(user.getEmail());
+        /*userManager.grantMemberAccess(user.getEmail());*/
         model.addAttribute("registerSuccess",true);
         return "redirect:/login";
     }

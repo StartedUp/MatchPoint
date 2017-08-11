@@ -1,3 +1,4 @@
+/*
 package com.matchpoint.model;
 
 import javax.persistence.Column;
@@ -6,14 +7,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+*/
 /**
  * Created by gokul on 19/7/17.
- */
+ *//*
+
 @Entity
 @Table(name = "user_role")
 public class UserRole {
 
     @Id
+    private int id;
     @NotNull
     @Column(name = "user_id")
     private int userId;
@@ -40,22 +44,23 @@ public class UserRole {
         return result;
     }
 
-    public int getuserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setuserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public int getRoles_id() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoles_id(int roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
 
 
 }
+*/

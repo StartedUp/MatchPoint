@@ -7,8 +7,6 @@ import com.matchpoint.service.EventManager;
 import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,13 +76,19 @@ public class AdminController {
         System.out.println(email);
         userManager.grantAdminAccess(email);
         model.addAttribute("Granted",true);
+        List<User> users;
+        users = userManager.findAll();
+        model.addAttribute("users", users);
         return "listUsers";
     }
     @RequestMapping("/revokeAdmin")
     public String revokeAdminAccess(@RequestParam("userEmail") String email, Model model){
         System.out.println(email);
-        userManager.grantMemberAccess(email);
+        /*userManager.grantMemberAccess(email);*/
         model.addAttribute("revoked",true);
+        List<User> users;
+        users = userManager.findAll();
+        model.addAttribute("users", users);
         return "listUsers";
     }
 }
