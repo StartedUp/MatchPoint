@@ -2,9 +2,11 @@ package com.matchpoint.controllers;
 
 import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
+import com.matchpoint.model.Role;
 import com.matchpoint.model.User;
 import com.matchpoint.service.EventManager;
 import com.matchpoint.service.EventRegistrationManager;
+import com.matchpoint.service.RoleManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class AdminController {
     @Autowired
     private EventManager eventManager;
     @Autowired
+    private RoleManager roleManager;
+    @Autowired
     private EventRegistrationManager eventRegistrationManager;
 
     /*@PreAuthorize("hasAnyRole('admin')")*/
@@ -37,7 +41,9 @@ public class AdminController {
     public String showUsers(Model model){
         List<User> users;
         users = userManager.findAll();
+        Role role=roleManager.findByName("admin");
         model.addAttribute("users", users);
+        model.addAttribute("roleAdmin",role);
         return "listUsers";
     }
     @GetMapping("/createEvent")
@@ -71,7 +77,7 @@ public class AdminController {
         model.addAttribute("eventRegistrations",eventRegistrations);
         return "registeredUsers";
     }
-    @RequestMapping("/adminAccess")
+    @RequestMapping("/manageRoles")
     public String adminAccess(@RequestParam("userEmail") String email,@RequestParam("action") String action, Model model){
         if (action.equals("revokeAction")) {
             userManager.revokeAdminAccess(email);

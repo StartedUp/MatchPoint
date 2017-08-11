@@ -36,7 +36,7 @@
                                 </thead>
                                 <tbody>
                                 <tr style="color: #122b40" th:each="user,stat : ${users}">
-                                    <form name="adminAccessForm" th:action="@{/a/adminAccess}" method="post" th:hidden="true">
+                                    <form name="adminAccessForm" th:action="@{/a/manageRoles}" method="post">
                                         <td th:text="${stat.count}">1</td>
                                     <td th:text="${user.firstName}"></td>
                                     <td th:text="${user.lastName}"></td>
@@ -45,8 +45,13 @@
                                     <td th:text="${user.active?'Active':'InActive'}">
                                     <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
                                         <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/>
-                                            <button type="submit" class="removebutton" name="action" value="grantAction">Grant Admin Access</button></div><br>
-                                            <button type="submit" class="removebutton" name="action" value="revokeAction">Revoke Admin Access</button>
+                                            <button type="submit" class="removebutton" name="action"
+                                                    th:value="${user.roles.contains(roleAdmin)
+                                                    ?'revokeAction':'grantAction'}"
+                                                    th:text="${user.roles.contains(roleAdmin)
+                                                    ?'Revoke Admin Access':'Grant Admin Access'}">
+                                                Grant Admin Access
+                                            </button>
                                         </td>
                                 </form>
                                 </tr>
