@@ -73,8 +73,10 @@ public class AdminController {
     @GetMapping("/eventRegistrationList/{eventId}")
     public String showRegisteredUsersList(Model model, @PathVariable("eventId") Integer eventId){
         List<EventRegistration> eventRegistrations;
+        Event event=eventManager.findById(eventId);
         eventRegistrations=eventRegistrationManager.findByEvent_id(eventId);
         model.addAttribute("eventRegistrations",eventRegistrations);
+        model.addAttribute("event", event);
         return "registeredUsers";
     }
     @RequestMapping("/manageRoles")
