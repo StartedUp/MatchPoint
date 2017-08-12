@@ -53,44 +53,18 @@ public class UserManagerImpl implements UserManager {
            return "exceptionError";
        }
     }
-
     @Override
-    public String grantAdminAccess(String email) {
-        //Query to grant Admin access. Role id -> 1
-        //INSERT INTO `matchpoint`.`user_role` (`users_id`, `roles_id`) VALUES ('8', '1');
+    public void manageAdminAccess(String email, String action) {
         User user=userRepository.findByEmail(email);
         Role role=roleRepository.findByName("admin");
         Set<Role> roles =user.getRoles();
-        roles.add(role);
+        if (action.equals("grantAction"))
+            roles.add(role);
+        if (action.equals("revokeAction"))
+            roles.remove(role);
         user.setRoles(roles);
         userRepository.save(user);
-        return "listUsers";
     }
-
-    @Override
-    public String revokeAdminAccess(String email) {
-        User user=userRepository.findByEmail(email);
-        Role role=roleRepository.findByName("admin");
-        Set<Role> roles =user.getRoles();
-        roles.remove(role);
-        user.setRoles(roles);
-        userRepository.save(user);
-        return "listUsers";
-    }
-/*@Override
-    public String grantMemberAccess(String email) {
-        //Query to grant Member access. Role id -> 2
-        //INSERT INTO `matchpoint`.`user_role` (`users_id`, `roles_id`) VALUES ('8', '2');
-        UserRole user_role=new UserRole();
-        User user=userRepository.findByEmail(email);
-        System.out.println(user.toString());
-        user_role.setUserId(user.getId());
-        user_role.setRoleId(2);
-        user_roleRepository.save(user_role);
-        System.out.println("In JPA REPOSITORY"+user.toString());
-        return "listUsers";
-    }*/
-
     @Override
     public UserQuery save(UserQuery userQuery) {
         return userQueryRepository.save(userQuery);

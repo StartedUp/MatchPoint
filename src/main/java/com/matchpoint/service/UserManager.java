@@ -14,8 +14,6 @@ public interface UserManager {
     public User save(User user);
     public List<User> findAll();
     public String updatePassword(String email,String password);
-    /*public String grantMemberAccess(String email);*/
-    public String grantAdminAccess(String email);
-    public String revokeAdminAccess(String email);
     public UserQuery save(UserQuery userQuery);
+    public void manageAdminAccess(String email,String action);
 }

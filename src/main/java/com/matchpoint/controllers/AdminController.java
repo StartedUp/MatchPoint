@@ -81,13 +81,8 @@ public class AdminController {
     }
     @RequestMapping("/manageRoles")
     public String adminAccess(@RequestParam("userEmail") String email,@RequestParam("action") String action, Model model){
-        if (action.equals("revokeAction")) {
-            userManager.revokeAdminAccess(email);
-            model.addAttribute("revoked",true);}
-        if (action.equals("grantAction")){
-            userManager.grantAdminAccess(email);
-            model.addAttribute("Granted",true);
-        }
-        return "redirect:/a/listUsers";
+            userManager.manageAdminAccess(email, action);
+           /* model.addAttribute("RolesModified",action+" Done");*/
+            return "redirect:/a/listUsers";
     }
 }
