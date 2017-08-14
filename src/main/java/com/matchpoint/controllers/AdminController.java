@@ -13,7 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -86,6 +93,31 @@ public class AdminController {
             return "redirect:/a/listUsers";
     }
     @RequestMapping("/uploadAlbum")
-    public String showUploadAlbumpage(){return "uploadAlbum";};
-
+    public String showUploadAlbumpage(){return "uploadAlbum";
+    }
+    @PostMapping("/uploadAlbumToGallery")
+    public String uploadAlbumToGallery(@RequestParam("albumName") String albumName,
+                                       @RequestParam("image1")MultipartFile file,
+                                       RedirectAttributes redirectAttributes)
+    {
+        String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
+        //Creating a new directory with Album Name
+        new File(LOCAL_UPLOAD_PATH + albumName).mkdir();
+        //Save the uploaded file to this folder
+          String UPLOADED_FOLDER = LOCAL_UPLOAD_PATH+albumName+"/";
+        if (file.isEmpty()){
+            redirectAttributes.
+                    addFlashAttribute("message","please upload the file and submit");
+        }
+        try {
+            byte[] bytes=file.getBytes();
+            Path path=Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path,bytes);
+            redirectAttributes.
+                    addFlashAttribute("message","You successfully uploaded " + file.getOriginalFilename() );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "redirect:/a/uploadAlbum";
+    }
 }
