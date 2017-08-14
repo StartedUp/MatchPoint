@@ -85,4 +85,7 @@ public class AdminController {
            /* model.addAttribute("RolesModified",action+" Done");*/
             return "redirect:/a/listUsers";
     }
+    @RequestMapping("/uploadAlbum")
+    public String showUploadAlbumpage(){return "uploadAlbum";};
+
 }
