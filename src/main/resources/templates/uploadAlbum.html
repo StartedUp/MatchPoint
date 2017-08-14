@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h3 style="text-align: center;color: #398439">Upload Albums to Gallery</h3><br>
+                <h2 style="text-align: center;color:lightskyblue">Upload Albums to Gallery</h2><br>
                 <form role="form" th:action="@{/a/uploadAlbumToGallery}" enctype="multipart/form-data" method="POST" >
                     <div class="row">
                         <div class="col-sm-4"></div>
@@ -27,7 +27,7 @@
                         <div class="col-sm-4" text-center>
                             <div class="attachFile">
                             <label for="fileupload"> Select an image file to upload</label>
-                            <input required name="image1" type="file" accept="image/*" class="form-control" id="imgupload1" data-error="Please fill this field">
+                            <input required name="image" type="file" accept="image/*" class="form-control" id="imgupload1" data-error="Please fill this field">
                             <br>
                         </div></div>
                         <div class="col-sm-1">
@@ -45,9 +45,11 @@
                             <div class="col-sm-4"></div>
                         </div>
                     </div>
-                </form>
+                </form><br>
                 <div th:if="${message}">
-                    <h2 th:text="${message}"/>
+                    <h2 style="text-align: center;color:#5cb85c" class="glyphicon glyphicon-ok">
+                        <span style="font-family: Consolas" th:text="${message}"></span>
+                    </h2>
                 </div>
             </div>
         </div>
@@ -56,16 +58,17 @@
 <div th:include="fragments/footer :: footer"></div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var i=2;
+        var i=1;
         $('#addNew').click(function() {
             i++;
                 jQuery('<input/>', {
                     type: 'file',
+                    name: 'image',
                     id: 'image' + i, //this will add serial number to end of ID
                     accept: 'image/*'
                 }).appendTo('.attachField');
 
-            if( i > 8)
+            if( i > 9)
             {
                 $('#addNew').hide();
             }

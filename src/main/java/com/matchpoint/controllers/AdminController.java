@@ -97,27 +97,28 @@ public class AdminController {
     }
     @PostMapping("/uploadAlbumToGallery")
     public String uploadAlbumToGallery(@RequestParam("albumName") String albumName,
-                                       @RequestParam("image1")MultipartFile file,
-                                       RedirectAttributes redirectAttributes)
+                                        @RequestParam("image")MultipartFile[] files,
+                                        RedirectAttributes redirectAttributes)
     {
         String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
         //Creating a new directory with Album Name
         new File(LOCAL_UPLOAD_PATH + albumName).mkdir();
         //Save the uploaded file to this folder
-          String UPLOADED_FOLDER = LOCAL_UPLOAD_PATH+albumName+"/";
-        if (file.isEmpty()){
+        String UPLOADED_FOLDER = LOCAL_UPLOAD_PATH+albumName+"/";
+        for (MultipartFile file:files){
+        if (files.length==0){
             redirectAttributes.
-                    addFlashAttribute("message","please upload the file and submit");
+                    addFlashAttribute("message","please upload a picture and submit");
         }
         try {
             byte[] bytes=file.getBytes();
             Path path=Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path,bytes);
-            redirectAttributes.
-                    addFlashAttribute("message","You successfully uploaded " + file.getOriginalFilename() );
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }}
+        redirectAttributes.
+                addFlashAttribute("message","   You have successfully uploaded "+files.length+" files");
         return "redirect:/a/uploadAlbum";
     }
 }
