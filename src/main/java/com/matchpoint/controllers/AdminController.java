@@ -9,6 +9,8 @@ import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.RoleManager;
 import com.matchpoint.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,11 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.nio.file.Files.readAllBytes;
 
 /**
  * Created by gokul on 10/7/17.
@@ -29,6 +36,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/a")
 public class AdminController {
+
+    private String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
     @Autowired
     private UserManager userManager;
     @Autowired
@@ -37,6 +46,8 @@ public class AdminController {
     private RoleManager roleManager;
     @Autowired
     private EventRegistrationManager eventRegistrationManager;
+    @Autowired
+    private ResourcePatternResolver resourcePatternResolver;
 
     /*@PreAuthorize("hasAnyRole('admin')")*/
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -57,11 +68,10 @@ public class AdminController {
     public String createEvent(){
         return "createEvent";
     }
+
     @RequestMapping(value = "/registerEvent", method = RequestMethod.POST)
     public String register(@ModelAttribute("event")Event event, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
-            System.out.println(event.toString());
-            System.out.println(bindingResult);
             return "createEvent";
         }
         eventManager.save(event);
@@ -87,7 +97,9 @@ public class AdminController {
         return "registeredUsers";
     }
     @RequestMapping("/manageRoles")
-    public String adminAccess(@RequestParam("userEmail") String email,@RequestParam("action") String action, Model model){
+    public String adminAccess(@RequestParam("userEmail") String email,
+                              @RequestParam("action") String action,
+                              Model model){
             userManager.manageAdminAccess(email, action);
            /* model.addAttribute("RolesModified",action+" Done");*/
             return "redirect:/a/listUsers";
@@ -100,7 +112,6 @@ public class AdminController {
                                         @RequestParam("image")MultipartFile[] files,
                                         RedirectAttributes redirectAttributes)
     {
-        String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
         //Creating a new directory with Album Name
         new File(LOCAL_UPLOAD_PATH + albumName).mkdir();
         //Save the uploaded file to this folder
@@ -120,5 +131,36 @@ public class AdminController {
         redirectAttributes.
                 addFlashAttribute("message","   You have successfully uploaded "+files.length+" files");
         return "redirect:/a/uploadAlbum";
+    }
+    @RequestMapping("/photoGallery")
+    public String showphotoGalleryHome(Model model){
+        try {
+            File file = new File(LOCAL_UPLOAD_PATH);
+            String[] names = file.list();
+            List albumNames =new ArrayList();
+            for(String name : names) {
+                if (new File(LOCAL_UPLOAD_PATH+ name).isDirectory())
+                    albumNames.add(name);
+              }
+            model.addAttribute("albumNames",albumNames);
+            } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "photoGalleryHome";
+    }
+    @RequestMapping("/showAlbum/{albumName}")
+    public String showAlbum(Model model, @PathVariable("albumName") String albumName){
+        String[] imageFiles=null;
+        try {
+            File file = new File(LOCAL_UPLOAD_PATH + albumName+"/");
+             imageFiles = file.list();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("path","/img/gallery/");
+        model.addAttribute("heading",albumName);
+        model.addAttribute("albumName",albumName);
+        model.addAttribute("imageFiles",imageFiles);
+        return "photoGallery";
     }
 }

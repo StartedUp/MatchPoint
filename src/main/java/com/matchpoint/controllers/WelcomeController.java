@@ -12,8 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,11 +25,11 @@ import java.util.List;
  */
 @Controller
 public class WelcomeController {
+    private String LOCAL_AwardsAlbum_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserManager userManager;
-
     @Autowired
    private EventManager eventManager;
     @GetMapping("/events")
@@ -56,4 +59,25 @@ public class WelcomeController {
         model.addAttribute("QueryUpdateSuccess",true);
         return "redirect:/";
     }
+    @RequestMapping("/showAwardsAlbum")
+    public String showAlbum(Model model){
+        String[] imageFileNames=null;
+        List<String> imageFiles=new ArrayList<String>();
+        try {
+            File file = new File(LOCAL_AwardsAlbum_PATH);
+            imageFileNames = file.list();
+            for (String fileName:imageFileNames) {
+                if(fileName.contains(".j") || fileName.contains(".p"))
+                    imageFiles.add(fileName);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("path","/img/gallery/");
+        model.addAttribute("heading","Awards and Achievments");
+        model.addAttribute("albumName","");
+        model.addAttribute("imageFiles",imageFiles);
+        return "photoGallery";
+    }
+
 }

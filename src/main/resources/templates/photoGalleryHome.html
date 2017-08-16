@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/header :: head"></head>
+
+<body id="page-top" class="index">
+<!-- Navigation -->
+<div th:include="fragments/header :: header"></div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3 style="text-align: center;color: #398439">Photo Gallery</h3><br>
+            </div>
+        </div>
+        <div th:if="${message}">
+            <h2 style="text-align: center;color:#5cb85c" class="glyphicon glyphicon-ok">
+               <a th:href="/a/showAlbum/"></a> <span style="font-family: Consolas" th:text="${message}"></span>
+            </h2>
+        </div>
+        <span th:each="albumName,stat : ${albumNames}">
+           <a th:href="@{'/a/showAlbum/'+${albumName}}" ><p th:text="${albumName}"> </p></a>
+            </span>
+    </div>
+</section>
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>
