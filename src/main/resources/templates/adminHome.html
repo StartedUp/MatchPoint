@@ -2,6 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head th:include="fragments/header :: head"></head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<style>
+    img:hover {
+        background-color: #4cae4c;
+    }
+</style>
 
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
@@ -18,71 +24,46 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 portfolio-item">
-                <a href="/a/listUsers" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/members.jpg}" style=max-width:50%>
+            <div class="col-sm-4">
+                <a href="/a/listUsers"  data-toggle="modal">
+                    <img th:src="@{/img/members.jpg}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="/a/createEvent" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/createEvent.jpg}" style=max-width:50%>
+            <div class="col-sm-4 ">
+                <a href="/a/createEvent"  data-toggle="modal">
+                    <img th:src="@{/img/createEvent.jpg}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="/a/uploadAlbum" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/albumupload.jpg}" style=max-width:50%>
+            <div class="col-sm-4">
+                <a href="/a/uploadAlbum"  data-toggle="modal">
+                    <img th:src="@{/img/albumupload.jpg}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="/a/listEvents" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/events.png}" style=max-width:50%>
+            <div class="col-sm-4 ">
+                <a href="/a/listEvents" data-toggle="modal">
+                    <img th:src="@{/img/events.png}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="/a/photoGallery" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/gallery-icon.png}" style=max-width:50%>
+            <div class="col-sm-4 ">
+                <a href="/a/photoGallery"  data-toggle="modal">
+                    <img th:src="@{/img/gallery-icon.png}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
-            <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                    <div class="caption">
-                        <div class="caption-content">
-                            <i class="fa fa-search-plus fa-3x"></i>
-                        </div>
-                    </div>
-                    <img th:src="@{/img/portfolio/submarine.png}" style=max-width:50%>
+            <div class="col-sm-4 ">
+                <a href="#portfolioModal6" >
+                    <img th:src="@{/img/portfolio/submarine.png}" class="resizeme" style=max-width:50%>
                 </a>
             </div>
         </div>
     </div>
 </section>
-
 <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
+<script src="js/jquery.ae.image.resize.js" th:src="@{/js/jquery.ae.image.resize.js}"></script>
+<script type="text/javascript">
+    $(function() {
+        $( ".resizeme" ).aeImageResize({ height: 150, width: 150 });
+    });
+</script>
 </body>
 </html>

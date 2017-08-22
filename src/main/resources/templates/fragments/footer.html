@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<body id="page-top" class="index">
+<head th:include="fragments/header :: head" xmlns:th="http://www.w3.org/1999/xhtml"></head>
+<body>
+<div id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 <!-- Footer -->
 <div th:fragment="footer">
@@ -66,7 +68,46 @@
         <i class="fa fa-chevron-up"></i>
     </a>
 </div>
+    <!-- FeedBack -->
+    <div th:fragment="feedback">
+        <section id="feedback">
+        <h2 style="text-align: center;color: #4cae4c">What our Players say</h2>
+        <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h4>"The game and the group of friends gives me the sanctity needed to relax from the daily routine. Would
+                    like to invite all Table Tennis crazy community come and play here!!!"<br>
+                    <span style="font-style:normal;">-Kiran HN</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Beautiful place with very good tables, superb lighting and flooring. Would recommend this place to every serious TT enthusiast.
+                    "<br><span style="font-style:normal;">-Raghavendra Pai</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Great Atmosphere to learn, professional team! Lovely.
+                    "<br><span style="font-style:normal;">-Nayan Karnavat</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Super facility. Outstanding people. Keeps me challenged."<br>
+                    <span style="font-style:normal;">-Rajesh Puvvada</span></h4>
+            </div>
+            <div class="item">
+                <h4>" Been in this club for past three years.Had an amazing time on and off the Table :)"<br>
+                    <span style="font-style:normal;"> -Vikas Sangam</span></h4>
+            </div>
+        </div>
 
-</body>
-
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+       </div> </section>
+    </div>
+</div></div></body>
 </html>

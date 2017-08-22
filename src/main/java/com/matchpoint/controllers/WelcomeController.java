@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Controller
 public class WelcomeController {
-    private String LOCAL_AwardsAlbum_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
+    private String LOCAL_AwardsAlbum_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/awards/";
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -73,11 +73,11 @@ public class WelcomeController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("path","/img/gallery/");
+        model.addAttribute("path","/img/awards/");
         model.addAttribute("heading","Awards and Achievments");
         model.addAttribute("albumName","");
         model.addAttribute("imageFiles",imageFiles);
-        return "photoGallery";
+        return "awardsGallery";
     }
 
 }

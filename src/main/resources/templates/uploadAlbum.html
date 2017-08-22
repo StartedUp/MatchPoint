@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:include="fragments/header :: head"></head>
+<head th:include="fragments/header :: head">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+</head>
 
 <body id="page-top" class="index">
 <!-- Navigation -->
@@ -20,28 +22,28 @@
                             <input required name="albumName" type="text" class="form-control" id="albumName" data-error="Please fill this field" placeholder=" Album Name ">
                             <br>
                         </div>
-                        <div class="col-sm-4"></div></div>
-
-                    <div class="row">
                         <div class="col-sm-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
                         <div class="col-sm-4" text-center>
                             <div class="attachFile">
                             <label for="fileupload"> Select an image file to upload</label>
                             <input required name="image" type="file" accept="image/*" class="form-control" id="imgupload1" data-error="Please fill this field">
-                            <br>
-                        </div></div>
+                            <br></div>
+                        </div>
                         <div class="col-sm-1">
                             <label>*</label><br>
                             <button type="button" id="addNew" class="btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                             </button>
-                        </div>
-                    </div>
+                        </div></div>
                     <div class="row" text-center>
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4"><br>
                             <div class="attachField"><br></div>
-                            <button type="submit" class="btn btn-default">UPLOAD</button>
+                            <button type="submit" class="btn btn-default text-center">UPLOAD</button>
                             <div class="col-sm-4"></div>
                         </div>
                     </div>
@@ -76,20 +78,19 @@
     });
 
 </script>
-<<!--script type="text/javascript">
-    $(document).ready(function () {
-                var i=0;
-                $('#addNew').click(function() {
-                            i++;
-                            $('.attachField').append( '<div class="attachFile">' +
-                                    '<input type="file" name="image"+i+ type="file" accept="image/*" id="imgupload"/><br></div>' );
+<script src="js/jquery.uploadPreview.min.js" th:src="@{/js/jquery.uploadPreview.min.js}"></script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $.uploadPreview({
+                    input_field: "#image-upload",   // Default: .image-upload
+                    preview_box: "#image-preview",  // Default: .image-preview
+                    label_field: "#image-label",    // Default: .image-label
+                    label_default: "Choose File",   // Default: Choose File
+                    label_selected: "Change File",  // Default: Change File
+                    no_label: false                 // Default: false
+                });
+            });
+</script>
 
-
-                        }); //end click
-
-                }
-    ); //end read
-</script>-->
 </body>
-
 </html>

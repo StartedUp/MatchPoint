@@ -15,7 +15,6 @@
 </style>
 
 <body id="page-top" class="index">
-<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
     <!-- Navigation -->
   <div th:include="fragments/header :: header"></div>
 <h3 th:if="${registerSuccess}" class="error">Registered Successfully</h3>
@@ -190,6 +189,7 @@
             </div>
         </div>
     </section>
+<div th:include="fragments/footer :: feedback"></div>
     <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
 </body>
