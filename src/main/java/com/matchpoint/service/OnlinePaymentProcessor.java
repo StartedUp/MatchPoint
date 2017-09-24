@@ -42,7 +42,7 @@ public class OnlinePaymentProcessor {
         order.setDescription(product.getProductName());
         order.setRedirectUrl(domainName+"/u/user/payment/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
-        order.setTransactionId(payment.getId()+"");
+        order.setTransactionId(payment.getTransactionId());
 
         Instamojo api = null;
         String longUrl = null;

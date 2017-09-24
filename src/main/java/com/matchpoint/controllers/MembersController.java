@@ -176,7 +176,7 @@ public class MembersController {
             else
                 return "exceptionError";
         }catch (Exception e){
-            LOGGER.info("Exception getting payment status");
+            LOGGER.info("Exception getting payment status", e);
             return "exceptionError";
         }
     }
