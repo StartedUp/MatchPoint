@@ -8,8 +8,9 @@ import com.matchpoint.service.EventManager;
 import com.matchpoint.service.EventRegistrationManager;
 import com.matchpoint.service.RoleManager;
 import com.matchpoint.service.UserManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static java.nio.file.Files.readAllBytes;
 
 /**
  * Created by gokul on 10/7/17.
@@ -37,6 +33,7 @@ import static java.nio.file.Files.readAllBytes;
 @RequestMapping(value = "/a")
 public class AdminController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class.getName());
     private String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
     @Autowired
     private UserManager userManager;
@@ -162,5 +159,13 @@ public class AdminController {
         model.addAttribute("albumName",albumName);
         model.addAttribute("imageFiles",imageFiles);
         return "photoGallery";
+    }
+    @RequestMapping("/manageUser")
+    public String manageUser(@RequestParam("block") boolean block, @RequestParam("email") String email){
+        LOGGER.info("Managing users {}",block?"blocking":"unblocking");
+        User user=userManager.findByEmail(email);
+        user.setActive(!block);
+        userManager.save(user);
+        return "redirect:/a/listUsers";
     }
 }
