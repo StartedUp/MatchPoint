@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-ssh -i "certificate/lms.pem" ubuntu@35.154.99.138
+ssh -i "certificates/matchpoint" root@159.65.155.41
