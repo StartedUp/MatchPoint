@@ -1,5 +1,7 @@
-package com.matchpoint.controllers;
+package com.matchpoint.controllers.admin;
 
+import com.matchpoint.enums.EventTypesEnum;
+import com.matchpoint.enums.PlayingCategoriesEnum;
 import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.Role;
@@ -62,7 +64,9 @@ public class AdminController {
         return "listUsers";
     }
     @GetMapping("/createEvent")
-    public String createEvent(){
+    public String createEvent(Model model){
+        model.addAttribute("playingCategories", PlayingCategoriesEnum.values())
+                .addAttribute("eventType", EventTypesEnum.values());
         return "createEvent";
     }
 

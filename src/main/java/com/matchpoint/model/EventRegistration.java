@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.ws.rs.DefaultValue;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by root on 8/7/17.
@@ -28,6 +29,7 @@ public class EventRegistration {
     @Column(name = "user_dob")
     @NotNull
     private Date userDob;
+    private List<Integer> selectedPlayingCategories;
     @Column(name = "nms")
     private boolean nms;
     @Column(name = "nmd")
@@ -199,6 +201,14 @@ public class EventRegistration {
 
     public void setYg(boolean yg) {
         this.yg = yg;
+    }
+
+    public List<Integer> getPlayingCategories() {
+        return selectedPlayingCategories;
+    }
+
+    public void setPlayingCategories(List<Integer> playingCategories) {
+        this.selectedPlayingCategories = playingCategories;
     }
 
     @Override

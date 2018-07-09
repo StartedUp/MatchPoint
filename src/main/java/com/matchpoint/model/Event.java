@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by root on 8/7/17.
@@ -23,6 +24,10 @@ public class Event {
     @Column(name = "end_date")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
+    @Column
+    private int eventType;
+    @Column
+    private List<PlayingCategory> playingCategories;
     @Column(name = "location")
     private String location;
     @Column(name = "nofication_date")
@@ -86,5 +91,21 @@ public class Event {
 
     public void setRegistrationLastDate(Date registrationLastDate) {
         this.registrationLastDate = registrationLastDate;
+    }
+
+    public int getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(int eventType) {
+        this.eventType = eventType;
+    }
+
+    public List<PlayingCategory> getPlayingCategories() {
+        return playingCategories;
+    }
+
+    public void setPlayingCategories(List<PlayingCategory> playingCategories) {
+        this.playingCategories = playingCategories;
     }
 }

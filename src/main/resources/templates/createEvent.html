@@ -58,6 +58,24 @@
                                 <input name="registrationLastDate" type="text"  class="form-control datepicker" placeholder="Registration Last Date" required/>
                             </div>
                         </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="playingCategories">Event Notification Date</label>
+                                <select id="playingCategories" multiple="multiple" name="playingCategories">
+                                    <option th:each="playingCategory : ${playingCategories}" th:text="${playingCategory.playingCategoryName}"
+                                            th:value="${playingCategory.playingCategory}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="eventType">Event Notification Date</label>
+                                <select id="eventType" multiple="multiple" name="eventType">
+                                    <option th:each="eventType : ${eventTypes}" th:text="${eventType.eventTypeName}"
+                                            th:value="${eventType.eventType}"></option>
+                                </select>
+                            </div>
+                        </div>
                         <hr>
                         <div class="row">
                             <div class="form-group col-xs-12">
