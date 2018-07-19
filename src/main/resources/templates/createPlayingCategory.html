@@ -36,6 +36,16 @@
                                        placeholder="Fee" required/>
                             </div>
                         </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-8 floating-label-form-group controls">
+                                <select class="form-control" id="genderType" name="genderType" placeholder="select gender type" required="required">
+                                    <th:block th:each="genderType, stat :${genderTypes}">
+                                        <option data-toggle="tooltip" th:value="${genderType.value}"
+                                                th:selected="${(playingCategory.genderType == 0 && stat.first) || playingCategory.genderType==genderType.value}" th:text="${genderType}">MALE</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
                         <input type="hidden" name="id" th:value="${playingCategory.id}">
                         <input name="active" type="hidden" th:value="${true}">
                         <div class="row">

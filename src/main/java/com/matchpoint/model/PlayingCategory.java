@@ -1,10 +1,11 @@
 package com.matchpoint.model;
 
+import com.matchpoint.enums.GenderTypeEnum;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.LinkedHashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by root on 6/6/18.
@@ -20,6 +21,8 @@ public class PlayingCategory {
     private BigDecimal fee;
     @Column
     private boolean active;
+    @Column
+    private int genderType; //GenderTypeEnum
     @ManyToMany(mappedBy = "playingCategories")
     private List<Event> events;
     @ManyToMany(mappedBy = "playingCategories")
@@ -71,5 +74,23 @@ public class PlayingCategory {
 
     public void setEventRegistrations(List<EventRegistration> eventRegistrations) {
         this.eventRegistrations = eventRegistrations;
+    }
+
+    public int getGenderType() {
+        return genderType;
+    }
+
+    public void setGenderType(int genderType) {
+        this.genderType = genderType;
+    }
+
+    public GenderTypeEnum getGenderType(int value){
+        List<GenderTypeEnum> genderTypes = Arrays.asList(GenderTypeEnum.values());
+        for(GenderTypeEnum genderType:genderTypes){
+            if(value==genderType.getValue()){
+                return genderType;
+            }
+        }
+        return null;
     }
 }

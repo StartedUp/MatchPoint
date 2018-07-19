@@ -1,5 +1,6 @@
 package com.matchpoint.controllers.admin;
 
+import com.matchpoint.enums.GenderTypeEnum;
 import com.matchpoint.model.PlayingCategory;
 import com.matchpoint.service.PlayingCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Arrays;
 
 /**
  * Created by root on 30/6/18.
@@ -28,6 +31,7 @@ public class PlayingCategoryController extends AdminRootController{
     @RequestMapping("/playingCategory/showCreatePage")
     public  String showCreatePage(Model model) {
         model.addAttribute("playingCategory", new PlayingCategory());
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
         return "createPlayingCategory";
     }
 
@@ -59,6 +63,7 @@ public class PlayingCategoryController extends AdminRootController{
     public String editPlayingCategory(@PathVariable("id") int id, Model model){
         model.addAttribute("playingCategory", this.playingCategoryService.getPlayingCategoryById(id));
         model.addAttribute("playingCategories", this.playingCategoryService.listPlayingCategory());
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
         return "createPlayingCategory";
     }
 }
