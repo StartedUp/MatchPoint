@@ -6,10 +6,7 @@ import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.Role;
 import com.matchpoint.model.User;
-import com.matchpoint.service.EventManager;
-import com.matchpoint.service.EventRegistrationManager;
-import com.matchpoint.service.RoleManager;
-import com.matchpoint.service.UserManager;
+import com.matchpoint.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +29,7 @@ import java.util.List;
  * Created by gokul on 10/7/17.
  */
 @Controller
-@RequestMapping(value = "/a")
-public class AdminController {
+public class AdminController extends AdminRootController{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class.getName());
     private String LOCAL_UPLOAD_PATH="/home/gokul/Git_projects/MatchPoint/src/main/resources/static/img/gallery/";
@@ -47,6 +43,8 @@ public class AdminController {
     private EventRegistrationManager eventRegistrationManager;
     @Autowired
     private ResourcePatternResolver resourcePatternResolver;
+    @Autowired
+    private PlayingCategoryService playingCategoryService;
 
     /*@PreAuthorize("hasAnyRole('admin')")*/
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -65,8 +63,8 @@ public class AdminController {
     }
     @GetMapping("/createEvent")
     public String createEvent(Model model){
-        model.addAttribute("playingCategories", PlayingCategoriesEnum.values())
-                .addAttribute("eventType", EventTypesEnum.values());
+        model.addAttribute("playingCategories", playingCategoryService.listPlayingCategory())
+                .addAttribute("eventTypes", EventTypesEnum.values());
         return "createEvent";
     }
 

@@ -89,42 +89,6 @@ public class MembersController {
         e.printStackTrace();
         return "exceptionError";}
     }
-    @GetMapping("/eventRegistration/{eventId}")
-    public String showRegisterEventPage(Model model, @PathVariable("eventId") Integer eventId){
-        EventRegistration eventRegistration=null;
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userManager.findByEmail(user.getEmail());
-        Event event=eventManager.findById(eventId);
-        eventRegistration=eventRegistrationManager.findByEventAndUser(event,user);
-        model.addAttribute("eventRegistration", eventRegistration!=null?eventRegistration:new EventRegistration());
-        model.addAttribute("event",event);
-        model.addAttribute("currentUser", currentUser);
-        return "registerEvent";
-    }
-    @RequestMapping(value = "/registerEvent",method = RequestMethod.POST)
-    public String registerEvent(@ModelAttribute("eventRegistration") EventRegistration eventRegistration, BindingResult
-                                bindingResult, Model model) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userManager.findByEmail(user.getEmail());
-        eventRegistration.setUser(currentUser);
-        eventRegistration.setUserDob(currentUser.getDob());
-        if (bindingResult.hasErrors()){
-            return "registerEvent";
-        }
-        eventRegistrationManager.save(eventRegistration);
-        return "redirect:/u/myRegisteredEvents";
-    }
-    @GetMapping("/myRegisteredEvents")
-    public String showMyEvents(Model model) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<EventRegistration> eventRegistrations = eventRegistrationManager.findByUser(user);
-        List<Event> events=new ArrayList<Event>();
-        for (EventRegistration eventRegistration: eventRegistrations) {
-            events.add(eventRegistration.getEvent());
-        }
-        model.addAttribute("registeredEvents",events);
-        return "myEvents";
-    }
     @GetMapping("/payment")
     public String showPaymentPage(Model model) {
         Payment payment=new Payment();

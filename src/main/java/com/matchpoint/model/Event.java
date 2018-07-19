@@ -4,7 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by root on 8/7/17.
@@ -26,7 +28,9 @@ public class Event {
     private Date endDate;
     @Column
     private int eventType;
-    @Column
+    @ManyToMany
+    @JoinTable(name = "event_playing_cat", joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "playing_category_id", referencedColumnName = "id"))
     private List<PlayingCategory> playingCategories;
     @Column(name = "location")
     private String location;

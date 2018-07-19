@@ -1,6 +1,7 @@
 package com.matchpoint.service;
 
 import com.matchpoint.model.PlayingCategory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

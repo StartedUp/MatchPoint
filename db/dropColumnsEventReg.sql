@@ -1,0 +1,15 @@
+ALTER TABLE `matchpoint`.`event_registration`
+DROP COLUMN `yg`,
+DROP COLUMN `yb`,
+DROP COLUMN `ws`,
+DROP COLUMN `sjg`,
+DROP COLUMN `sjb`,
+DROP COLUMN `nms`,
+DROP COLUMN `nmd`,
+DROP COLUMN `ms`,
+DROP COLUMN `mcg`,
+DROP COLUMN `mcb`,
+DROP COLUMN `jg`,
+DROP COLUMN `jb`,
+DROP COLUMN `cg`,
+DROP COLUMN `cb`;

@@ -34,11 +34,9 @@ public class Payment {
     private String paymentStatus;
     @Column(name = "description")
     private String description;
-    @NotNull
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
-    @NotNull
     @OneToOne(cascade= CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;

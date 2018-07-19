@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form action="/a/registerEvent" method="post" class="register-form">
+                    <form action="/a/registerEvent" id="create-event-form" method="post" class="register-form">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="name">Event Name</label>
@@ -58,28 +58,32 @@
                                 <input name="registrationLastDate" type="text"  class="form-control datepicker" placeholder="Registration Last Date" required/>
                             </div>
                         </div>
+                        <h4 style="color: darkcyan">Please Choose the Categories</h4>
                         <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="playingCategories">Event Notification Date</label>
-                                <select id="playingCategories" multiple="multiple" name="playingCategories">
-                                    <option th:each="playingCategory : ${playingCategories}" th:text="${playingCategory.playingCategoryName}"
-                                            th:value="${playingCategory.playingCategory}"></option>
-                                </select>
+                            <div class="col-sm-4" th:each="playingCategory, stat : ${playingCategories}">
+                                <label th:text="${playingCategory.name}">Choose playing categories</label>
+                                <input type="checkbox" class="event-playing-category" th:value="${playingCategory.id}">
+                                <!--<input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].name'}"
+                                       th:value="${playingCategory.name}">
+                                <input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].fee'}"
+                                       th:value="${playingCategory.fee}">-->
                             </div>
                         </div>
+
+                        <h4 style="color: darkcyan">Please Choose the Event type</h4>
                         <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="eventType">Event Notification Date</label>
-                                <select id="eventType" multiple="multiple" name="eventType">
-                                    <option th:each="eventType : ${eventTypes}" th:text="${eventType.eventTypeName}"
-                                            th:value="${eventType.eventType}"></option>
+                            <div class="col-sm-4">
+                                <label for="eventType">Event type</label>
+                                <select id="eventType" name="eventType">
+                                    <option th:each="eventType,stat : ${eventTypes}" th:text="${eventType.eventTypeName}"
+                                            th:value="${eventType.eventType}" th:selected="${stat.first}"></option>
                                 </select>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <input value="Register this Event" type="submit" class="btn btn-success btn-lg"/>
+                                <input value="Register this Event" id="create-event-submit" type="button" class="btn btn-success btn-lg"/>
                             </div>
                         </div>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

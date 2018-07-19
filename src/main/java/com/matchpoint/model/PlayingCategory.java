@@ -2,6 +2,9 @@ package com.matchpoint.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by root on 6/6/18.
@@ -15,6 +18,12 @@ public class PlayingCategory {
     private String name;
     @Column
     private BigDecimal fee;
+    @Column
+    private boolean active;
+    @ManyToMany(mappedBy = "playingCategories")
+    private List<Event> events;
+    @ManyToMany(mappedBy = "playingCategories")
+    private List<EventRegistration> eventRegistrations;
 
     public int getId() {
         return id;
@@ -40,4 +49,27 @@ public class PlayingCategory {
         this.fee = fee;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<EventRegistration> getEventRegistrations() {
+        return eventRegistrations;
+    }
+
+    public void setEventRegistrations(List<EventRegistration> eventRegistrations) {
+        this.eventRegistrations = eventRegistrations;
+    }
 }

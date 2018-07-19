@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/header :: head">
+    <meta charset="UTF-8" />
+    <title>Matchpoint-Create Event</title>
+    <link rel="stylesheet" href="css/registerForm.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body id="page-top" class="index">
+    <div th:include="fragments/header :: header"></div>
+    <section id="registration" th:name="register">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Create Playing Category</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <form action="/a/playingCategory/add" method="post" class="register-form">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="name">Playing Category Name</label>
+                                <input name="name" class="form-control" type="text" th:value="${playingCategory.name}"
+                                       placeholder="Playing Category Name" required/>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="fee">Fee</label>
+                                <input name="fee" class="form-control" type="text" th:value="${playingCategory.fee}"
+                                       placeholder="Fee" required/>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" th:value="${playingCategory.id}">
+                        <input name="active" type="hidden" th:value="${true}">
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <input value="Create/Update playing category" type="submit" class="btn btn-success btn-lg"/>
+                            </div>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
