@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +96,8 @@ public class EventRegistrationController {
     public String paymentSuccessRedirect(
             @RequestParam("id") String paymentRequestId,
             @RequestParam("transaction_id") String transactionId,
-            @RequestParam("payment_id") String paymentId
+            @RequestParam("payment_id") String paymentId,
+            HttpSession session
     ) {
         try {
             Payment payment=paymentManager.findByTransactionId(transactionId);
@@ -109,7 +111,8 @@ public class EventRegistrationController {
                 payment.setPaymentStatus(PaymentStatusEnum.SUCCESS.getStatus());
                 payment.setOrderId(paymentOrderDetailsResponse.getId());
                 paymentManager.saveOrUpdate(payment);
-                return "redirect:/?paymentSuccess";
+                session.setAttribute("payment", payment);
+                return "redirect:/eventRegistration/success";
             }
             else
                 return "exceptionError";
@@ -117,6 +120,18 @@ public class EventRegistrationController {
             LOGGER.info("Exception getting payment status", e);
             return "exceptionError";
         }
+    }
+
+    @RequestMapping("/eventRegistration/success")
+    public String eventRegistrationSuccess(Model model, HttpSession session) {
+        Payment payment = (Payment) session.getAttribute("payment");
+        if(payment!=null){
+            EventRegistration eventRegistration = eventRegistrationManager.findByPayment(payment);
+            model.addAttribute("eventRegistration", eventRegistration);
+            session.removeAttribute("payment");
+            return "eventRegistration-success";
+        }
+        return "redirect:/";
     }
 
 }

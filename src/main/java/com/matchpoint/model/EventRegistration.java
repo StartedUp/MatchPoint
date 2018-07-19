@@ -15,7 +15,7 @@ import java.util.Set;
  * Created by root on 8/7/17.
  */
 @Entity
-@Table(name = "event_registration",uniqueConstraints={@UniqueConstraint(columnNames={"user_id", "event_id"})})
+@Table(name = "event_registration",uniqueConstraints={@UniqueConstraint(columnNames={"playerEmail", "event_id"})})
 public class EventRegistration {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

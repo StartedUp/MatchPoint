@@ -112,10 +112,15 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
                     .setTransactionId(eventRegistration.getId()+""+eventRegistration.getEvent().getId()+eventRegistration.getPlayerEmail().hashCode());
             payment=paymentManager.saveOrUpdate(payment);
             paymentUrl = onlinePaymentProcessor.payForEventRegistration(eventRegistration);
-            return paymentUrl != null ? "redirect:" + paymentUrl : "exceptionError";
+            return paymentUrl != null ? paymentUrl : "exceptionError";
         } catch (Exception e) {
             e.printStackTrace();
             return "exceptionError";
         }
+    }
+
+    @Override
+    public EventRegistration findByPayment(Payment payment) {
+        return eventRegistrationRepository.findByPayment(payment);
     }
 }
