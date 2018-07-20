@@ -1,5 +1,6 @@
 package com.matchpoint.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,6 +30,8 @@ public class EventRegistration {
     private String playerEmail;
     @Column
     private String playerMobile;
+    @Column(columnDefinition="int default 0")
+    private int gender;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "payment_id")
     private Payment payment;
@@ -36,7 +39,7 @@ public class EventRegistration {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
     @Column(name = "user_dob")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date userDob;
     @ManyToMany
     @JoinTable(name = "event_reg_playing_cat", joinColumns = @JoinColumn(name = "event_registration_id", referencedColumnName = "id"),
@@ -113,6 +116,14 @@ public class EventRegistration {
 
     public void setPlayerMobile(String playerMobile) {
         this.playerMobile = playerMobile;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     @Override

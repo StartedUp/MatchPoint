@@ -29,30 +29,43 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerName">Player Name
-                                        <input name="playerName" th:readonly="${#strings.isEmpty(currentUser.firstName)}" th:value="${currentUser.firstName}" class="form-control" type="text"/>
+                                        <input name="playerName" th:readonly="${!#strings.isEmpty(currentUser.firstName)}" th:value="${currentUser.firstName}" class="form-control" type="text"/>
                                     </label>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerEmail">Player Email
-                                        <input name="playerEmail" th:readonly="${#strings.isEmpty(currentUser.email)}" th:value="${currentUser.email}" class="form-control" type="text"/>
+                                        <input name="playerEmail" th:readonly="${!#strings.isEmpty(currentUser.email)}" th:value="${currentUser.email}" class="form-control" type="text"/>
                                     </label>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerMobile">Player Mobile
-                                        <input name="playerMobile" th:readonly="${#strings.isEmpty(currentUser.mobile)}" required
+                                        <input name="playerMobile" th:readonly="${!#strings.isEmpty(currentUser.mobile)}" required
                                                th:value="${currentUser.mobile}" class="form-control" type="text"/>
                                     </label>
                                 </div>
                             </div>
                             <div class="row control-group">
+                                <div class="form-group col-xs-8 floating-label-form-group controls">
+                                    <h4 style="color: darkcyan">Gender</h4>
+                                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                                        <th:block th:each="genderType, stat :${genderTypes}">
+                                            <option data-toggle="tooltip" th:value="${genderType.value}" th:disabled="${currentUser.gender!=0}"
+                                                    th:selected="${(currentUser.gender == 0 && stat.first) || currentUser.gender==genderType.value}"
+                                                    th:text="${genderType}" th:if="${genderType.value != T(com.matchpoint.enums.GenderTypeEnum).ALL.getValue()}">
+                                            </option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="userDob">User Dob
-                                        <input name="userDob" th:readonly="${#strings.isEmpty(currentUser.dob)}" required
-                                               th:value="${#dates.format(currentUser.dob,'dd-MM-yyyy')}" class="form-control" type="text"/>
+                                        <input name="userDob" th:readonly="${!#strings.isEmpty(currentUser.dob)}" required
+                                               th:value="${#dates.format(currentUser.dob,'dd/MM/yyyy')}" class="form-control" type="text"/>
                                     </label>
                                 </div>
                             </div>
@@ -69,7 +82,7 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerEmail">Player Email
-                                        <input name="playerName" required class="form-control" type="text"/>
+                                        <input name="playerEmail" required class="form-control" type="text"/>
                                     </label>
                                 </div>
                             </div>
@@ -78,6 +91,19 @@
                                     <label for="playerMobile">Player Mobile
                                         <input name="playerMobile" required class="form-control" type="text"/>
                                     </label>
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-8 floating-label-form-group controls">
+                                    <h4 style="color: darkcyan">Gender</h4>
+                                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                                        <th:block th:each="genderType, stat :${genderTypes}"
+                                                  th:if="${genderType.value != T(com.matchpoint.enums.GenderTypeEnum).ALL.getValue()}">
+                                            <option data-toggle="tooltip" th:value="${genderType.value}"
+                                                    th:selected="${stat.first}" th:text="${genderType}">MALE</option>
+                                        </th:block>
+                                    </select>
+
                                 </div>
                             </div>
                             <div class="row control-group">

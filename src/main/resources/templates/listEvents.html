@@ -32,18 +32,26 @@
                                     <th>Location</th>
                                     <th>Notification Date</th>
                                     <th>Registration LastDate</th>
-                                    <th sec:authorize="isAuthenticated()">Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr style="color: #122b40" th:each="event,stat : ${events}">
+                                <tr style="color: #122b40" th:each="event,stat : ${events}" >
                                     <td th:text="${event.name}"></td>
                                     <td th:text="${#dates.format(event.startDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.endDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${event.location}"></td>
                                     <td th:text="${#dates.format(event.notificationDate,'dd-MMM-yyyy')}"></td>
                                     <td th:text="${#dates.format(event.registrationLastDate,'dd-MMM-yyyy')}"></td>
-                                    <td><a th:href="@{'/eventRegistration/'+${event.id}}" >Click to register/ Update</a></td>
+                                    <td th:if="${event.eventType==T(com.matchpoint.enums.EventTypesEnum).OPEN.getEventType()}"><a th:href="@{'/eventRegistration/'+${event.id}}" >Click to register</a></td>
+                                    <th:block sec:authorize="authenticated">
+                                         <td th:if="${event.eventType==T(com.matchpoint.enums.EventTypesEnum).INTERNAL.getEventType()}"><a th:href="@{'/eventRegistration/'+${event.id}}" >Click to register</a></td>
+                                    </th:block>
+                                    <th:block sec:authorize="anonymous">
+                                        <td th:if="${event.eventType==T(com.matchpoint.enums.EventTypesEnum).INTERNAL.getEventType()}">
+                                            <a th:href="@{'/login/'}" >Signin to register</a>
+                                        </td>
+                                    </th:block>
                                     </tr>
                                 </tbody>
                             </table>

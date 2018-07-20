@@ -5,6 +5,7 @@ import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import com.matchpoint.Util.SessionUtil;
 import com.matchpoint.controllers.admin.AdminRootController;
+import com.matchpoint.enums.GenderTypeEnum;
 import com.matchpoint.enums.PaymentStatusEnum;
 import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -67,6 +69,7 @@ public class EventRegistrationController {
         //eventRegistration=eventRegistrationManager.findByEventAndUser(event,user);
         model.addAttribute("eventRegistration", eventRegistration!=null?eventRegistration:new EventRegistration());
         model.addAttribute("event",event).addAttribute("playingCategories", event.getPlayingCategories());
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
         return "registerEvent";
     }
     @RequestMapping(value = "/registerEvent",method = RequestMethod.POST)
@@ -74,7 +77,8 @@ public class EventRegistrationController {
             bindingResult, Model model) {
         if (bindingResult.hasErrors()){
             model.addAttribute(eventRegistration.getEvent());
-
+            model.addAttribute("playingCategories", eventRegistration.getEvent().getPlayingCategories());
+            model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
             return "registerEvent";
         }
         String paymentUrl=eventRegistrationManager.processAndRegister(eventRegistration);

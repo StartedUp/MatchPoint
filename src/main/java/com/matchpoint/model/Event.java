@@ -1,5 +1,6 @@
 package com.matchpoint.model;
 
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -111,5 +112,9 @@ public class Event {
 
     public void setPlayingCategories(List<PlayingCategory> playingCategories) {
         this.playingCategories = playingCategories;
+    }
+
+    public boolean isEventOpen() {
+        return new Date().before(this.endDate);
     }
 }

@@ -21,7 +21,7 @@ public class PlayingCategory {
     private BigDecimal fee;
     @Column
     private boolean active;
-    @Column
+    @Column(columnDefinition="int default 0")
     private int genderType; //GenderTypeEnum
     @ManyToMany(mappedBy = "playingCategories")
     private List<Event> events;
