@@ -1,0 +1,49 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:include="fragments/header :: head"></head>
+
+    <body id="page-top" class="index">
+    <div th:include="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <style rel="stylesheet">
+            th{
+                text-align: center;
+            }
+        </style>
+
+        <section>
+            <div class="container" id="maincontent" tabindex="2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>Table tennis Player Categories<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/player-category/showCreatePage}" style="float: right" class="btn btn-info btn-lg">Create Player Category</a><br></h2>
+                                <hr class="star-primary">
+                            </div>
+                        </div>
+                        <br><div class="table-responsive">
+                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${playerCategories!=null && !playerCategories.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>Player category Title</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="color: #122b40" th:each="playerCategory,stat : ${playerCategories}">
+                                    <td th:text="${playerCategory.categoryName}"></td>
+                                    <td th:text="${playerCategory.active?'Active':'Inactive'}"></td>
+                                    <td><a th:href="@{'/a/player-category/edit/'+${playerCategory.id}}">Edit</a>/
+                                        <a th:href="@{'/a/player-category/remove/'+${playerCategory.id}}">Remove</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>
