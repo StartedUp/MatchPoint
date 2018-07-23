@@ -37,7 +37,7 @@
                                 <tr style="color: #122b40" th:each="playingCategory,stat : ${playingCategories}">
                                     <td th:text="${playingCategory.name}"></td>
                                     <td th:text="${playingCategory.fee}"></td>
-                                    <td th:text="${playingCategory.getGenderType(playingCategory.genderType).getDescription()}"></td>
+                                    <td th:text="${playingCategory.getGenderType(playingCategory.genderType)?.getDescription()}"></td>
                                     <td th:text="${playingCategory.active?'Enabled':'Disabled'}"></td>
                                     <td><a th:href="@{'/a/playingCategory/edit/'+${playingCategory.id}}">Edit</a>/
                                         <a th:href="@{'/a/playingCategory/remove/'+${playingCategory.id}}">Remove</a></td>
