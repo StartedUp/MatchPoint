@@ -36,4 +36,8 @@ public class EventManagerImpl implements EventManager {
         return eventRepository.findOne(eventId);
     }
 
+    @Override
+    public List<Event> findAllByOrderByEndDateDesc() {
+        return eventRepository.findAllByOrderByEndDateDesc();
+    }
 }

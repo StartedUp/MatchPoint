@@ -28,7 +28,10 @@
                                 <thead>
                                 <tr style="color:#c7254e">
                                     <th>S.NO</th>
-                                    <th>Member Name</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Payment Details</th>
                                     <th>DOB</th>
                                     <th>Playing Categories</th>
                                 </tr>
@@ -37,9 +40,13 @@
                                 <tr style="color: #122b40" th:each="eventReg,stat : ${eventRegistrations}">
                                     <td th:text="${stat.count}">1</td>
                                     <td th:text="${eventReg.getPlayerName()} "></td>
+                                    <td th:text="${eventReg.getPlayerEmail()} "></td>
+                                    <td th:text="${eventReg.getPlayerMobile()} "></td>
+                                    <td th:text="${'Amount : ₹ '+ eventReg.payment.amount+', Status : '+eventReg.payment.paymentStatus} "></td>
                                     <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
                                     <td>
-                                        <span tht></span>
+                                        <span th:each="playingCategory,stat : ${eventReg.playingCategories}"
+                                              th:text="${stat.first?playingCategory.name:', '+playingCategory.name}"></span>
                                     </td>
                                 </tr>
                                 </tbody>

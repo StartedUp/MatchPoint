@@ -31,6 +31,8 @@ public class  User {
     private String firstName;
     @Column(name="last_name")
     private String lastName;
+    @Column(columnDefinition="int default 0")
+    private int gender;
     @NotNull
     @Column(name="mobile")
     private String mobile;
@@ -137,6 +139,14 @@ public class  User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     @Override

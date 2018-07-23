@@ -80,7 +80,7 @@ public class AdminController extends AdminRootController{
     @RequestMapping(value = "/listEvents", method = RequestMethod.GET)
     public String showEvents(Model model){
         List<Event> events; List<EventRegistration> eventRegistrations;List<String> usersCount;
-        events = eventManager.findAll();
+        events = eventManager.findAllByOrderByEndDateDesc();
         usersCount = eventRegistrationManager.registrationCount(events);
         model.addAttribute("events", events);
         model.addAttribute("registrationCount",usersCount);

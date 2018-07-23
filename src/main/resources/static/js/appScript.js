@@ -33,11 +33,11 @@ $(document).ready(function () {
     })
 
     $('.eventRegistration-playing-category').on('change', function () {
-        var totalFee=0;
+        var totalFee=0.00;
         $('.eventRegistration-playing-category:checked').each(function (i) {
             totalFee+=Number($(this).data('fee'))
         })
-        $('#total-event-reg-fee').text('Total : ₹'+totalFee)
+        $('#total-event-reg-fee').text('Total : ₹ '+totalFee.toFixed(2))
     })
 
 
