@@ -9,13 +9,15 @@ import java.math.BigDecimal;
  * Created by Prithu on 14/9/17.
  */
 @Entity
-public class Product {
+public class Fee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotEmpty
     @Column(name="product_name", nullable=false)
     private String productName;
+    @Column
+    private PlayerCategory playerCategory;
     @NotEmpty
     @Column(name = "amount")
     private BigDecimal amount;
@@ -26,7 +28,7 @@ public class Product {
         return id;
     }
 
-    public Product setId(int id) {
+    public Fee setId(int id) {
         this.id = id;
         return this;
     }
@@ -35,7 +37,7 @@ public class Product {
         return productName;
     }
 
-    public Product setProductName(String productName) {
+    public Fee setProductName(String productName) {
         this.productName = productName;
         return this;
     }
@@ -44,7 +46,7 @@ public class Product {
         return amount;
     }
 
-    public Product setAmount(BigDecimal amount) {
+    public Fee setAmount(BigDecimal amount) {
         this.amount = amount;
         return this;
     }
@@ -53,8 +55,16 @@ public class Product {
         return description;
     }
 
-    public Product setDescription(String description) {
+    public Fee setDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    public PlayerCategory getPlayerCategory() {
+        return playerCategory;
+    }
+
+    public void setPlayerCategory(PlayerCategory playerCategory) {
+        this.playerCategory = playerCategory;
     }
 }

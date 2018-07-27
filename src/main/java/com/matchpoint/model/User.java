@@ -40,6 +40,8 @@ public class  User {
     @Column(name = "dob")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dob;
+    private Payment registrationPaymentDetails;
+    private Payment monthlyPaymentDetails;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn)

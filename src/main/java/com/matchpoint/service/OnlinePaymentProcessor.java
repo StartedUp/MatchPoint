@@ -7,8 +7,8 @@ import com.instamojo.wrapper.exception.InvalidPaymentOrderException;
 import com.instamojo.wrapper.model.PaymentOrder;
 import com.instamojo.wrapper.response.CreatePaymentOrderResponse;
 import com.matchpoint.model.EventRegistration;
+import com.matchpoint.model.Fee;
 import com.matchpoint.model.Payment;
-import com.matchpoint.model.Product;
 import com.matchpoint.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +34,13 @@ public class OnlinePaymentProcessor {
     public String placeOrder(Payment payment){
         PaymentOrder order = new PaymentOrder();
         User user = payment.getUser();
-        Product product=payment.getProduct();
+        Fee fee =payment.getFee();
         order.setName(user.getFirstName()+" "+user.getLastName());
         order.setEmail(user.getEmail());
         order.setPhone(user.getMobile());
         order.setCurrency("INR");
         order.setAmount(payment.getAmount().doubleValue());
-        order.setDescription(product.getProductName());
+        order.setDescription(fee.getProductName());
         order.setRedirectUrl(domainName+"/u/user/payment/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
         order.setTransactionId(payment.getTransactionId());

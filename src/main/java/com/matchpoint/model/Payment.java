@@ -36,7 +36,7 @@ public class Payment {
     private String description;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    private Product product;
+    private Fee fee;
     @OneToOne(cascade= CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
@@ -104,12 +104,12 @@ public class Payment {
         return this;
     }
 
-    public Product getProduct() {
-        return product;
+    public Fee getFee() {
+        return fee;
     }
 
-    public Payment setProduct(Product product) {
-        this.product = product;
+    public Payment setFee(Fee fee) {
+        this.fee = fee;
         return this;
     }
 

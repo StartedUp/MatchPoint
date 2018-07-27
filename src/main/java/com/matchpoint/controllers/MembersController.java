@@ -15,12 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by gokul on 5/7/17.
@@ -102,10 +99,10 @@ public class MembersController {
             String paymentUrl = null;
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            Product product = productManager.findById(productId);
+            Fee fee = productManager.findById(productId);
             payment.setPaymentMode("online")
-                    .setPaymentDate(new Date()).setProduct(product).setUser(user)
-                    .setDescription(product.getDescription())
+                    .setPaymentDate(new Date()).setFee(fee).setUser(user)
+                    .setDescription(fee.getDescription())
                     .setPaymentStatus("initialized");
             payment=paymentManager.saveOrUpdate(payment);
             payment.setTransactionId(environment.getProperty("payment.online.transaction.id")+payment.getId());
