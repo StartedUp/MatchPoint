@@ -1,12 +1,11 @@
 package com.matchpoint.model;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.DefaultValue;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,8 +39,8 @@ public class  User {
     @Column(name = "dob")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dob;
-    private Payment registrationPaymentDetails;
-    private Payment monthlyPaymentDetails;
+    @OneToMany(targetEntity = Payment.class,mappedBy = "user",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> payments;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn)
@@ -149,6 +148,15 @@ public class  User {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public User setPayments(List<Payment> payments) {
+        this.payments = payments;
+        return this;
     }
 
     @Override

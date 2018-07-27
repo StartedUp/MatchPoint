@@ -14,9 +14,10 @@ public class Fee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotEmpty
-    @Column(name="product_name", nullable=false)
-    private String productName;
-    @Column
+    @Column(name="fee_name", nullable=false)
+    private String feeName;
+    @OneToOne
+    @JoinColumn(name="player_category_id")
     private PlayerCategory playerCategory;
     @NotEmpty
     @Column(name = "amount")
@@ -33,12 +34,12 @@ public class Fee {
         return this;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getFeeName() {
+        return feeName;
     }
 
-    public Fee setProductName(String productName) {
-        this.productName = productName;
+    public Fee setFeeName(String feeName) {
+        this.feeName = feeName;
         return this;
     }
 

@@ -40,7 +40,7 @@ public class OnlinePaymentProcessor {
         order.setPhone(user.getMobile());
         order.setCurrency("INR");
         order.setAmount(payment.getAmount().doubleValue());
-        order.setDescription(fee.getProductName());
+        order.setDescription(fee.getFeeName());
         order.setRedirectUrl(domainName+"/u/user/payment/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
         order.setTransactionId(payment.getTransactionId());

@@ -35,7 +35,7 @@ public class Payment {
     @Column(name = "description")
     private String description;
     @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "fee_id")
     private Fee fee;
     @OneToOne(cascade= CascadeType.MERGE)
     @JoinColumn(name = "user_id")
