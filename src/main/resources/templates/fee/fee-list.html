@@ -1,0 +1,54 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:include="fragments/header :: head"></head>
+
+    <body id="page-top" class="index">
+    <div th:include="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <style rel="stylesheet">
+            th{
+                text-align: center;
+            }
+        </style>
+
+        <section>
+            <div class="container" id="maincontent" tabindex="2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>Table tennis Fees<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/fee/showCreatePage}" style="float: right" class="btn btn-info btn-lg">Create Fee</a><br></h2>
+                                <hr class="star-primary">
+                            </div>
+                        </div>
+                        <br><div class="table-responsive">
+                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${feeList!=null && !feeList.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>Fee Name</th>
+                                    <th>Fee Description</th>
+                                    <th>Amount</th>
+                                    <th>Player Category</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="color: #122b40" th:each="fee,stat : ${feeList}">
+                                    <td th:text="${fee.feeName}"></td>
+                                    <td th:text="${fee.description}"></td>
+                                    <td th:text="${fee.amount}"></td>
+                                    <td th:text="${fee.playerCategory.categoryName}"></td>
+                                    <td><a th:href="@{'/a/fee/edit/'+${fee.id}}">Edit</a>/
+                                        <a th:href="@{'/a/fee/remove/'+${fee.id}}">Remove</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>

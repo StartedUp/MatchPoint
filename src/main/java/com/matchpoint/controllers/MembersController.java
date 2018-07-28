@@ -3,7 +3,10 @@ package com.matchpoint.controllers;
 import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
-import com.matchpoint.model.*;
+import com.matchpoint.Util.SessionUtil;
+import com.matchpoint.model.Fee;
+import com.matchpoint.model.Payment;
+import com.matchpoint.model.User;
 import com.matchpoint.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gokul on 5/7/17.
@@ -44,6 +48,8 @@ public class MembersController {
     private PaymentManager paymentManager;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private SessionUtil sessionUtil;
     @Value("${payment.online.instamojo.api.endpoint}")
     private String instamojoApiEndpoint;
     @Value("${payment.online.instamojo.auth.endpoint}")
@@ -52,6 +58,8 @@ public class MembersController {
     private String instamojoClientId;
     @Value("${payment.online.instamojo.client.secret}")
     private String instamojoClientSecret;
+    @Autowired
+    private FeeService feeService;
 
     @GetMapping("/home")
     public String showMemberHome(){
@@ -88,8 +96,12 @@ public class MembersController {
     }
     @GetMapping("/payment")
     public String showPaymentPage(Model model) {
+        User user = sessionUtil.getCurrentuser();
+        List<Fee> feeList = feeService.findByPlayerCategoryId(user.getPlayerCategory().getId());
         Payment payment=new Payment();
         model.addAttribute("payment",payment);
+        model.addAttribute("feeList",feeList);
+        model.addAttribute("user",user);
         return "paymentPage";
     }
     @PostMapping("/payment/{productId}")

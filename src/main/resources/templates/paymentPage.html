@@ -12,25 +12,17 @@
 <!-- Header -->
 <header>
     <div class="container" id="maincontent" tabindex="-1">
-        <div class="row">
-            <div class="col-lg-6">
-                <form th:action="@{/u/payment/1}" th:object="${payment}" method="post">
-                    <input type="hidden" name="product" value="1">
-                    <input type="hidden" name="amount" value="750">
-                    <p>Entry Fee</p>
-                    <p>750</p>
-                    <input type="submit" value="Pay Registry Fee" class="btn btn-lg btn-outline">
-                </form>
-            </div>
-            <div class="col-lg-6">
-                <form th:action="@{/u/payment/2}" th:object="${payment}" method="post">
-                    <input type="hidden" name="product" value="2">
-                    <input type="hidden" name="amount" value="1700">
-                    <p>Mothly Fee(including ball fee)</p>
-                    <p>1500 + 200</p>
-                    <input type="submit" value="Pay Monthly Fee" class="btn btn-lg btn-outline">
-                </form>
-            </div>
+        <div>
+            <h3 th:text="${!user.adminApproved}?'Admin did not approve the user':''">Admin did not approve the user</h3>
+        </div>
+        <div class="row" th:if="${user.adminApproved}">
+            <form th:action="@{/u/payment/1}" method="post">
+                <th:block th:each="fee, stat:${feeList}">
+                    <input type="checkbox" name="feeList" th:value="${fee.id}">
+                    <label for="" th:text="${fee.feeName+' - '+fee.amount}"></label>
+                </th:block>
+                <input type="submit" value="Proceed">
+            </form>
         </div>
     </div>
 </header>

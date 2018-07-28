@@ -59,6 +59,16 @@
                             <input name="password" class="form-control" type="password" placeholder="Set Password" required data-validation-required-message="Please enter Password."/>
                         </div>
                     </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-8 floating-label-form-group controls">
+                            <select class="form-control" id="playerCategory" name="playerCategory" required="required">
+                                <th:block th:each="playerCategory, stat :${playerCategories}">
+                                    <option data-toggle="tooltip" th:value="${playerCategory.id}"
+                                             th:text="${playerCategory.categoryName}">Student</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
                     <hr>
                     <div class="row">
                         <div class="form-group col-xs-12">

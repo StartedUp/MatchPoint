@@ -32,6 +32,11 @@ public class  User {
     private String lastName;
     @Column(columnDefinition="int default 0")
     private int gender;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private PlayerCategory playerCategory;
+    @Column
+    private boolean adminApproved;
     @NotNull
     @Column(name="mobile")
     private String mobile;
@@ -73,6 +78,24 @@ public class  User {
 
     }
 
+
+    public PlayerCategory getPlayerCategory() {
+        return playerCategory;
+    }
+
+    public User setPlayerCategory(PlayerCategory playerCategory) {
+        this.playerCategory = playerCategory;
+        return this;
+    }
+
+    public boolean isAdminApproved() {
+        return adminApproved;
+    }
+
+    public User setAdminApproved(boolean adminApproved) {
+        this.adminApproved = adminApproved;
+        return this;
+    }
 
     public int getId() {
         return id;

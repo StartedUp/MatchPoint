@@ -19,7 +19,6 @@ public class Fee {
     @OneToOne
     @JoinColumn(name="player_category_id")
     private PlayerCategory playerCategory;
-    @NotEmpty
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name="description")

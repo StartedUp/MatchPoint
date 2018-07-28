@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Balaji on 24/7/18.
  */
 @Entity
-public class PlayerCategory {
+public class  PlayerCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
