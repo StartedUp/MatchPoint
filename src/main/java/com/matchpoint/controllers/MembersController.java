@@ -4,7 +4,9 @@ import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import com.matchpoint.Util.SessionUtil;
+import com.matchpoint.enums.PaymentStatusEnum;
 import com.matchpoint.model.Fee;
+import com.matchpoint.model.FeeListWrapper;
 import com.matchpoint.model.Payment;
 import com.matchpoint.model.User;
 import com.matchpoint.service.*;
@@ -20,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,6 +62,7 @@ public class MembersController {
     @Autowired
     private FeeService feeService;
 
+
     @GetMapping("/home")
     public String showMemberHome(){
         return "memberHome";
@@ -99,28 +101,30 @@ public class MembersController {
         User user = sessionUtil.getCurrentuser();
         List<Fee> feeList = feeService.findByPlayerCategoryId(user.getPlayerCategory().getId());
         Payment payment=new Payment();
+        List<Payment> payments = user.getPayments();
+        model.addAttribute("includeRegistrationFee", false);
+        if(payments==null || payments.isEmpty()){
+            model.addAttribute("includeRegistrationFee", true);
+        }
+        else {
+            boolean registration = payments.stream().anyMatch(payment1 ->
+                    payment1.getFee()!=null && payment1.getFee()
+                            .getFeeName().equals("Registration")
+                            && payment1.getPaymentStatus().equals(PaymentStatusEnum.INIT.getStatus()));
+            model.addAttribute("includeRegistrationFee", !registration);
+        }
         model.addAttribute("payment",payment);
         model.addAttribute("feeList",feeList);
         model.addAttribute("user",user);
         return "paymentPage";
     }
-    @PostMapping("/payment/{productId}")
+    @PostMapping("/payment/pay")
     public String payFee(
-            @ModelAttribute("payment")Payment payment, @PathVariable("productId")int productId) {
+            @ModelAttribute("feeList")FeeListWrapper feeListWrapper) {
         try {
-            String paymentUrl = null;
+            String paymentUrl = paymentManager.processPayment(feeListWrapper);
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            Fee fee = productManager.findById(productId);
-            payment.setPaymentMode("online")
-                    .setPaymentDate(new Date()).setFee(fee).setUser(user)
-                    .setDescription(fee.getDescription())
-                    .setPaymentStatus("initialized");
-            payment=paymentManager.saveOrUpdate(payment);
-            payment.setTransactionId(environment.getProperty("payment.online.transaction.id")+payment.getId());
-            payment=paymentManager.saveOrUpdate(payment);
-            paymentUrl = onlinePaymentProcessor.placeOrder(payment);
-            return paymentUrl != null ? "redirect:" + paymentUrl : "exceptionError";
+            return paymentUrl != null ? "redirect:/" + paymentUrl : "exceptionError";
         } catch (Exception e) {
             e.printStackTrace();
             return "exceptionError";

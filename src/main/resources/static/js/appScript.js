@@ -16,6 +16,20 @@ $(document).ready(function () {
         $('#create-event-form').submit();
     })
 
+    $('#payment-submit').on('click', function () {
+        var allowSubmit = false;
+        $('.feeCheckBox:checked').each(function (i) {
+            allowSubmit = true;
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'feeList['+i+'].id',
+                value: this.value
+            }).appendTo('#payment-form');
+        })
+        if (allowSubmit)
+            $('#payment-form').submit();
+    })
+
     $('#register-event-submit').on('click', function () {
         $('.eventRegistration-playing-category:checked').each(function (i) {
             $('<input>').attr({

@@ -7,7 +7,6 @@ import com.instamojo.wrapper.exception.InvalidPaymentOrderException;
 import com.instamojo.wrapper.model.PaymentOrder;
 import com.instamojo.wrapper.response.CreatePaymentOrderResponse;
 import com.matchpoint.model.EventRegistration;
-import com.matchpoint.model.Fee;
 import com.matchpoint.model.Payment;
 import com.matchpoint.model.User;
 import org.slf4j.Logger;
@@ -15,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,19 +33,27 @@ public class OnlinePaymentProcessor {
     private String instamojoClientSecret;
     @Value("${domain.name}")
     private String domainName;
-    public String placeOrder(Payment payment){
+    public String placeOrder(List<Payment> payments, String transactionId){
         PaymentOrder order = new PaymentOrder();
-        User user = payment.getUser();
-        Fee fee =payment.getFee();
+        User user = payments.get(0).getUser();
+        String feeName = "";
+        double amount = 0;
+        List<Payment> newPayments = payments.stream().filter(payment -> payment.getTransactionId()!=null && payment.getTransactionId().equals(transactionId)).collect(Collectors.toList());
+        amount=newPayments.stream().mapToDouble(payment -> payment.getAmount().doubleValue()).sum();
+        feeName=newPayments.stream().map(payment -> payment.getFee().getFeeName()).collect(Collectors.joining(" & "));
+        /*for(Payment payment1:payments){
+            feeName += payment1.getFee().getFeeName();
+            amount += payment1.getAmount().doubleValue();
+        }*/
         order.setName(user.getFirstName()+" "+user.getLastName());
         order.setEmail(user.getEmail());
         order.setPhone(user.getMobile());
         order.setCurrency("INR");
-        order.setAmount(payment.getAmount().doubleValue());
-        order.setDescription(fee.getFeeName());
+        order.setAmount(amount);
+        order.setDescription(feeName);
         order.setRedirectUrl(domainName+"/u/user/payment/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
-        order.setTransactionId(payment.getTransactionId());
+        order.setTransactionId(transactionId);
 
         Instamojo api = null;
         String longUrl = null;
