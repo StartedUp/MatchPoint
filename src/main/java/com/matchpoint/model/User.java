@@ -33,7 +33,7 @@ public class  User {
     @Column(columnDefinition="int default 0")
     private int gender;
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "player_category_id")
     private PlayerCategory playerCategory;
     @Column
     private boolean adminApproved;
