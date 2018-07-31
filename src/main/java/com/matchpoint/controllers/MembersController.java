@@ -4,11 +4,9 @@ import com.instamojo.wrapper.api.Instamojo;
 import com.instamojo.wrapper.api.InstamojoImpl;
 import com.instamojo.wrapper.response.PaymentOrderDetailsResponse;
 import com.matchpoint.Util.SessionUtil;
+import com.matchpoint.enums.GenderTypeEnum;
 import com.matchpoint.enums.PaymentStatusEnum;
-import com.matchpoint.model.Fee;
-import com.matchpoint.model.FeeListWrapper;
-import com.matchpoint.model.Payment;
-import com.matchpoint.model.User;
+import com.matchpoint.model.*;
 import com.matchpoint.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +18,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by gokul on 5/7/17.
@@ -48,6 +51,8 @@ public class MembersController {
     @Autowired
     private PaymentManager paymentManager;
     @Autowired
+    private PlayerCategoryService playerCategoryService;
+    @Autowired
     private MailService mailService;
     @Autowired
     private SessionUtil sessionUtil;
@@ -68,8 +73,34 @@ public class MembersController {
         return "memberHome";
     }
     @GetMapping("/userProfile")
-    public String showUserProfile(){
+    public String showUserProfile(Model model){
+        User user = sessionUtil.getCurrentuser();
+        model.addAttribute("user", user);
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
+        model.addAttribute("playerCategories", playerCategoryService.listplayerCategory());
         return "userProfile";
+    }
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model){
+        User userExists = userManager.findOne(user.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
+        model.addAttribute("playerCategories", playerCategoryService.listplayerCategory());
+        if (userExists == null) {
+           model.addAttribute("InvalidData", true);
+        }
+        if (bindingResult.hasErrors()){
+            LOGGER.info(bindingResult+"");
+            return "userProfile";
+        }
+        user.setPassword(userExists.getPassword());
+        user.setActive(userExists.isActive());
+        user.setRoles(userExists.getRoles());
+        user.setPayments(userExists.getPayments());
+        user.setAdminApproved(userExists.isAdminApproved());
+        userManager.save(user);
+        model.addAttribute("updateSuccess",true);
+        return "redirect:/login";
     }
     @GetMapping("/changePassword")
     public String changePassword(){
@@ -99,6 +130,10 @@ public class MembersController {
     @GetMapping("/payment")
     public String showPaymentPage(Model model) {
         User user = sessionUtil.getCurrentuser();
+        if (user.getPlayerCategory()==null) {
+            model.addAttribute("user", user).addAttribute("noPlayerCategory", true);
+            return "userProfile";
+        }
         List<Fee> feeList = feeService.findByPlayerCategoryId(user.getPlayerCategory().getId());
         Payment payment=new Payment();
         List<Payment> payments = user.getPayments();

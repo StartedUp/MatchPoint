@@ -33,8 +33,8 @@ public class EventRegistration {
     @Column(columnDefinition="int default 0")
     private int gender;
     @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+    @JoinColumn(name = "event_payment_id")
+    private EventPayment eventPayment;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
@@ -94,12 +94,12 @@ public class EventRegistration {
         this.playerEmail = playerEmail;
     }
 
-    public Payment getPayment() {
-        return payment;
+    public EventPayment getEventPayment() {
+        return eventPayment;
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public void setEventPayment(EventPayment eventPayment) {
+        this.eventPayment = eventPayment;
     }
 
     public List<PlayingCategory> getPlayingCategories() {

@@ -58,11 +58,11 @@
                                 <input name="registrationLastDate" type="text"  class="form-control datepicker" placeholder="Registration Last Date" required/>
                             </div>
                         </div>
-                        <h4 style="color: darkcyan">Please Choose the Categories</h4>
+                        <h4 style="color: darkcyan">Please Choose the Categories for the event</h4>
                         <div class="row control-group">
                             <div class="col-sm-4" th:each="playingCategory, stat : ${playingCategories}">
-                                <label th:text="${playingCategory.name}">Choose playing categories</label>
                                 <input type="checkbox" class="event-playing-category" th:value="${playingCategory.id}">
+                                <label th:text="${playingCategory.name}"></label>
                                 <!--<input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].name'}"
                                        th:value="${playingCategory.name}">
                                 <input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].fee'}"

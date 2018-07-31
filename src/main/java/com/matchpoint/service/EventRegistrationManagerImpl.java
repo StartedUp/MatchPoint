@@ -47,6 +47,8 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
     @Autowired
     private PaymentManager paymentManager;
     @Autowired
+    private EventPaymentManager eventPaymentManager;
+    @Autowired
     private OnlinePaymentProcessor onlinePaymentProcessor;
 
     @Override
@@ -93,11 +95,11 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
             Event event = eventRegistration.getEvent();
             List<PlayingCategory> playingCategories = eventRegistration.getPlayingCategories();
             int totalFee = playingCategories.stream().mapToInt(playingCategory -> playingCategory.getFee().intValue()).sum();
-            Payment payment = new Payment();
+            EventPayment payment = new EventPayment();
             payment.setAmount(new BigDecimal(totalFee)).setDescription(event.getName()).setPaymentDate(new Date())
                     .setPaymentStatus(PaymentStatusEnum.INIT.getStatus()).setPaymentMode(PaymentModeEnum.ONLINE.getMode()+"");
-            paymentManager.saveOrUpdate(payment);
-            eventRegistration.setPayment(payment);
+            eventPaymentManager.saveOrUpdate(payment);
+            eventRegistration.setEventPayment(payment);
             eventRegistration=eventRegistrationRepository.save(eventRegistration);
             return processPayment(eventRegistration);
         }
@@ -106,11 +108,11 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
 
     private String processPayment(EventRegistration eventRegistration) {
         try {
-            Payment payment = eventRegistration.getPayment();
+            EventPayment payment = eventRegistration.getEventPayment();
             String paymentUrl = null;
             payment.setPaymentDate(new Date())
                     .setTransactionId(eventRegistration.getId()+""+eventRegistration.getEvent().getId()+eventRegistration.getPlayerEmail().hashCode());
-            payment=paymentManager.saveOrUpdate(payment);
+            payment=eventPaymentManager.saveOrUpdate(payment);
             paymentUrl = onlinePaymentProcessor.payForEventRegistration(eventRegistration);
             return paymentUrl != null ? paymentUrl : "exceptionError";
         } catch (Exception e) {
@@ -120,7 +122,7 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
     }
 
     @Override
-    public EventRegistration findByPayment(Payment payment) {
-        return eventRegistrationRepository.findByPayment(payment);
+    public EventRegistration findByPayment(EventPayment payment) {
+        return eventRegistrationRepository.findByEventPayment(payment);
     }
 }

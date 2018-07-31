@@ -10,7 +10,7 @@
 <!-- Navigation -->
 <div th:include="fragments/header :: header"></div>
 <!-- Header -->
-<header>
+<section>
     <div class="container" id="maincontent" tabindex="-1">
         <div>
             <h3 th:text="${!user.adminApproved}?'Admin did not approve the user':''">Admin did not approve the user</h3>
@@ -18,17 +18,24 @@
         <div class="row" th:if="${user.adminApproved}">
             <form id="payment-form" th:action="@{/u/payment/pay}" method="post">
                 <th:block th:each="fee, stat:${feeList}">
-                    <input th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
-                           th:checked="${fee.feeName=='Registration' && includeRegistrationFee}"
-                           th:readonly="${fee.feeName=='Registration' && includeRegistrationFee}"
-                           type="checkbox" class="feeCheckBox" th:value="${fee.id}">
-                    <label for="" th:text="${fee.feeName+' - '+fee.amount}"></label>
+                    <div class="col-sm-4 control-group">
+                        <label th:text="${fee.feeName+' - '+fee.amount}"></label>
+                        <input th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
+                               th:checked="${fee.feeName=='Registration' && includeRegistrationFee}"
+                               th:readonly="${fee.feeName=='Registration' && includeRegistrationFee}"
+                               type="checkbox" class="form-control feeCheckBox" th:value="${fee.id}">
+                    </div>
                 </th:block>
-                <input type="button" id="payment-submit" value="Proceed">
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <input  class="btn btn-success btn-lg" value="Proceed" id="payment-submit" type="button"/>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
-</header>
+</section>
 <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
 </body>

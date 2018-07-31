@@ -1,9 +1,6 @@
 package com.matchpoint.repository;
 
-import com.matchpoint.model.Event;
-import com.matchpoint.model.EventRegistration;
-import com.matchpoint.model.Payment;
-import com.matchpoint.model.User;
+import com.matchpoint.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,5 +13,5 @@ import java.util.List;
      List<EventRegistration> findByUser(User user);
      List<EventRegistration> findByEvent_id(int eventid);
      EventRegistration findByEventAndUser(Event event,User user);
-    EventRegistration findByPayment(Payment payment);
+    EventRegistration findByEventPayment(EventPayment payment);
 }

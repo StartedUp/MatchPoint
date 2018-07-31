@@ -8,47 +8,92 @@
 <!-- Navigation -->
 <div th:include="fragments/header :: header"></div>
 <section>
+    <input type="hidden" id="noPlayerCategory" th:value="${noPlayerCategory!=null?noPlayerCategory:false}">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-            <h3 style="text-align: center;color: #398439">MY PROFILE</h3><br></div>
-            <div class="col-md-4 col-sm-4 col-lg-4">
-                <label for="firstName">Firstname</label>
-                <input name="firstName" class="form-control"  type="text" th:value="${#authentication.getPrincipal().getFirstName()}" readonly/>
-            </div><br>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-lg-4">
-                <label for="lastName">Lastname</label>
-                <input name="lastName" class="form-control" th:value="${#authentication.getPrincipal().getLastName()}" type="text"  readonly/>
+        <form action="/u/user/update" method="post">
+            <input type="hidden" name="id" th:value="${user.id}">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3 style="text-align: center;color: #398439">MY PROFILE</h3><br></div>
+                <div class="col-md-4 col-sm-4 col-lg-4">
+                    <label for="firstName">Firstname</label>
+                    <input name="firstName" class="form-control" type="text"
+                           th:value="${#authentication.getPrincipal().getFirstName()}"/>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-lg-4"><br>
-                <label for="dob">Date of Birth</label>
-                <input name="dob" type="text" th:value="${#dates.format(#authentication.getPrincipal().getDob(), 'dd-MM-yyyy')}"  readonly/>
-            </div><br>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-lg-4">
-                <label for="email">Email</label>
-                <input name="email" class="form-control" th:value="${#authentication.getPrincipal().getEmail()}" type="email" readonly/>
-            </div><br>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-lg-4">
-                <label for="mobile">Mobile</label>
-                <input name="mobile" class="form-control" th:value="${#authentication.getPrincipal().getMobile()}" type="text" readonly/>
-            </div><br>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                <a th:href="@{/u/home}" class="btn btn-default logbutton"/>Back to Home
-            </div><br>
-        </div>
-        </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-lg-4">
+                    <label for="lastName">Lastname</label>
+                    <input name="lastName" class="form-control"
+                           th:value="${#authentication.getPrincipal().getLastName()}" type="text"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-lg-4"><br>
+                    <label for="dob">Date of Birth</label>
+                    <input name="dob" type="text" class="datepicker form-control"
+                           th:value="${#dates.format(#authentication.getPrincipal().getDob(), 'dd-MM-yyyy')}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-lg-4">
+                    <label for="email">Email</label>
+                    <input name="email" class="form-control" th:value="${#authentication.getPrincipal().getEmail()}"
+                           type="email"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-lg-4">
+                    <label for="mobile">Mobile</label>
+                    <input name="mobile" class="form-control" th:value="${#authentication.getPrincipal().getMobile()}"
+                           type="text" />
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-8 controls">
+                    <h4 style="color: darkcyan">Gender</h4>
+                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                        <th:block th:each="genderType, stat :${genderTypes}">
+                            <option data-toggle="tooltip" th:value="${genderType.value}"
+                                    th:selected="${(user.gender == 0 && stat.first) || user.gender==genderType.value}"
+                                    th:text="${genderType}" name="gender">
+                            </option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-8 controls">
+                    <h4 style="color: darkcyan">Player Category</h4>
+                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                        <th:block th:each="playerCategory, stat :${playerCategories}">
+                            <option data-toggle="tooltip" th:value="${playerCategory.id}"
+                                    th:selected="${(user.playerCategory.id == 0 && stat.first) || user.playerCategory.id==playerCategory.id}"
+                                    th:text="${playerCategory.categoryName}" name="playerCategory.id">
+                            </option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-xl" id="editProfile">
+            </div>
+            <div class="row"></div>
+        </form>
+    </div>
     </section>
+    <div th:include="fragments/alertBox :: messageModal"></div>
+
     <div th:include="fragments/footer :: footer"></div>
+<script>
+    $(document).ready(function () {
+        var noPlayerCategory = $('#noPlayerCategory').val()
+        if (noPlayerCategory=='true') {
+            var title='Alert Message'
+            var message='Please update the player category and proceed'
+            messageAlertModal(title, message)
+        }
+    })
+</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import com.instamojo.wrapper.exception.ConnectionException;
 import com.instamojo.wrapper.exception.InvalidPaymentOrderException;
 import com.instamojo.wrapper.model.PaymentOrder;
 import com.instamojo.wrapper.response.CreatePaymentOrderResponse;
+import com.matchpoint.model.EventPayment;
 import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.Payment;
 import com.matchpoint.model.User;
@@ -122,7 +123,7 @@ public class OnlinePaymentProcessor {
 
     public String payForEventRegistration(EventRegistration eventRegistration){
         PaymentOrder order = new PaymentOrder();
-        Payment payment = eventRegistration.getPayment();
+        EventPayment payment = eventRegistration.getEventPayment();
         order.setName(eventRegistration.getPlayerName());
         order.setEmail(eventRegistration.getPlayerEmail());
         order.setPhone(eventRegistration.getPlayerMobile());

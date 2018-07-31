@@ -53,6 +53,9 @@ $(document).ready(function () {
         })
         $('#total-event-reg-fee').text('Total : ₹ '+totalFee.toFixed(2))
     })
-
-
 })
+function messageAlertModal(title, message) {
+    $('#messageTitle').text(title)
+    $('#message').text(message)
+    $('#messageModal').modal('show')
+}

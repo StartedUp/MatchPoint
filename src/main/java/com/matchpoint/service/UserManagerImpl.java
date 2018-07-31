@@ -69,4 +69,9 @@ public class UserManagerImpl implements UserManager {
     public UserQuery save(UserQuery userQuery) {
         return userQueryRepository.save(userQuery);
     }
+
+    @Override
+    public User findOne(Integer id) {
+        return userRepository.findOne(id);
+    }
 }

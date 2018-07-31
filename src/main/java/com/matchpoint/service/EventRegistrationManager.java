@@ -1,9 +1,6 @@
 package com.matchpoint.service;
 
-import com.matchpoint.model.Event;
-import com.matchpoint.model.EventRegistration;
-import com.matchpoint.model.Payment;
-import com.matchpoint.model.User;
+import com.matchpoint.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +24,5 @@ public interface EventRegistrationManager {
 
     String processAndRegister(EventRegistration eventRegistration);
 
-    EventRegistration findByPayment(Payment payment);
+    EventRegistration findByPayment(EventPayment payment);
 }

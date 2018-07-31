@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface UserManager {
     public User findByEmail(String email);
+    User findOne(Integer id);
     public User save(User user);
     public List<User> findAll();
     public String updatePassword(String email,String password);

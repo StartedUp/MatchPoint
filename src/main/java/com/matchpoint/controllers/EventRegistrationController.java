@@ -7,10 +7,7 @@ import com.matchpoint.Util.SessionUtil;
 import com.matchpoint.controllers.admin.AdminRootController;
 import com.matchpoint.enums.GenderTypeEnum;
 import com.matchpoint.enums.PaymentStatusEnum;
-import com.matchpoint.model.Event;
-import com.matchpoint.model.EventRegistration;
-import com.matchpoint.model.Payment;
-import com.matchpoint.model.User;
+import com.matchpoint.model.*;
 import com.matchpoint.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +43,8 @@ public class EventRegistrationController {
     private SessionUtil sessionUtil;
     @Autowired
     private PaymentManager paymentManager;
+    @Autowired
+    private EventPaymentManager eventPaymentManager;
     @Autowired
     private MailService mailService;
     @Value("${payment.online.instamojo.api.endpoint}")
@@ -128,7 +127,7 @@ public class EventRegistrationController {
 
     @RequestMapping("/eventRegistration/success")
     public String eventRegistrationSuccess(Model model, HttpSession session) {
-        Payment payment = (Payment) session.getAttribute("payment");
+        EventPayment payment = (EventPayment) session.getAttribute("payment");
         if(payment!=null){
             EventRegistration eventRegistration = eventRegistrationManager.findByPayment(payment);
             model.addAttribute("eventRegistration", eventRegistration);
