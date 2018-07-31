@@ -36,7 +36,7 @@ public class  User {
     @JoinColumn(name = "player_category_id")
     private PlayerCategory playerCategory;
     @Column
-    private boolean adminApproved;
+    private boolean adminApproved =true;
     @NotNull
     @Column(name="mobile")
     private String mobile;
