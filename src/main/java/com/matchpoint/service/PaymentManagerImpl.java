@@ -38,6 +38,12 @@ public class PaymentManagerImpl implements PaymentManager{
     public Payment findById(int paymentId) {
         return paymentRepository.findById(paymentId);
     }
+
+    @Override
+    public List<Payment> findByUserId(int userId) {
+        return paymentRepository.findByUserId(userId);
+    }
+
     public Payment saveOrUpdate(Payment payment) {
         return paymentRepository.save(payment);
     }

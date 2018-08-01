@@ -67,4 +67,5 @@ public class FeeController extends AdminRootController{
         model.addAttribute("playerCategories", playerCategoryService.listplayerCategory());
         return "fee/createFee";
     }
+
 }

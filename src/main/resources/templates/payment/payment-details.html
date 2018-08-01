@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/header :: head"></head>
+
+<body id="page-top" class="index">
+<div th:include="fragments/header :: header"></div>
+<div class="container-fluid">
+    <style rel="stylesheet">
+        th{
+            text-align: center;
+        }
+    </style>
+
+    <section>
+        <div class="container" id="maincontent" tabindex="2">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2>Payment Details<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/player-category/showCreatePage}" style="float: right" class="btn btn-info btn-lg">Create Payment</a><br></h2>
+                            <hr class="star-primary">
+                        </div>
+                    </div>
+                    <br><div class="table-responsive">
+                    <table style="border-style: solid" th:each="payments,stat : ${paymentsList}"  class="table table-hover table-bordered" th:if="${!#lists.isEmpty(payments.value)}">
+                        <thead>
+                        <tr style="color:#c7254e">
+                            <th>Date</th>
+                            <th>Fee Type</th>
+                            <th>Transaction Id</th>
+                            <th>Amount</th>
+                            <th>Payment mode</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="color: #122b40" th:each="payment,stat : ${payments.value}">
+                            <td th:text="${#dates.format(payment.paymentDate,'dd-MMM-yyyy')}"></td>
+                            <td th:text="${payment.Fee.feeName}"></td>
+                            <td th:text="${payment.transactionId}"></td>
+                            <td th:text="${payment.amount}"></td>
+                            <td th:text="${payment.paymentMode}"></td>
+                            <td th:text="${(payment.paymentStatus=='Completed')?'Paid':'Not Paid'}"></td>
+                            <td><a th:if="${payment.paymentStatus!='Completed'}" href="#">Update</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
