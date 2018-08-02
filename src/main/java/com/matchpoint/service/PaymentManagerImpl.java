@@ -53,7 +53,7 @@ public class PaymentManagerImpl implements PaymentManager{
         List<Fee> feeList = feeListWrapper.getFeeList();
         List<Payment> payments = new ArrayList<>();
         User user = sessionUtil.getCurrentuser();
-        String transactionId = user.getEmail().hashCode()+""+new Date().getTime();
+        String transactionId = new Date().getTime()+""+user.getEmail()!=null?user.getEmail().hashCode()+"":"";
         feeList.forEach(fee -> {
             Payment payment = new Payment();
             Fee fee1 = feeService.getFeeById(fee.getId());
@@ -61,21 +61,23 @@ public class PaymentManagerImpl implements PaymentManager{
             payment.setPaymentDate(new Date());
             payment.setPaymentMode(PaymentModeEnum.ONLINE.getDescription())
                     .setPaymentDate(new Date()).setUser(user)
-                    .setDescription(fee1.getFeeName())
+                    .setDescription(fee1.getDescription())
                     .setAmount(fee1.getAmount())
                     .setPaymentStatus(PaymentStatusEnum.INIT.getStatus());
-            payment.setTransactionId(transactionId);
+            payment.setTransactionId(fee.getId()+""+user.getEmail().hashCode()+transactionId);
 //            payment=paymentRepository.save(payment);
             payments.add(payment);
         });
+        List<Payment> paymentsNew = new ArrayList<>();
+        paymentsNew.addAll(payments);
         if (user.getPayments()!=null)
             payments.addAll(user.getPayments());
         user.setPayments(payments);
         userRepository.save(user);
-        String redirectUrl = onlinePaymentProcessor.placeOrder(payments, transactionId);
-        return redirectUrl!=null?"redirect:" +redirectUrl:"exceptionError";
+        String redirectUrl = onlinePaymentProcessor.placeOrder(paymentsNew, transactionId);
+        return redirectUrl!=null?redirectUrl:"exceptionError";
     }
-    public Payment findByTransactionId(String transactionId) {
+    public List<Payment> findByTransactionId(String transactionId) {
         return paymentRepository.findByTransactionId(transactionId);
     }
 }

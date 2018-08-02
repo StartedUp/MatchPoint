@@ -5,6 +5,7 @@ import com.matchpoint.model.Role;
 import com.matchpoint.model.User;
 import com.matchpoint.service.MailService;
 import com.matchpoint.service.UserManager;
+import com.matchpoint.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class RegisterController {
     private Environment environment;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private UserService userService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class.getName());
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model){
@@ -47,9 +51,8 @@ public class RegisterController {
             LOGGER.info(bindingResult+"");
             return "register";
         }
+        userService.populateDefaultValues(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        Role role = new Role();
         LOGGER.info(user.toString());
         userManager.save(user);
         Mailer mailer=new Mailer();

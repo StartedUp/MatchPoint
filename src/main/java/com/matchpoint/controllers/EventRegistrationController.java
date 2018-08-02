@@ -103,7 +103,7 @@ public class EventRegistrationController {
             HttpSession session
     ) {
         try {
-            Payment payment=paymentManager.findByTransactionId(transactionId);
+            EventPayment payment=eventPaymentManager.findByTransactionId(transactionId);
             Instamojo api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
 
             PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId(transactionId+"");
@@ -113,7 +113,7 @@ public class EventRegistrationController {
             if (status.equals("completed")){
                 payment.setPaymentStatus(PaymentStatusEnum.SUCCESS.getStatus());
                 payment.setOrderId(paymentOrderDetailsResponse.getId());
-                paymentManager.saveOrUpdate(payment);
+                eventPaymentManager.saveOrUpdate(payment);
                 session.setAttribute("payment", payment);
                 return "redirect:/eventRegistration/success";
             }

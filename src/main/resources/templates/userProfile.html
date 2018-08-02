@@ -66,11 +66,11 @@
             <div class="row control-group">
                 <div class="form-group col-xs-8 controls">
                     <h4 style="color: darkcyan">Player Category</h4>
-                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                    <select class="form-control" id="playerGender" name="playerCategory.id" required="required">
                         <th:block th:each="playerCategory, stat :${playerCategories}">
                             <option data-toggle="tooltip" th:value="${playerCategory.id}"
                                     th:selected="${(user.playerCategory?.id == 0 && stat.first) || user.playerCategory?.id==playerCategory.id}"
-                                    th:text="${playerCategory.categoryName}" name="playerCategory.id">
+                                    th:text="${playerCategory.categoryName}">
                             </option>
                         </th:block>
                     </select>

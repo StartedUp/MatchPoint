@@ -17,9 +17,10 @@
         </div>
         <div class="row" th:if="${user.adminApproved}">
             <form id="payment-form" th:action="@{/u/payment/pay}" method="post">
-                <th:block th:each="fee, stat:${feeList}">
+                <th:block th:each="fee, stat:${feeList}" th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}">
                     <div class="col-sm-4 control-group">
-                        <label th:text="${fee.feeName+' - '+fee.amount}"></label>
+                        <label th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
+                               th:text="${fee.feeName+' - '+fee.amount}"></label>
                         <input th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
                                th:checked="${fee.feeName=='Registration' && includeRegistrationFee}"
                                th:readonly="${fee.feeName=='Registration' && includeRegistrationFee}"

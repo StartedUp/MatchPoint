@@ -37,20 +37,20 @@
                             </div>
                         </div>
                         <div class="row control-group">
-                            <div class="form-group col-xs-8 floating-label-form-group controls">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="name">Amount</label>
+                                <input name="amount" class="form-control" type="number" min="0" th:value="${fee.amount}"
+                                       placeholder="Amount" required/>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-8 controls">
                                 <select class="form-control" id="playerCategory" name="playerCategory" required="required">
                                     <th:block th:each="playerCategory, stat :${playerCategories}">
                                         <option data-toggle="tooltip" th:value="${playerCategory.id}"
                                                 th:selected="${fee.playerCategory!=null && playerCategory.id==fee.playerCategory.id}" th:text="${playerCategory.categoryName}">Student</option>
                                     </th:block>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="name">Amount</label>
-                                <input name="amount" class="form-control" type="number" min="0" th:value="${fee.amount}"
-                                       placeholder="Amount" required/>
                             </div>
                         </div>
                         <input type="hidden" name="id" th:value="${fee.id}">

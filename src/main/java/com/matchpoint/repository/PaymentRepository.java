@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface PaymentRepository extends JpaRepository<Payment, Integer>{
     public Payment findById(int paymentId);
-    public Payment findByTransactionId(String transactionId);
+    public List<Payment> findByTransactionId(String transactionId);
 
     List<Payment> findByUserId(int userId);
 }

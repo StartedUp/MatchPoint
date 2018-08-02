@@ -155,8 +155,7 @@ public class MembersController {
             @ModelAttribute("feeList")FeeListWrapper feeListWrapper) {
         try {
             String paymentUrl = paymentManager.processPayment(feeListWrapper);
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            return paymentUrl != null ? "redirect:/" + paymentUrl : "exceptionError";
+            return paymentUrl;
         } catch (Exception e) {
             e.printStackTrace();
             return "exceptionError";
@@ -169,7 +168,7 @@ public class MembersController {
             @RequestParam("payment_id") String paymentId
     ) {
         try {
-            Payment payment=paymentManager.findByTransactionId(transactionId);
+            List<Payment> payments=paymentManager.findByTransactionId(transactionId);
             Instamojo api = InstamojoImpl.getApi(instamojoClientId, instamojoClientSecret, instamojoApiEndpoint, instamojoAuthEndpoint);
 
             PaymentOrderDetailsResponse paymentOrderDetailsResponse = api.getPaymentOrderDetailsByTransactionId(transactionId+"");
@@ -177,9 +176,11 @@ public class MembersController {
             LOGGER.info("paymentOrderDetailsResponse.getStatus() "+paymentOrderDetailsResponse.getStatus());
             String status =paymentOrderDetailsResponse.getStatus();
             if (status.equals("completed")){
-                payment.setPaymentStatus(status);
-                payment.setOrderId(paymentOrderDetailsResponse.getId());
-                paymentManager.saveOrUpdate(payment);
+                payments.forEach(payment -> {
+                    payment.setPaymentStatus(status);
+                    payment.setOrderId(paymentOrderDetailsResponse.getId());
+                    paymentManager.saveOrUpdate(payment);
+                });
                 return "redirect:/?paymentSuccess";
             }
             else

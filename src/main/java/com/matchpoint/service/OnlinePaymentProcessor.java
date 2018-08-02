@@ -34,12 +34,11 @@ public class OnlinePaymentProcessor {
     private String instamojoClientSecret;
     @Value("${domain.name}")
     private String domainName;
-    public String placeOrder(List<Payment> payments, String transactionId){
+    public String placeOrder(List<Payment> newPayments, String transactionId){
         PaymentOrder order = new PaymentOrder();
-        User user = payments.get(0).getUser();
+        User user = newPayments.get(0).getUser();
         String feeName = "";
         double amount = 0;
-        List<Payment> newPayments = payments.stream().filter(payment -> payment.getTransactionId()!=null && payment.getTransactionId().equals(transactionId)).collect(Collectors.toList());
         amount=newPayments.stream().mapToDouble(payment -> payment.getAmount().doubleValue()).sum();
         feeName=newPayments.stream().map(payment -> payment.getFee().getFeeName()).collect(Collectors.joining(" & "));
         /*for(Payment payment1:payments){

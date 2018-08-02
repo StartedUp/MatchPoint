@@ -11,7 +11,7 @@ import java.util.List;
 public interface PaymentManager {
     public Payment findById(int paymentId);
     public List<Payment> findByUserId(int userId);
-    public Payment findByTransactionId(String transactionId);
+    public List<Payment> findByTransactionId(String transactionId);
     public Payment saveOrUpdate(Payment payment);
     String processPayment(FeeListWrapper feeListWrapper);
 }
