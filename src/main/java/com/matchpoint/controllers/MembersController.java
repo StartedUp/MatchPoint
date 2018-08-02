@@ -86,12 +86,8 @@ public class MembersController {
         model.addAttribute("user", user);
         model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
         model.addAttribute("playerCategories", playerCategoryService.listplayerCategory());
-        if (userExists == null) {
+        if (userExists == null || (userExists!=null && userExists.getId()!=sessionUtil.getCurrentuser().getId())) {
            model.addAttribute("InvalidData", true);
-        }
-        if (bindingResult.hasErrors()){
-            LOGGER.info(bindingResult+"");
-            return "userProfile";
         }
         user.setPassword(userExists.getPassword());
         user.setActive(userExists.isActive());
@@ -99,8 +95,9 @@ public class MembersController {
         user.setPayments(userExists.getPayments());
         user.setAdminApproved(userExists.isAdminApproved());
         userManager.save(user);
+        model.addAttribute("user", user);
         model.addAttribute("updateSuccess",true);
-        return "redirect:/login";
+        return "userProfile";
     }
     @GetMapping("/changePassword")
     public String changePassword(){
