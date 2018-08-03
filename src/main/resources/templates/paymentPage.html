@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-
-<head th:include="fragments/header :: head"></head>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="fragments/header :: headMeta" th:remove="tag"></th:block>
+    <!--head content-->
+    <th:block th:include="fragments/header :: head" th:remove="tag"></th:block>
+</head>
 <body id="page-top" class="index">
-<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
-
 <!-- Navigation -->
-<div th:include="fragments/header :: header"></div>
+<div th:include="fragments/header :: header" th:remove="tag"></div>
 <!-- Header -->
 <section>
     <div class="container" id="maincontent" tabindex="-1">
@@ -17,23 +16,21 @@
         </div>
         <div class="row" th:if="${user.adminApproved}">
             <form id="payment-form" th:action="@{/u/payment/pay}" method="post">
-                <th:block th:each="fee, stat:${feeList}" th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}">
+                <th:block th:each="fee, stat:${feeList}">
                     <div class="col-sm-4 control-group">
-                        <label th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
-                               th:text="${fee.feeName+' - '+fee.amount}"></label>
-                        <input th:if="${(fee.feeName=='Registration' && includeRegistrationFee) || fee.feeName != 'Registration'}"
-                               th:checked="${fee.feeName=='Registration' && includeRegistrationFee}"
-                               th:readonly="${fee.feeName=='Registration' && includeRegistrationFee}"
-                               type="checkbox" class="form-control feeCheckBox" th:value="${fee.id}">
+                        <label th:text="${fee.feeName+' - '+fee.amount}"></label>
+                        <input th:checked="${fee.feeName=='Registration'}"
+                               th:disabled="${fee.feeName=='Registration'}"
+                               type="checkbox" class="form-control feeCheckBox" th:value="${fee.id}" style="width: 10%">
                     </div>
                 </th:block>
-
-                <div class="row">
-                    <div class="form-group col-xs-12">
-                        <input  class="btn btn-success btn-lg" value="Proceed" id="payment-submit" type="button"/>
-                    </div>
-                </div>
             </form>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <input class="btn btn-success btn-lg" value="Proceed" id="payment-submit" type="button"/>
+            </div>
         </div>
     </div>
 </section>

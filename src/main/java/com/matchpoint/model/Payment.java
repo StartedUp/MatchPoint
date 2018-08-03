@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by Prithu on 14/9/17.
  */
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"user_id", "fee_id"})})
+@Table
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

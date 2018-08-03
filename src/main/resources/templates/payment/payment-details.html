@@ -42,8 +42,8 @@
                             <td th:text="${payment.transactionId}"></td>
                             <td th:text="${payment.amount}"></td>
                             <td th:text="${payment.paymentMode}"></td>
-                            <td th:text="${(payment.paymentStatus=='Completed')?'Paid':'Not Paid'}"></td>
-                            <td><a th:if="${payment.paymentStatus!='Completed'}" href="#">Update</a></td>
+                            <td th:text="${(payment.paymentStatus==T(com.matchpoint.enums.PaymentStatusEnum).SUCCESS.status)?'Paid':'Not Paid'}"></td>
+                            <td><a th:if="${payment.paymentStatus!='Completed'}" href="#"></a></td>
                         </tr>
                         </tbody>
                     </table>

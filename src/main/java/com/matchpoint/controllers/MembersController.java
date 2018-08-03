@@ -66,6 +66,8 @@ public class MembersController {
     private String instamojoClientSecret;
     @Autowired
     private FeeService feeService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/home")
@@ -126,28 +128,11 @@ public class MembersController {
     }
     @GetMapping("/payment")
     public String showPaymentPage(Model model) {
-        User user = sessionUtil.getCurrentuser();
-        if (user.getPlayerCategory()==null) {
-            model.addAttribute("user", user).addAttribute("noPlayerCategory", true);
-            return "userProfile";
-        }
-        List<Fee> feeList = feeService.findByPlayerCategoryId(user.getPlayerCategory().getId());
-        Payment payment=new Payment();
-        List<Payment> payments = user.getPayments();
-        model.addAttribute("includeRegistrationFee", false);
-        if(payments==null || payments.isEmpty()){
-            model.addAttribute("includeRegistrationFee", true);
-        }
-        else {
-            boolean registration = payments.stream().anyMatch(payment1 ->
-                    payment1.getFee()!=null && payment1.getFee()
-                            .getFeeName().equals("Registration")
-                            && payment1.getPaymentStatus().equals(PaymentStatusEnum.INIT.getStatus()));
-            model.addAttribute("includeRegistrationFee", !registration);
-        }
+        List<Fee> feeList = userService.getRelavantFeeList();
+        Payment payment = new Payment();
         model.addAttribute("payment",payment);
         model.addAttribute("feeList",feeList);
-        model.addAttribute("user",user);
+        model.addAttribute("user",sessionUtil.getCurrentuser());
         return "paymentPage";
     }
     @PostMapping("/payment/pay")
@@ -155,7 +140,7 @@ public class MembersController {
             @ModelAttribute("feeList")FeeListWrapper feeListWrapper) {
         try {
             String paymentUrl = paymentManager.processPayment(feeListWrapper);
-            return paymentUrl;
+            return "redirect:"+paymentUrl;
         } catch (Exception e) {
             e.printStackTrace();
             return "exceptionError";
@@ -177,7 +162,7 @@ public class MembersController {
             String status =paymentOrderDetailsResponse.getStatus();
             if (status.equals("completed")){
                 payments.forEach(payment -> {
-                    payment.setPaymentStatus(status);
+                    payment.setPaymentStatus(PaymentStatusEnum.SUCCESS.getStatus());
                     payment.setOrderId(paymentOrderDetailsResponse.getId());
                     paymentManager.saveOrUpdate(payment);
                 });

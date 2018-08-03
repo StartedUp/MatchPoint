@@ -51,9 +51,9 @@ public class PaymentManagerImpl implements PaymentManager{
     @Override
     public String processPayment(FeeListWrapper feeListWrapper) {
         List<Fee> feeList = feeListWrapper.getFeeList();
-        List<Payment> payments = new ArrayList<>();
         User user = sessionUtil.getCurrentuser();
-        String transactionId = new Date().getTime()+""+user.getEmail()!=null?user.getEmail().hashCode()+"":"";
+        List<Payment> payments = new ArrayList<>();
+        String transactionId = new Date().getTime()+(user.getEmail()!=null?user.getEmail().hashCode():0)+"-Payment";
         feeList.forEach(fee -> {
             Payment payment = new Payment();
             Fee fee1 = feeService.getFeeById(fee.getId());
@@ -64,7 +64,7 @@ public class PaymentManagerImpl implements PaymentManager{
                     .setDescription(fee1.getDescription())
                     .setAmount(fee1.getAmount())
                     .setPaymentStatus(PaymentStatusEnum.INIT.getStatus());
-            payment.setTransactionId(fee.getId()+""+user.getEmail().hashCode()+transactionId);
+            payment.setTransactionId(transactionId);
 //            payment=paymentRepository.save(payment);
             payments.add(payment);
         });
@@ -75,7 +75,7 @@ public class PaymentManagerImpl implements PaymentManager{
         user.setPayments(payments);
         userRepository.save(user);
         String redirectUrl = onlinePaymentProcessor.placeOrder(paymentsNew, transactionId);
-        return redirectUrl!=null?redirectUrl:"exceptionError";
+        return redirectUrl!=null?redirectUrl:"/exceptionError";
     }
     public List<Payment> findByTransactionId(String transactionId) {
         return paymentRepository.findByTransactionId(transactionId);
