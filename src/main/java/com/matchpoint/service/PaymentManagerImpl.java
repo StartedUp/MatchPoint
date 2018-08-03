@@ -53,7 +53,7 @@ public class PaymentManagerImpl implements PaymentManager{
         List<Fee> feeList = feeListWrapper.getFeeList();
         List<Payment> payments = new ArrayList<>();
         User user = sessionUtil.getCurrentuser();
-        String transactionId = user.getEmail().hashCode()+""+new Date().getTime();
+        String transactionId = ""+user.getEmail().hashCode()+new Date().getTime();
         feeList.forEach(fee -> {
             Payment payment = new Payment();
             Fee fee1 = feeService.getFeeById(fee.getId());
