@@ -1,17 +1,21 @@
     <!DOCTYPE html>
     <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-    <head th:include="fragments/header :: head"></head>
-    <body>
-    <div th:include="fragments/header :: header"></div>
-    <div class="container-fluid">
+    <head>
+        <div th:include="fragments/header :: headMeta" th:remove="tag"></div>
+        <div th:include="fragments/header :: head" th:remove="tag"></div>
+        <link th:href="@{/css/admin-style.css}" rel="stylesheet"/>
         <style rel="stylesheet">
             th{
                 text-align: center;
             }
         </style>
+    </head>
+    <body>
+    <div th:include="fragments/header :: header"></div>
+    <div class="container-fluid">
         <section>
-            <div class="container" id="maincontent" tabindex="2">
+            <div class="container-fluid" id="maincontent" tabindex="2">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
@@ -29,23 +33,28 @@
                                     <th>Last Name</th>
                                     <th>E-mail</th>
                                     <th>Mobile</th>
+                                    <th>Gender</th>
+                                    <th>Player Category</th>
                                     <th>Activity Status</th>
                                     <th>Role</th>
                                     <th>Access</th>
                                     <th>Block/Unblock</th>
                                     <th>Payment Details</th>
+                                    <th>Approve Details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr style="color: #122b40" th:each="user,stat : ${users}">
                                     <form name="adminAccessForm" th:action="@{/a/manageRoles}" method="post">
                                         <td th:text="${stat.count}">1</td>
-                                    <td th:text="${user.firstName}"></td>
-                                    <td th:text="${user.lastName}"></td>
-                                    <td th:text="${user.email}"></td>
-                                    <td th:text="${user.mobile}"></td>
-                                    <td th:text="${user.active?'Active':'Blocked'}">
-                                    <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
+                                        <td th:text="${user.firstName}"></td>
+                                        <td th:text="${user.lastName}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.mobile}"></td>
+                                        <td th:text="${user.gender}"></td>
+                                        <td th:text="${user.playerCategory?.categoryName}"></td>
+                                        <td th:text="${user.active?'Active':'Blocked'}">
+                                        <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
                                         <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/>
                                             <button type="submit" class="removebutton" name="action"
                                                     th:value="${user.roles.contains(roleAdmin)
@@ -65,7 +74,13 @@
                                             </a>
                                         </td>
                                         <td th:if="${user.active}"><a class="btn btn-primary" th:href="${'/a/view-payment/'+user.id}">View / Update payment</a></td>
-                                        <td th:if="${!user.active}">Unblock First!</td>
+                                        <td th:if="${!user.active}">Please Unblock First!</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input id="approveMember" th:value="${user.id}" type="checkbox" th:checked="${user.adminApproved}">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
                                 </form>
                                 </tr>
                                 </tbody>
@@ -73,8 +88,9 @@
                         </div>
                     </div>
                 </div>
-                </div>
-    </section>
-        </div>
+            </div>
+        </section>
+    </div>
+    <div th:include="fragments/alertBox :: messageModal"></div>
     </body>
     </html>

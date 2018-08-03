@@ -2,6 +2,8 @@
  * Created by root on 18/7/18.
  */
 $(document).ready(function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
 
     $( ".datepicker" ).datepicker({changeYear: true, yearRange: "-80:+0", dateFormat: 'dd/mm/yy' });
 
@@ -52,6 +54,27 @@ $(document).ready(function () {
             totalFee+=Number($(this).data('fee'))
         })
         $('#total-event-reg-fee').text('Total : ₹ '+totalFee.toFixed(2))
+    })
+
+    $('#approveMember').on('change', function () {
+        $.ajax({
+            type: 'POST',
+            url: "/a/member-details-approval",
+            data: {"id" :this.value},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        }).done( function(resultData) {
+            var title='Alert Message'
+            if (resultData) {
+                var message='Updated member details successfully'
+                messageAlertModal(title, message)
+            }else {
+                var message='Failed to Update'
+                messageAlertModal(title, message)
+                location.reload()
+            }
+        });
     })
 })
 function messageAlertModal(title, message) {
