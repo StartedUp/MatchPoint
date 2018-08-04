@@ -11,10 +11,11 @@
 <!-- Header -->
 <section>
     <div class="container" id="maincontent" tabindex="-1">
+        <br>
         <div>
-            <h3 th:text="${!user.adminApproved}?'Admin did not approve the user':''">Admin did not approve the user</h3>
+            <h3 th:if="${feeList==null || feeList.isEmpty()}">No online payments to show for now</h3>
         </div>
-        <div class="row" th:if="${user.adminApproved}">
+        <div class="row">
             <form id="payment-form" th:action="@{/u/payment/pay}" method="post">
                 <th:block th:each="fee, stat:${feeList}">
                     <div class="col-sm-4 control-group">
@@ -28,7 +29,7 @@
         </div>
         <br>
         <div class="row">
-            <div class="form-group col-xs-12">
+            <div class="form-group col-xs-12" th:if="${feeList!=null && !feeList.isEmpty()}">
                 <input class="btn btn-success btn-lg" value="Proceed" id="payment-submit" type="button"/>
             </div>
         </div>

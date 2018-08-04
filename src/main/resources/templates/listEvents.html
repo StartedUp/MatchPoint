@@ -18,7 +18,9 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <h2>MatchPoint Upcoming Events<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/createEvent}" style="float: right" class="btn btn-info btn-lg">Create Event</a><br></h2>
+                                <h2 th:text="${events==null || events.isEmpty() ? 'No events to show':'MatchPoint Upcoming Events'}">
+                                  <a sec:authorize="hasRole('ROLE_admin')"
+                                       th:href="@{/a/createEvent}" style="float: right" class="btn btn-info btn-lg">Create Event</a><br></h2>
                                 <hr class="star-primary">
                             </div>
                         </div>

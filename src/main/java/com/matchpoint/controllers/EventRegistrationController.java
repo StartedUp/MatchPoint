@@ -80,7 +80,12 @@ public class EventRegistrationController {
             model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
             return "registerEvent";
         }
-        String paymentUrl=eventRegistrationManager.processAndRegister(eventRegistration);
+        String paymentUrl= "/exceptionError";
+        try {
+            paymentUrl = eventRegistrationManager.processAndRegister(eventRegistration);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:"+paymentUrl;
     }
     @GetMapping("/myRegisteredEvents")

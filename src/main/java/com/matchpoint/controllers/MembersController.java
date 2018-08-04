@@ -96,7 +96,7 @@ public class MembersController {
         user.setRoles(userExists.getRoles());
         user.setPayments(userExists.getPayments());
         user.setAdminApproved(userExists.isAdminApproved());
-        userManager.save(user);
+        user=userManager.save(user);
         model.addAttribute("user", user);
         model.addAttribute("updateSuccess",true);
         return "userProfile";
@@ -129,8 +129,6 @@ public class MembersController {
     @GetMapping("/payment")
     public String showPaymentPage(Model model) {
         List<Fee> feeList = userService.getRelavantFeeList();
-        Payment payment = new Payment();
-        model.addAttribute("payment",payment);
         model.addAttribute("feeList",feeList);
         model.addAttribute("user",sessionUtil.getCurrentuser());
         return "paymentPage";
@@ -166,10 +164,16 @@ public class MembersController {
                     payment.setOrderId(paymentOrderDetailsResponse.getId());
                     paymentManager.saveOrUpdate(payment);
                 });
-                return "redirect:/?paymentSuccess";
+                return "redirect:/?paymentStatus="+PaymentStatusEnum.SUCCESS.getStatus();
             }
-            else
-                return "exceptionError";
+            else {
+                payments.forEach(payment -> {
+                    payment.setPaymentStatus(PaymentStatusEnum.FAILED.getStatus());
+                    payment.setOrderId(paymentOrderDetailsResponse.getId());
+                    paymentManager.saveOrUpdate(payment);
+                });
+                return "redirect:/?paymentStatus="+PaymentStatusEnum.FAILED.getStatus();
+            }
         }catch (Exception e){
             LOGGER.info("Exception getting payment status", e);
             return "exceptionError";

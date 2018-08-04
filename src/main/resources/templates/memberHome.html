@@ -5,6 +5,7 @@
 <head th:include="fragments/header :: head"></head>
 
 <body id="page-top" class="index">
+<input type="hidden" id="paymentStatus" th:value="${param.paymentStatus!=null?param.paymentStatus:null}">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
 <!-- Navigation -->
@@ -24,7 +25,23 @@
         </div>
     </div>
 </header>
+<div th:include="fragments/alertBox :: messageModal"></div>
 <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
+<script>
+    $(document).ready(function () {
+        var paymentStatus = $('#paymentStatus').val()
+        if (paymentStatus=='Success') {
+            var title='Alert Message'
+            var message='Payment is successful'
+            messageAlertModal(title, message)
+        }
+        if (paymentStatus=='Failed') {
+            var title='Alert Message'
+            var message='Payment has failed please try again or contact admin.'
+            messageAlertModal(title, message)
+        }
+    })
+</script>
 </body>
 </html>

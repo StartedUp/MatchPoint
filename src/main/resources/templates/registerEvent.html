@@ -29,14 +29,14 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerName">Player Name
-                                        <input name="playerName" th:readonly="${!#strings.isEmpty(currentUser.firstName)}" th:value="${currentUser.firstName}" class="form-control" type="text"/>
+                                        <input name="playerName" th:readonly="${!#strings.isEmpty(currentUser.firstName)}" th:value="${currentUser.firstName}" class="form-control" type="text" required/>
                                     </label>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="playerEmail">Player Email
-                                        <input name="playerEmail" th:readonly="${!#strings.isEmpty(currentUser.email)}" th:value="${currentUser.email}" class="form-control" type="text"/>
+                                        <input name="playerEmail" th:readonly="${!#strings.isEmpty(currentUser.email)}" th:value="${currentUser.email}" class="form-control" type="text" required/>
                                     </label>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                         <div class="row control-group">
                             <div class="col-sm-4" th:each="playingCategory, stat : ${playingCategories}">
                                 <label th:text="${playingCategory.name +' Registration fee: ₹'+playingCategory.fee}">Choose playing categories</label>
-                                <input type="checkbox" class="eventRegistration-playing-category"
+                                <input type="checkbox" class="eventRegistration-playing-category" required
                                        th:attr="data-fee=${playingCategory.fee}" th:value="${playingCategory.id}">
                                 <!--<input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].name'}"
                                        th:value="${playingCategory.name}">
@@ -220,7 +220,7 @@
                 </div>
             </div>
         </div>
-
+    <div th:include="fragments/alertBox :: messageModal"></div>
 </section>
 <script type="text/javascript">
   /*  $(document).ready(function () {
@@ -235,23 +235,6 @@
 
     $(document).ready(function () {
 
-        $("form").submit(function () {
-
-            var this_master = $(this);
-
-            this_master.find('input[type="checkbox"]').each( function () {
-                var checkbox_this = $(this);
-
-
-                if( checkbox_this.is(":checked") == true ) {
-                    checkbox_this.attr('value','1');
-                } else {
-                    checkbox_this.prop('checked',true);
-                    //DONT' ITS JUST CHECK THE CHECKBOX TO SUBMIT FORM DATA
-                    checkbox_this.attr('value','0');
-                }
-            })
-        })
     })
 
 

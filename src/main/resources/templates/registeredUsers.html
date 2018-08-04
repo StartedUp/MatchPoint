@@ -42,7 +42,7 @@
                                     <td th:text="${eventReg.getPlayerName()} "></td>
                                     <td th:text="${eventReg.getPlayerEmail()} "></td>
                                     <td th:text="${eventReg.getPlayerMobile()} "></td>
-                                    <td th:text="${'Amount : ₹ '+ eventReg.payment.amount+', Status : '+eventReg.payment.paymentStatus} "></td>
+                                    <td th:text="${'Amount : ₹ '+ eventReg.eventPayment.amount+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
                                     <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
                                     <td>
                                         <span th:each="playingCategory,stat : ${eventReg.playingCategories}"
@@ -57,7 +57,7 @@
             </div>
         </section>
     </div>
-    <script src="js/table2excel.js" th:src="@{/js/table2excel.js}"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#export").click(function () {

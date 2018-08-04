@@ -45,7 +45,8 @@ $(document).ready(function () {
                 value: Number($(this).data('fee'))
             }).appendTo('#eventRegistration-form');
         })
-        $('#eventRegistration-form').submit();
+        if(validateFormFields())
+            $('#eventRegistration-form').submit();
     })
 
     $('.eventRegistration-playing-category').on('change', function () {
@@ -81,4 +82,23 @@ function messageAlertModal(title, message) {
     $('#messageTitle').text(title)
     $('#message').text(message)
     $('#messageModal').modal('show')
+}
+
+function validateFormFields() {
+    var valid=true;
+    $('#eventRegistration-form input[required]').each(function () {
+        if(!$(this).val()) {
+            messageAlertModal('Alert Message', 'Please enter the required fields')
+            $(this).css("border-color", "red");
+            valid = false;
+            return false;
+        }
+    })
+    if(valid && $('.eventRegistration-playing-category:checked').length<1){
+        messageAlertModal('Alert Message', 'Please choose any one playing category')
+        $(this).css("border-color", "red");
+        valid=false
+        return false
+    }
+    return valid;
 }

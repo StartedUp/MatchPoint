@@ -1,6 +1,9 @@
 package com.matchpoint.controllers;
 
+import com.matchpoint.enums.GenderTypeEnum;
 import com.matchpoint.model.User;
+import com.matchpoint.service.PlayerCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,8 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+
 @Controller
 public class LoginController {
+
+    @Autowired
+    private PlayerCategoryService playerCategoryService;
 
     @GetMapping("/")
     public String showHomePage() {
@@ -45,6 +53,8 @@ public class LoginController {
     @GetMapping("/register")
     public String showRegisterForm(Model model){
         model.addAttribute("user", new User());
+        model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
+        model.addAttribute("playerCategories", playerCategoryService.listplayerCategory());
         return "register";
     }
 

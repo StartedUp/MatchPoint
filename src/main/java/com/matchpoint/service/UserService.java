@@ -13,10 +13,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.Instant;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,12 +43,13 @@ public class UserService {
         Optional<Fee> registration = feeList.stream().filter(fee -> fee.getFeeName() != null && fee.getFeeName().equals("Registration")).findFirst();
         if (registration.isPresent()) {
             payment.setDescription(registration.get().getDescription());
-            payment.setTransactionId(new Date().getTime()+""+user.getEmail()!=null?user.getEmail().hashCode()+"":"");
+            payment.setTransactionId(new Date().getTime()+""+(user.getEmail()!=null?user.getEmail().hashCode()+"":""));
             payment.setAmount(registration.get().getAmount());
             payment.setPaymentMode(PaymentModeEnum.CASH.getDescription());
             payment.setPaymentStatus(PaymentStatusEnum.SUCCESS.getStatus());
             payment.setUser(user);
             payment.setFee(registration.get());
+            payment.setPaymentDate(new Date());
         }
         ArrayList<Payment> payments = new ArrayList<>();
         payments.add(payment);
@@ -64,19 +62,22 @@ public class UserService {
         List<Payment> payments = user.getPayments();
         if (payments!=null && !payments.isEmpty()) {
             Optional<Payment> registration = payments.stream().filter(payment -> payment.getFee().getFeeName().equals("Registration") && payment.getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus())).findAny();
-            if (registration.isPresent()) {
-                fees = fees.stream().filter(fee -> fee.getId()!=registration.get().getId()).collect(Collectors.toList());
+            if (registration.isPresent() || !user.isAdminApproved()) {
+                fees = fees.stream().filter(fee -> fee.getId()!=registration.get().getFee().getId()).collect(Collectors.toList());
             }
             Optional<Payment> monthly = payments.stream().filter(payment -> {
                 Date paymentDate = payment.getPaymentDate();
                 if (paymentDate==null)
                     return false;
-                Instant pDate = paymentDate.toInstant();
-               return payment.getFee().getFeeName().equals("Monthly") && payment.getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus()) && Month.from(pDate) == Month.from(Instant.now());
+                Calendar cal1 = Calendar.getInstance();
+                Calendar cal2 = Calendar.getInstance();
+                cal1.setTime(paymentDate);
+                cal2.setTime(new Date());
+               return payment.getFee().getFeeName().equals("Monthly") && payment.getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus()) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
             }).findAny();
 
             if (monthly.isPresent()) {
-                fees = fees.stream().filter(fee -> fee.getId()!=monthly.get().getId()).collect(Collectors.toList());
+                fees = fees.stream().filter(fee -> fee.getId()!=monthly.get().getFee().getId()).collect(Collectors.toList());
             }
         }
         return fees;

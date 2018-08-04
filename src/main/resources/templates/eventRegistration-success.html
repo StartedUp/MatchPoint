@@ -43,8 +43,8 @@
                         <td th:text="${eventRegistration.event.name}"></td>
                         <td th:text="${eventRegistration.event.location}"></td>
                         <td><span th:each="playingCategory : ${eventRegistration.playingCategories}" th:text="${playingCategory.name+' '}"></span></td>
-                        <td th:text="${eventRegistration.payment.amount}"></td>
-                        <td th:text="${eventRegistration.payment.paymentStatus}"></td>
+                        <td th:text="${eventRegistration.eventPayment.amount}"></td>
+                        <td th:text="${eventRegistration.eventPayment.paymentStatus}"></td>
                     </tr>
                     </tbody>
                 </table>

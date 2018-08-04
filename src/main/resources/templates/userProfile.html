@@ -19,34 +19,34 @@
                 <div class="col-md-4 col-sm-4 col-lg-4">
                     <label for="firstName">Firstname</label>
                     <input name="firstName" class="form-control" type="text"
-                           th:value="${#authentication.getPrincipal().getFirstName()}"/>
+                           th:value="${user.firstName}"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-lg-4">
                     <label for="lastName">Lastname</label>
                     <input name="lastName" class="form-control"
-                           th:value="${#authentication.getPrincipal().getLastName()}" type="text"/>
+                           th:value="${user.lastName}" type="text"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-lg-4"><br>
                     <label for="dob">Date of Birth</label>
                     <input name="dob" type="text" class="datepicker form-control"
-                           th:value="${#dates.format(#authentication.getPrincipal().getDob(), 'dd/MM/yyyy')}" />
+                           th:value="${#dates.format(user.dob, 'dd/MM/yyyy')}" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-lg-4">
                     <label for="email">Email</label>
-                    <input name="email" class="form-control" th:value="${#authentication.getPrincipal().getEmail()}"
+                    <input name="email" class="form-control" th:value="${user.email}"
                            type="email"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-lg-4">
                     <label for="mobile">Mobile</label>
-                    <input name="mobile" class="form-control" th:value="${#authentication.getPrincipal().getMobile()}"
+                    <input name="mobile" class="form-control" th:value="${user.mobile}"
                            type="text" />
                 </div>
             </div>
