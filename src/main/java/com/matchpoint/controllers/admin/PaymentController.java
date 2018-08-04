@@ -52,7 +52,7 @@ public class PaymentController extends AdminRootController {
         Map<String, List<Payment>> paymentsMap = payments.stream().collect(Collectors.groupingBy(payment -> payment.getFee().getFeeName()));
         model.addAttribute("paymentsList", paymentsMap);
         model.addAttribute("id", id);
-        return"/payment/payment-details";
+        return"payment/payment-details";
     }
 
 
@@ -61,7 +61,7 @@ public class PaymentController extends AdminRootController {
         User user = userManager.findOne(id);
         model.addAttribute("user",user);
         model.addAttribute("feeList",feeService.findByPlayerCategoryId(user.getPlayerCategory().getId()));
-        return "/payment/createPayment";
+        return "payment/createPayment";
     }
 
     @PostMapping("/create-pay")
@@ -78,6 +78,6 @@ public class PaymentController extends AdminRootController {
                 .setPaymentStatus(PaymentStatusEnum.SUCCESS.getStatus())
                 .setTransactionId(transactionId);
         paymentManager.saveOrUpdate(payment);
-        return "/payment/payment-details";
+        return "payment/payment-details";
     }
 }
