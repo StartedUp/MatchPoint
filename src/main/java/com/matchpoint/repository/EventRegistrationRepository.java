@@ -14,4 +14,6 @@ import java.util.List;
      List<EventRegistration> findByEvent_id(int eventid);
      EventRegistration findByEventAndUser(Event event,User user);
     EventRegistration findByEventPayment(EventPayment payment);
+
+    EventRegistration findByEvent_idAndPlayerEmail(int id, String playerEmail);
 }

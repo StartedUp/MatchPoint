@@ -2,6 +2,7 @@ package com.matchpoint.service;
 
 import com.matchpoint.model.*;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface EventRegistrationManager {
     String processAndRegister(EventRegistration eventRegistration);
 
     EventRegistration findByPayment(EventPayment payment);
+
+    boolean validateRegistration(EventRegistration eventRegistration, Model model);
 }

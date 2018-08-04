@@ -74,14 +74,17 @@ public class EventRegistrationController {
     @RequestMapping(value = "/registerEvent",method = RequestMethod.POST)
     public String registerEvent(@ModelAttribute("eventRegistration") EventRegistration eventRegistration, BindingResult
             bindingResult, Model model) {
-        if (bindingResult.hasErrors()){
-            model.addAttribute(eventRegistration.getEvent());
-            model.addAttribute("playingCategories", eventRegistration.getEvent().getPlayingCategories());
-            model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
-            return "registerEvent";
-        }
         String paymentUrl= "/exceptionError";
         try {
+            if (bindingResult.hasErrors()){
+                model.addAttribute(eventRegistration.getEvent());
+                model.addAttribute("playingCategories", eventRegistration.getEvent().getPlayingCategories());
+                model.addAttribute("genderTypes", Arrays.asList(GenderTypeEnum.values()));
+                return "registerEvent";
+            }
+            if (!eventRegistrationManager.validateRegistration(eventRegistration, model)) {
+                return "eventRegistration-success";
+            }
             paymentUrl = eventRegistrationManager.processAndRegister(eventRegistration);
         } catch (Exception e) {
             e.printStackTrace();

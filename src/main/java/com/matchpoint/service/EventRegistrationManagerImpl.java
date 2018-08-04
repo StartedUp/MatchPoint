@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -124,5 +125,16 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
     @Override
     public EventRegistration findByPayment(EventPayment payment) {
         return eventRegistrationRepository.findByEventPayment(payment);
+    }
+
+    @Override
+    public boolean validateRegistration(EventRegistration eventRegistration, Model model) {
+        eventRegistration=eventRegistrationRepository.findByEvent_idAndPlayerEmail(eventRegistration.getEvent().getId(), eventRegistration.getPlayerEmail());
+        if (eventRegistration!=null && eventRegistration.getEventPayment().getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus())) {
+            model.addAttribute("eventRegistration", eventRegistration);
+            model.addAttribute("alreadyRegistered", true);
+            return false;
+        }
+        return true;
     }
 }

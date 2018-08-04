@@ -189,8 +189,26 @@
             </div>
         </div>
     </section>
+    <div th:include="fragments/alertBox :: messageModal"></div>
+
 <div th:include="fragments/footer :: feedback"></div>
     <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
+    <input type="hidden" id="paymentStatus" th:value="${param.paymentStatus!=null?param.paymentStatus:null}">
+    <script>
+        $(document).ready(function () {
+            var paymentStatus = $('#paymentStatus').val()
+            if (paymentStatus=='Success') {
+                var title='Alert Message'
+                var message='Payment is successful'
+                messageAlertModal(title, message)
+            }
+            if (paymentStatus=='Failed') {
+                var title='Alert Message'
+                var message='Payment has failed please try again or contact admin.'
+                messageAlertModal(title, message)
+            }
+        })
+    </script>
 </body>
 </html>

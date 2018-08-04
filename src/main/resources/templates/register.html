@@ -62,7 +62,7 @@
                     <div class="row control-group">
                         <div class="form-group col-xs-8 controls">
                             <h4 style="color: darkcyan">Gender</h4>
-                            <select class="form-control" id="playerGender" name="playerGender" required="required">
+                            <select class="form-control" id="playerGender" name="gender" required="required">
                                 <th:block th:each="genderType, stat :${genderTypes}">
                                     <option data-toggle="tooltip" th:value="${genderType.value}"
                                             th:selected="${(user.gender == 0 && stat.first) || user.gender==genderType.value}"

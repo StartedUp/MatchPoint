@@ -53,5 +53,17 @@
         </div>
     </div>
 </section>
+<input type="hidden" id="alreadyRegistered" th:value="${alreadyRegistered}">
+<div th:include="fragments/alertBox :: messageModal"></div>
+<script>
+    $(document).ready(function () {
+        var alreadyRegistered = $('#alreadyRegistered').val()
+        if (alreadyRegistered=='true') {
+            var title='Alert Message'
+            var message='Registration is done with the email id you provided'
+            messageAlertModal(title, message)
+        }
+    })
+</script>
 </body>
 </html>
