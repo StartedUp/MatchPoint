@@ -1,5 +1,6 @@
 package com.matchpoint.service;
 
+import com.matchpoint.Util.DateUtil;
 import com.matchpoint.Util.SessionUtil;
 import com.matchpoint.enums.PaymentModeEnum;
 import com.matchpoint.enums.PaymentStatusEnum;
@@ -27,6 +28,10 @@ public class UserService {
 
     @Value("${payment.create.onregistration}")
     private boolean createRegistrationPayment;
+
+    @Autowired
+    private UserManager userManager;
+
     @Autowired
     private SessionUtil sessionUtil;
 
@@ -81,5 +86,25 @@ public class UserService {
             }
         }
         return fees;
+    }
+
+    public List<User> fetchUsersWithoutMonthlyPayment(){
+        List<User> users = userManager.findAll();
+        return users=users.stream().filter(user -> {
+            List<Payment> payments = user.getPayments();
+            if(!user.isActive()) {
+                return false;
+            }
+            return (payments==null || payments.isEmpty()) || !payments.stream().filter(payment -> payment.getFee().getFeeName().equals("Monthly")
+                    && DateUtil.isCurrentMonth(payment.getPaymentDate())).findAny().isPresent();
+        }).collect(Collectors.toList());
+    }
+
+    public List<String> getUserEmails(List<User> users) {
+        List<String> emails = new ArrayList<>();
+        if(users!=null) {
+            emails = users.stream().map(User::getEmail).collect(Collectors.toList());
+        }
+        return emails;
     }
 }

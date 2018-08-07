@@ -60,6 +60,7 @@ public class RegisterController {
         mailer.setCcList(new String[]{environment.getProperty("spring.mail.username")});
         mailer.setSubject("Matchpoint welcomes you");
         Map<String,String> mailTemplateData=new HashMap<>();
+        mailTemplateData.put("userName", user.getFirstName());
         mailTemplateData.put("templateName","mailTemplates/welcomeMail");
         mailService.prepareAndSend(mailer,mailTemplateData);
         model.addAttribute("registerSuccess",true);

@@ -43,7 +43,7 @@ public class  User {
     @Column(name = "dob")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dob;
-    @OneToMany(targetEntity = Payment.class,mappedBy = "user",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Payment.class,mappedBy = "user",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Payment> payments;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
