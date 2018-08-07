@@ -17,4 +17,6 @@ public interface UserManager {
     public String updatePassword(String email,String password);
     public UserQuery save(UserQuery userQuery);
     public void manageAdminAccess(String email,String action);
+
+    List<User> findByActive(boolean b);
 }

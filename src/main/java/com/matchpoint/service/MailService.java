@@ -5,10 +5,13 @@ package com.matchpoint.service;
  */
 
 import com.matchpoint.Util.MailTemplateBuilder;
+import com.matchpoint.model.Event;
 import com.matchpoint.model.Mailer;
+import com.matchpoint.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +20,8 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,6 +31,14 @@ public class MailService {
     private MailTemplateBuilder mailTemplateBuilder;
     @Autowired
     private Environment environment;
+    @Autowired
+    private UserManager userManager;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MailService mailService;
+    @Value("${mail.event.notification}")
+    private String eventNotification;
 
     @Autowired
     public MailService(JavaMailSender mailSender, MailTemplateBuilder mailTemplateBuilder) {
@@ -59,5 +72,29 @@ public class MailService {
             // runtime exception; compiler will not force you to handle it
             LOGGER.info("Error while sending mail {}", e);
         }
+    }
+
+    @Async
+    public void sendEventNotification(Event event) {
+        LOGGER.info("Send event notificatipon : {}", event);
+        List<User> users = userManager.findByActive(true);
+        if(users!=null && !users.isEmpty()){
+            List<String> userEmails = userService.getUserEmails(users);
+            Mailer mailer = new Mailer();
+            mailer.setBccList(userEmails.stream().toArray(String[]::new));
+            mailer.setSubject("Table tennis events for you");
+            Map<String,String> mailTemplateData=new HashMap<>();
+            mailTemplateData.put("templateName","mailTemplates/eventNotificationMail");
+            mailTemplateData.put("content", eventNotification);
+            mailTemplateData.put("event-name", event.getName());
+            mailTemplateData.put("event-startDate", event.getStartDate().toString());
+            mailTemplateData.put("event-endDate", event.getEndDate().toString());
+            mailTemplateData.put("event-location", event.getLocation());
+            mailTemplateData.put("event-notificationDate", event.getNotificationDate().toString());
+            mailTemplateData.put("event-registra", event.getRegistrationLastDate().toString());
+            mailService.prepareAndSend(mailer,mailTemplateData);
+        }
+
+
     }
 }

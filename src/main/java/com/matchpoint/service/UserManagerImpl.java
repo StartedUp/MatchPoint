@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -65,6 +64,12 @@ public class UserManagerImpl implements UserManager {
         user.setRoles(roles);
         userRepository.save(user);
     }
+
+    @Override
+    public List<User> findByActive(boolean active) {
+        return userRepository.findByActive(active);
+    }
+
     @Override
     public UserQuery save(UserQuery userQuery) {
         return userQueryRepository.save(userQuery);

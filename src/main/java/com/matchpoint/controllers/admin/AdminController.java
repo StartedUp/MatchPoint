@@ -1,7 +1,6 @@
 package com.matchpoint.controllers.admin;
 
 import com.matchpoint.enums.EventTypesEnum;
-import com.matchpoint.enums.PlayingCategoriesEnum;
 import com.matchpoint.model.Event;
 import com.matchpoint.model.EventRegistration;
 import com.matchpoint.model.Role;
@@ -45,6 +44,8 @@ public class AdminController extends AdminRootController{
     private ResourcePatternResolver resourcePatternResolver;
     @Autowired
     private PlayingCategoryService playingCategoryService;
+    @Autowired
+    private MailService mailService;
 
     /*@PreAuthorize("hasAnyRole('admin')")*/
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -74,6 +75,7 @@ public class AdminController extends AdminRootController{
             return "createEvent";
         }
         eventManager.save(event);
+        mailService.sendEventNotification(event);
         model.addAttribute("eventRegisterSuccess",true);
         return "redirect:/a/listEvents";
     }
