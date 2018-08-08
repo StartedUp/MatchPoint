@@ -4,6 +4,7 @@
     <head>
         <div th:include="fragments/header :: headMeta" th:remove="tag"></div>
         <div th:include="fragments/header :: head" th:remove="tag"></div>
+        <div th:include="fragments/header :: table" th:remove="tag"></div>
         <link th:href="@{/css/admin-style.css}" rel="stylesheet"/>
         <style rel="stylesheet">
             th{
@@ -24,22 +25,29 @@
                                 <hr class="star-primary">
                             </div>
                         </div>
-                        <br><div class="table-responsive">
-                            <table style="border-style: solid;background-color:#67b168"  class="table table-hover table-inverse table-bordered" th:if="${!users.isEmpty()}">
+                        <br>
+                        <div class="table-responsive">
+                            <table style="border-style: solid;background-color:#CDDC39"
+                                   class="table table-hover table-inverse table-bordered" id="usersTable"
+                                   data-toggle="table"
+                                   data-show-export="true"
+                                   data-show-columns="true"
+                                   data-search="true"th:if="${!users.isEmpty()}">
                                 <thead class="thead-inverse">
                                 <tr style="color:#c7254e" align="center">
                                     <th>S.NO</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>E-mail</th>
-                                    <th>Mobile</th>
-                                    <th>Gender</th>
-                                    <th>Player Category</th>
-                                    <th>Activity Status</th>
-                                    <th>Role</th>
+                                    <th data-field="Firstname">First Name</th>
+                                    <th data-field="Lastname">Last Name</th>
+                                    <th data-field="Email">E-mail</th>
+                                    <th data-field="Mobile">Mobile</th>
+                                    <th data-field="Gender" data-sortable="true">Gender</th>
+                                    <th data-field="PlayerCategory" data-sortable="true">Player Category</th>
+                                    <th data-sortable="true">Activity Status</th>
+                                    <th data-sortable="true">Role</th>
                                     <th>Access</th>
                                     <th>Block/Unblock</th>
                                     <th>Payment Details</th>
+                                    <th data-sortable="true">Current Month Fee Status</th>
                                     <th>Approve Details</th>
                                 </tr>
                                 </thead>
@@ -51,7 +59,7 @@
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.mobile}"></td>
-                                        <td th:text="${user.gender}"></td>
+                                        <td th:text="${user.getGenderName(user.gender)}"></td>
                                         <td th:text="${user.playerCategory?.categoryName}"></td>
                                         <td th:text="${user.active?'Active':'Blocked'}">
                                         <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
@@ -74,6 +82,7 @@
                                             </a>
                                         </td>
                                         <td th:if="${user.active}"><a class="btn btn-primary" th:href="${'/a/view-payment/'+user.id}">View / Update payment</a></td>
+                                        <td th:text="${user.getCurrentMonthPayment()!=null?user.getCurrentMonthPayment().amount+'-'+user.getCurrentMonthPayment().paymentStatus:'Not Paid'}"></td>
                                         <td th:if="${!user.active}">Please Unblock First!</td>
                                         <td>
                                             <label class="switch">

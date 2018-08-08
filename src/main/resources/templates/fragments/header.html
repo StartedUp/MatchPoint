@@ -62,6 +62,19 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </th:block>
+<th:block th:fragment="table">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/export/bootstrap-table-export.js"></script>
+    <script th:src="@{/js/tableExport.js}"></script>
+    <script th:src="@{/js/jquery.base64.js}"></script>
+<!--
+    &lt;!&ndash; Latest compiled and minified Locales &ndash;&gt;
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>-->
+</th:block>
 <!-- Navigation -->
 <div th:fragment="header">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">

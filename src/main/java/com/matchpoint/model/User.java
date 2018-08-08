@@ -1,12 +1,12 @@
 package com.matchpoint.model;
 
+import com.matchpoint.Util.DateUtil;
+import com.matchpoint.enums.GenderTypeEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gokul on 15/6/17.
@@ -181,6 +181,12 @@ public class  User {
         return this;
     }
 
+    public String getGenderName(int genderCode) {
+        if (genderCode==0)
+            return "";
+        return Arrays.stream(GenderTypeEnum.values()).filter(genderTypeEnum -> genderTypeEnum.getValue()==genderCode).findAny().get().getDescription();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -213,5 +219,16 @@ public class  User {
                 ", dob=" + dob +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public Payment getCurrentMonthPayment() {
+        List<Payment> payments = this.getPayments();
+        if(payments!=null){
+            Optional<Payment> monthly = payments.stream().filter(payment -> payment.getFee().getFeeName().equals("Monthly") && DateUtil.isCurrentMonth(payment.getPaymentDate())).findAny();
+            if (monthly.isPresent()){
+                return monthly.get();
+            }
+        }
+        return null;
     }
 }

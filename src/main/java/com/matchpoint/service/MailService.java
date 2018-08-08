@@ -35,8 +35,6 @@ public class MailService {
     private UserManager userManager;
     @Autowired
     private UserService userService;
-    @Autowired
-    private MailService mailService;
     @Value("${mail.event.notification}")
     private String eventNotification;
 
@@ -92,7 +90,7 @@ public class MailService {
             mailTemplateData.put("event-location", event.getLocation());
             mailTemplateData.put("event-notificationDate", event.getNotificationDate().toString());
             mailTemplateData.put("event-registra", event.getRegistrationLastDate().toString());
-            mailService.prepareAndSend(mailer,mailTemplateData);
+            prepareAndSend(mailer,mailTemplateData);
         }
 
 

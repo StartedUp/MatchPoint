@@ -1,7 +1,11 @@
     <!DOCTYPE html>
     <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-    <head th:include="fragments/header :: head"></head>
+    <head>
+        <div th:include="fragments/header :: headMeta" th:remove="tag"></div>
+        <div th:include="fragments/header :: head" th:remove="tag"></div>
+        <div th:include="fragments/header :: table" th:remove="tag"></div>
+    </head>
 
     <body id="page-top" class="index">
     <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
@@ -19,18 +23,21 @@
             <div class="container" id="maincontent" tabindex="2">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>MatchPoint->Registration list
-                            <a id="export" sec:authorize="hasRole('ROLE_admin')" style="float: right" class="btn btn-info btn-lg">Export</a><br></h2>
+                        <h2>MatchPoint->Registration list<br></h2>
                         <h4 id="eventName" th:class="${event.name}" th:text="'Event Name : '+${event.name}"></h4>
                         <br><div class="table-responsive">
                             <table id="registeredMembers" style="border-style: solid"
+                                   data-toggle="table"
+                                   data-show-export="true"
+                                   data-show-columns="true"
+                                   data-pagination="true" data-search="true"
                                    class="table table-hover table-bordered" th:if="${!eventRegistrations.isEmpty()}">
                                 <thead>
                                 <tr style="color:#c7254e">
                                     <th>S.NO</th>
-                                    <th>Name</th>
+                                    <th data-sortable="true">Name</th>
                                     <th>Email</th>
-                                    <th>Mobile</th>
+                                    <th data-sortable="true">Mobile</th>
                                     <th>Payment Details</th>
                                     <th>DOB</th>
                                     <th>Playing Categories</th>
@@ -57,7 +64,6 @@
             </div>
         </section>
     </div>
-    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#export").click(function () {

@@ -1,5 +1,7 @@
 package com.matchpoint.enums;
 
+import java.util.Arrays;
+
 /**
  * Created by Prithu on 19/7/18.
  */
@@ -34,5 +36,4 @@ public enum GenderTypeEnum {
         this.description = description;
         return this;
     }
-
 }
