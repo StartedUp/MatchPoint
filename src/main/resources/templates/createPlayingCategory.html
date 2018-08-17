@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form action="/a/playingCategory/add" method="post" class="register-form">
+                    <form action="/a/playingCategory/add" id="playingCatForm" method="post" class="register-form">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="name">Playing Category Name</label>
@@ -46,11 +46,27 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-8 floating-label-form-group controls">
+                                <select class="form-control" id="ageLimit" name="ageLimit" placeholder="select age limit" required="required">
+                                        <option data-toggle="tooltip" th:each="i: ${#numbers.sequence(0, 100)}" th:value="${i}"
+                                        th:selected="${playingCategory.ageLimit!=null && playingCategory.ageLimit==i}" th:text="${i}">0</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="asOnDate">As on date</label>
+                                <input id="asOnDateAndMonth" class="form-control" type="text" placeholder="As on date" th:value="${playingCategory.asOnDate+'-'+playingCategory.asOnMonth}" required/>
+                            </div>
+                        </div>
                         <input type="hidden" name="id" th:value="${playingCategory.id}">
+                        <input type="hidden" id="asOnDate" name="asOnDate" th:value="${playingCategory.asOnDate}">
+                        <input type="hidden" id="asOnMonth" name="asOnMonth" th:value="${playingCategory.asOnMonth}">
                         <input name="active" type="hidden" th:value="${true}">
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <input value="Create/Update playing category" type="submit" class="btn btn-success btn-lg"/>
+                                <input value="Create/Update playing category" id="playingCatSubmit" type="button" class="btn btn-success btn-lg"/>
                             </div>
                         </div>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -59,5 +75,13 @@
             </div>
         </div>
     </section>
+    <script>
+        $( "#asOnDateAndMonth" ).datepicker({changeYear: false, yearRange: "-0:+0", dateFormat: 'dd-mm' });
+    </script>
+    <style>
+        .ui-datepicker-year{
+            display: none;
+        }
+    </style>
 </body>
 </html>

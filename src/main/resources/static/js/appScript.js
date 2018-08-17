@@ -6,6 +6,7 @@ $(document).ready(function () {
     var header = $("meta[name='_csrf_header']").attr("content");
 
     $( ".datepicker" ).datepicker({changeYear: true, yearRange: "-80:+0", dateFormat: 'dd/mm/yy' });
+    
 
     $('#create-event-submit').on('click', function () {
         $('.event-playing-category:checked').each(function (i) {
@@ -16,6 +17,13 @@ $(document).ready(function () {
             }).appendTo('#create-event-form');
         })
         $('#create-event-form').submit();
+    })
+
+    $('#playingCatSubmit').on('click', function () {
+        var asOndate = $('#asOnDateAndMonth').val();
+        $('#asOnDate').val(asOndate.substring(0,2));
+        $('#asOnMonth').val(asOndate.substring(3));
+        $('#playingCatForm').submit();
     })
 
     $('#payment-submit').on('click', function () {

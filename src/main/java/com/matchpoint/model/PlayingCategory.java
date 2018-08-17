@@ -27,6 +27,39 @@ public class PlayingCategory {
     private List<Event> events;
     @ManyToMany(mappedBy = "playingCategories")
     private List<EventRegistration> eventRegistrations;
+    @Column
+    private Integer ageLimit;
+    @Column
+    private Integer asOnMonth;
+    @Column
+    private Integer asOnDate;
+
+    public Integer getAgeLimit() {
+        return ageLimit;
+    }
+
+    public PlayingCategory setAgeLimit(Integer ageLimit) {
+        this.ageLimit = ageLimit;
+        return this;
+    }
+
+    public Integer getAsOnMonth() {
+        return asOnMonth;
+    }
+
+    public PlayingCategory setAsOnMonth(Integer asOnMonth) {
+        this.asOnMonth = asOnMonth;
+        return this;
+    }
+
+    public Integer getAsOnDate() {
+        return asOnDate;
+    }
+
+    public PlayingCategory setAsOnDate(Integer asOnDate) {
+        this.asOnDate = asOnDate;
+        return this;
+    }
 
     public int getId() {
         return id;
@@ -92,5 +125,21 @@ public class PlayingCategory {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayingCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", fee=" + fee +
+                ", active=" + active +
+                ", genderType=" + genderType +
+                ", events=" + events +
+                ", eventRegistrations=" + eventRegistrations +
+                ", ageLimit=" + ageLimit +
+                ", asOnMonth=" + asOnMonth +
+                ", asOnDate=" + asOnDate +
+                '}';
     }
 }
