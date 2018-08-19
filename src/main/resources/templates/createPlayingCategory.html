@@ -76,7 +76,9 @@
         </div>
     </section>
     <script>
-        $( "#asOnDateAndMonth" ).datepicker({changeYear: false, yearRange: "-0:+0", dateFormat: 'dd-mm' });
+        $(document).ready(function () {
+            $( "#asOnDateAndMonth" ).datepicker({changeYear: false, yearRange: "-0:+0", dateFormat: 'dd-mm' });
+        })
     </script>
     <style>
         .ui-datepicker-year{

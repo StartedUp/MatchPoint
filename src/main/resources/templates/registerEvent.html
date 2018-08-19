@@ -18,6 +18,7 @@
             <div class="col-lg-12 text-center">
                 <h2 th:text="${eventRegistration.id!=0?'Update Registration':'Register to '+ event.name}"></h2>
                 <hr class="star-primary">
+                <input type="hidden" id="playingCat" th:value="${playingCategories}">
             </div>
         </div>
         <div class="row">
@@ -51,7 +52,7 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-8 floating-label-form-group controls">
                                     <h4 style="color: darkcyan">Gender</h4>
-                                    <select class="form-control" id="playerGender" name="playerGender" required="required">
+                                    <select class="form-control playerGender" id="playerGender" name="playerGender" required="required">
                                         <th:block th:each="genderType, stat :${genderTypes}">
                                             <option data-toggle="tooltip" th:value="${genderType.value}" th:disabled="${currentUser.gender!=0}"
                                                     th:selected="${(currentUser.gender == 0 && stat.first) || currentUser.gender==genderType.value}"
@@ -65,7 +66,7 @@
                                 <div class="form-group col-xs-12">
                                     <label for="userDob">User Dob
                                         <input name="userDob" th:readonly="${!#strings.isEmpty(currentUser.dob)}" required
-                                               th:value="${#dates.format(currentUser.dob,'dd/MM/yyyy')}" class="form-control" type="text"/>
+                                               th:value="${#dates.format(currentUser.dob,'dd/MM/yyyy')}" class="form-control dob" type="text"/>
                                     </label>
                                 </div>
                             </div>
@@ -96,7 +97,7 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-8 floating-label-form-group controls">
                                     <h4 style="color: darkcyan">Gender</h4>
-                                    <select class="form-control" id="playerGender" name="gender" required="required">
+                                    <select class="form-control playerGender" id="gender" name="gender" required="required">
                                         <th:block th:each="genderType, stat :${genderTypes}"
                                                   th:if="${genderType.value != T(com.matchpoint.enums.GenderTypeEnum).ALL.getValue()}">
                                             <option data-toggle="tooltip" th:value="${genderType.value}"
@@ -109,8 +110,8 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12">
                                     <label for="userDob">User Dob
-                                        <input name="userDob" th:required="${event.eventType==T(com.matchpoint.enums.EventTypesEnum).OPEN.getEventType()}"
-                                               class="form-control datepicker" type="text"/>
+                                        <input name="userDob" id="userDob" th:required="${event.eventType==T(com.matchpoint.enums.EventTypesEnum).OPEN.getEventType()}"
+                                               class="form-control datepicker dob" type="text"/>
                                     </label>
                                 </div>
                             </div>
@@ -121,7 +122,10 @@
                             <div class="col-sm-4" th:each="playingCategory, stat : ${playingCategories}">
                                 <label th:text="${playingCategory.name +' Registration fee: ₹'+playingCategory.fee}">Choose playing categories</label>
                                 <input type="checkbox" class="eventRegistration-playing-category" required
-                                       th:attr="data-fee=${playingCategory.fee}" th:value="${playingCategory.id}">
+                                       th:attr="data-fee=${playingCategory.fee}, data-gender=${playingCategory.genderType},
+                                       data-ageLimit=${playingCategory.ageLimit }, data-asOnDate=${playingCategory.asOnDate},
+                                       data-asOnMonth=${playingCategory.asOnMonth}"
+                                       th:value="${playingCategory.id}">
                                 <!--<input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].name'}"
                                        th:value="${playingCategory.name}">
                                 <input type="hidden" th:name="${'playingCategories['+__${stat.index}__+'].fee'}"
@@ -234,7 +238,57 @@
     })*/
 
     $(document).ready(function () {
+        var playerGender = $('.playerGender').val();
+        if(playerGender)
+            displayPlayingCategoriesByGender(playerGender);
+        var dob = $('.dob').val();
+        if(dob)
+            displayPlayingCategoriesByDob(dob);
+        $('.playerGender').on('change', function () {
+            $('.eventRegistration-playing-category').parent().css('display', "block");
+            var playerGender = $('.playerGender').val();
+            var dob = $('.dob').val();
+            if(playerGender)
+                displayPlayingCategoriesByGender(playerGender);
+            if(dob)
+                displayPlayingCategoriesByDob(dob);
+        })
 
+        $('.datepicker').on('change', function () {
+            $('.eventRegistration-playing-category').parent().css('display', "block");
+            var dob = $('.dob').val();
+            var playerGender = $('.playerGender').val();
+            if(dob)
+                displayPlayingCategoriesByDob(dob);
+            if(playerGender)
+                displayPlayingCategoriesByGender(playerGender);
+        })
+
+        function displayPlayingCategoriesByGender(playerGender) {
+            $('.eventRegistration-playing-category').each(function () {
+                var genderType = $(this).data('gender');
+                if(genderType != playerGender && genderType!=4){
+                    $(this).parent().css('display', "none");
+                }
+            })
+        }
+
+        function displayPlayingCategoriesByDob(dob) {
+            $('.eventRegistration-playing-category').each(function () {
+                var asOnDate = $(this).data('asondate')
+                var asOnMonth = $(this).data('asonmonth')
+                var ageLimit = $(this).data('agelimit')
+                var parts = dob.split("/");
+                var playerDob = new Date(parts[2], parts[1] - 1, parts[0]);
+                var date = new Date();
+                date.setDate(asOnDate);
+                date.setMonth(asOnMonth-1);
+                date.setFullYear(date.getFullYear()-ageLimit)
+                if(ageLimit!=0 && date>playerDob){
+                    $(this).parent().css('display', "none");
+                }
+            })
+        }
     })
 
 
