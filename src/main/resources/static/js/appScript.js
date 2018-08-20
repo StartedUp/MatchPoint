@@ -21,8 +21,13 @@ $(document).ready(function () {
 
     $('#playingCatSubmit').on('click', function () {
         var asOndate = $('#asOnDateAndMonth').val();
-        $('#asOnDate').val(asOndate.substring(0,2));
-        $('#asOnMonth').val(asOndate.substring(3));
+        if (asOndate) {
+            $('#asOnDate').val(asOndate.substring(0, 2));
+            $('#asOnMonth').val(asOndate.substring(3));
+        }else {
+            $('#asOnDate').val(0);
+            $('#asOnMonth').val(0);
+        }
         $('#playingCatForm').submit();
     })
 

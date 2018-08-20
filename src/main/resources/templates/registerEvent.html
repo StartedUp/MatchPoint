@@ -49,12 +49,13 @@
                                     </label>
                                 </div>
                             </div>
+                            <!--Gender html-->
                             <div class="row control-group">
-                                <div class="form-group col-xs-8 floating-label-form-group controls">
+                                <div class="form-group col-xs-3 controls">
                                     <h4 style="color: darkcyan">Gender</h4>
-                                    <select class="form-control playerGender" id="playerGender" name="playerGender" required="required">
+                                    <select class="form-control playerGender" id="playerGender" name="playerGender" required="required" disabled>
                                         <th:block th:each="genderType, stat :${genderTypes}">
-                                            <option data-toggle="tooltip" th:value="${genderType.value}" th:disabled="${currentUser.gender!=0}"
+                                            <option data-toggle="tooltip" th:value="${genderType.value}"
                                                     th:selected="${(currentUser.gender == 0 && stat.first) || currentUser.gender==genderType.value}"
                                                     th:text="${genderType}" th:if="${genderType.value != T(com.matchpoint.enums.GenderTypeEnum).ALL.getValue()}">
                                             </option>
@@ -95,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="row control-group">
-                                <div class="form-group col-xs-8 floating-label-form-group controls">
+                                <div class="form-group col-xs-3">
                                     <h4 style="color: darkcyan">Gender</h4>
                                     <select class="form-control playerGender" id="gender" name="gender" required="required">
                                         <th:block th:each="genderType, stat :${genderTypes}"
