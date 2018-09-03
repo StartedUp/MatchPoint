@@ -20,8 +20,8 @@ $(document).ready(function () {
     })
 
     $('#playingCatSubmit').on('click', function () {
-        var asOndate = $('#asOnDateAndMonth').val();
-        if (asOndate) {
+        var asOndate = $('#asOnDateAndMonth').val();/*Day and month of age limit*/
+        if (asOndate && asOndate.split('-')[0]!='null' && asOndate.split('-')[1]!='null' ) {
             $('#asOnDate').val(asOndate.substring(0, 2));
             $('#asOnMonth').val(asOndate.substring(3));
         }else {
@@ -64,9 +64,18 @@ $(document).ready(function () {
 
     $('.eventRegistration-playing-category').on('change', function () {
         var totalFee=0.00;
+        var isTeamEvent = 'false';
         $('.eventRegistration-playing-category:checked').each(function (i) {
             totalFee+=Number($(this).data('fee'))
+            if (isTeamEvent!='true') {
+                isTeamEvent=$(this).data('isteamevent')
+            }
         })
+        if (isTeamEvent == 'true' || isTeamEvent==true) {
+            $('#teamName').show()
+        }else {
+            $('#teamName').hide()
+        }
         $('#total-event-reg-fee').text('Total : ₹ '+totalFee.toFixed(2))
     })
 

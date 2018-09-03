@@ -31,6 +31,13 @@
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="description">Description</label>
+                                <input name="description" class="form-control" type="text" th:value="${playingCategory.description}"
+                                       placeholder="description" required/>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="fee">Fee</label>
                                 <input name="fee" class="form-control" type="text" th:value="${playingCategory.fee}"
                                        placeholder="Fee" required/>
@@ -52,6 +59,15 @@
                                 <select class="form-control" id="ageLimit" name="ageLimit" placeholder="select age limit" required="required">
                                         <option data-toggle="tooltip" th:each="i: ${#numbers.sequence(0, 100)}" th:value="${i}"
                                         th:selected="${playingCategory.ageLimit!=null && playingCategory.ageLimit==i}" th:text="${i}">0</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-8 controls">
+                                <h4 style="color: darkcyan">Is Team Event</h4>
+                                <select class="form-control" id="teamEvent" name="teamEvent" placeholder="Is Team Event">
+                                    <option th:value="${false}" th:selected="${!playingCategory.teamEvent}" th:text="${'No'}">0</option>
+                                    <option th:value="${true}" th:selected="${playingCategory.teamEvent}" th:text="${'Yes'}">0</option>
                                 </select>
                             </div>
                         </div>

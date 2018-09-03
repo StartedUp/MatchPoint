@@ -27,10 +27,12 @@
                                 <thead>
                                 <tr style="color:#c7254e">
                                     <th>Playing category Name</th>
+                                    <th>Description</th>
                                     <th>Fee</th>
                                     <th>Gender Type</th>
                                     <th>Age limit</th>
                                     <th>As on Date/Month</th>
+                                    <th>Is Team Event</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -38,14 +40,17 @@
                                 <tbody>
                                 <tr style="color: #122b40" th:each="playingCategory,stat : ${playingCategories}">
                                     <td th:text="${playingCategory.name}"></td>
+                                    <td th:text="${playingCategory.description}"></td>
                                     <td th:text="${playingCategory.fee}"></td>
                                     <td th:text="${playingCategory.getGenderType(playingCategory.genderType)?.getDescription()}"></td>
                                     <td th:text="${playingCategory.ageLimit}"></td>
                                     <td th:text="${playingCategory.asOnDate+'-'+playingCategory.asOnMonth}"></td>
+                                    <td th:text="${playingCategory.isTeamEvent()?'Yes':'No'}"></td>
                                     <td th:text="${playingCategory.active?'Enabled':'Disabled'}"></td>
                                     <td><a th:href="@{'/a/playingCategory/edit/'+${playingCategory.id}}">Edit</a>/
                                         <a th:href="@{'/a/playingCategory/remove/'+${playingCategory.id}}">Remove</a></td>
                                     </tr>
+                                <!--fhijhgybbcdfxsgbbgbknbvgghnjj-->
                                 </tbody>
                             </table>
                         </div>

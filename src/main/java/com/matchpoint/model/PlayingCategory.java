@@ -18,9 +18,13 @@ public class PlayingCategory {
     @Column(name = "name")
     private String name;
     @Column
+    private String description;
+    @Column
     private BigDecimal fee;
     @Column
     private boolean active;
+    @Column(columnDefinition="tinyint(1) default 0")
+    private boolean teamEvent;
     @Column(columnDefinition="int default 0")
     private int genderType; //GenderTypeEnum
     @ManyToMany(mappedBy = "playingCategories")
@@ -115,6 +119,22 @@ public class PlayingCategory {
 
     public void setGenderType(int genderType) {
         this.genderType = genderType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isTeamEvent() {
+        return teamEvent;
+    }
+
+    public void setTeamEvent(boolean teamEvent) {
+        this.teamEvent = teamEvent;
     }
 
     public GenderTypeEnum getGenderType(int value){

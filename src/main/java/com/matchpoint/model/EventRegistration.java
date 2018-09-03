@@ -32,6 +32,8 @@ public class EventRegistration {
     private String playerMobile;
     @Column(columnDefinition="int default 0")
     private int gender;
+    @Column
+    private String teamName;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "event_payment_id")
     private EventPayment eventPayment;
@@ -124,6 +126,14 @@ public class EventRegistration {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     @Override

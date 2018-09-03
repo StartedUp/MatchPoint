@@ -72,13 +72,14 @@ public class MailService {
         }
     }
 
-    @Async
+    /*@Async*/
     public void sendEventNotification(Event event) {
         LOGGER.info("Send event notificatipon : {}", event);
         List<User> users = userManager.findByActive(true);
         if(users!=null && !users.isEmpty()){
             List<String> userEmails = userService.getUserEmails(users);
             Mailer mailer = new Mailer();
+            mailer.setRecipients(new String[]{"matchpointtta@gmail.com"});
             mailer.setBccList(userEmails.stream().toArray(String[]::new));
             mailer.setSubject("Table tennis events for you");
             Map<String,String> mailTemplateData=new HashMap<>();
