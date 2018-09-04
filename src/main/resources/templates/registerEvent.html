@@ -121,7 +121,12 @@
                         <h4 style="color: darkcyan">Please Choose the Categories</h4>
                         <div class="row control-group">
                             <div class="col-sm-4" th:each="playingCategory, stat : ${playingCategories}">
-                                <label th:text="${playingCategory.name +' Registration fee: ₹'+playingCategory.fee}"></label>
+                                <label>
+                                    <span th:text="${playingCategory.name +' Registration fee: ₹'+playingCategory.fee}"></span>
+                                    <a href="#" data-toggle="tooltip" th:title="${playingCategory.description}">
+                                        <span class="glyphicon glyphicon-info-sign"></span>
+                                    </a>
+                                </label>
                                 <input type="checkbox" class="eventRegistration-playing-category" required
                                        th:attr="data-fee=${playingCategory.fee}, data-gender=${playingCategory.genderType},
                                        data-ageLimit=${playingCategory.ageLimit }, data-asOnDate=${playingCategory.asOnDate},
