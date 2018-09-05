@@ -5,6 +5,15 @@
         <div th:include="fragments/header :: headMeta" th:remove="tag"></div>
         <div th:include="fragments/header :: head" th:remove="tag"></div>
         <div th:include="fragments/header :: table" th:remove="tag"></div>
+        <script>
+            $(document).ready(function () {
+                $('#registeredMembers').bootstrapTable({
+                    exportOptions: {
+                        fileName: $("#eventName").attr('class')
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body id="page-top" class="index">
@@ -49,7 +58,7 @@
                                     <td th:text="${eventReg.getPlayerName()} "></td>
                                     <td th:text="${eventReg.getPlayerEmail()} "></td>
                                     <td th:text="${eventReg.getPlayerMobile()} "></td>
-                                    <td th:text="${'Amount : ₹ '+ eventReg.eventPayment.amount+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
+                                    <td th:text="${'Amount : Rs. '+ eventReg.eventPayment.amount+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
                                     <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
                                     <td>
                                         <span th:each="playingCategory,stat : ${eventReg.playingCategories}"
@@ -64,20 +73,5 @@
             </div>
         </section>
     </div>
-    <script>
-        $(document).ready(function () {
-            $("#export").click(function () {
-                $("#registeredMembers").table2excel({
-                    exclude: ".noExl",
-                    name: "Playing List",
-                    filename: $("#eventName").attr('class'),
-                    fileext: ".xls",
-                    exclude_img: true,
-                    exclude_links: true,
-                    exclude_inputs: true
-                });
-            });
-        });
-    </script>
     </body>
     </html>
