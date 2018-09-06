@@ -6,7 +6,8 @@ $(document).ready(function () {
     var header = $("meta[name='_csrf_header']").attr("content");
 
     $( ".datepicker" ).datepicker({changeYear: true, yearRange: "-80:+0", dateFormat: 'dd/mm/yy' });
-    
+
+    $('[data-toggle="tooltip"]').tooltip();
 
     $('#create-event-submit').on('click', function () {
         $('.event-playing-category:checked').each(function (i) {
