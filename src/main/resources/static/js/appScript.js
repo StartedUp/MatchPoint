@@ -68,7 +68,7 @@ $(document).ready(function () {
         var isTeamEvent = 'false';
         $('.eventRegistration-playing-category:checked').each(function (i) {
             totalFee+=Number($(this).data('fee'))
-            if (isTeamEvent!='true') {
+            if (isTeamEvent!='true' && isTeamEvent!=true) {
                 isTeamEvent=$(this).data('isteamevent')
             }
         })
