@@ -5,7 +5,7 @@
 <head th:include="fragments/header :: head"></head>
 
 <body id="page-top" class="index">
-<input type="hidden" id="paymentStatus" th:value="${param.paymentStatus}">
+<input type="hidden" id="paymentStatus" th:value="${#httpServletRequest.getParameter('paymentStatus')}">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
 <!-- Navigation -->
@@ -33,12 +33,12 @@
         var paymentStatus = $('#paymentStatus').val()
         if (paymentStatus=='Success') {
             var title='Alert Message'
-            var message='Payment is successful'
+            var message='Registration is successful'
             messageAlertModal(title, message)
         }
         if (paymentStatus=='Failed') {
             var title='Alert Message'
-            var message='Payment has failed please try again or contact admin.'
+            var message='Payment has failed please try again'
             messageAlertModal(title, message)
         }
     })

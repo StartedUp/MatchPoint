@@ -23,8 +23,8 @@ $(document).ready(function () {
     $('#playingCatSubmit').on('click', function () {
         var asOndate = $('#asOnDateAndMonth').val();/*Day and month of age limit*/
         if (asOndate && asOndate.split('-')[0]!='null' && asOndate.split('-')[1]!='null' ) {
-            $('#asOnDate').val(asOndate.substring(0, 2));
-            $('#asOnMonth').val(asOndate.substring(3));
+            $('#asOnDate').val(asOndate.split('-')[0]);
+            $('#asOnMonth').val(asOndate.split('-')[1]);
         }else {
             $('#asOnDate').val(0);
             $('#asOnMonth').val(0);

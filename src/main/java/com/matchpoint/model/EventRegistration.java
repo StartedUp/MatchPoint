@@ -34,6 +34,8 @@ public class EventRegistration {
     private int gender;
     @Column
     private String teamName;
+    @Column
+    private String kttaRegNum;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "event_payment_id")
     private EventPayment eventPayment;
@@ -134,6 +136,14 @@ public class EventRegistration {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getKttaRegNum() {
+        return kttaRegNum;
+    }
+
+    public void setKttaRegNum(String kttaRegNum) {
+        this.kttaRegNum = kttaRegNum;
     }
 
     @Override

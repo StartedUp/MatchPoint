@@ -85,12 +85,12 @@ public class MailService {
             Map<String,String> mailTemplateData=new HashMap<>();
             mailTemplateData.put("templateName","mailTemplates/eventNotificationMail");
             mailTemplateData.put("content", eventNotification);
-            mailTemplateData.put("event-name", event.getName());
-            mailTemplateData.put("event-startDate", event.getStartDate().toString());
-            mailTemplateData.put("event-endDate", event.getEndDate().toString());
-            mailTemplateData.put("event-location", event.getLocation());
-            mailTemplateData.put("event-notificationDate", event.getNotificationDate().toString());
-            mailTemplateData.put("event-registra", event.getRegistrationLastDate().toString());
+            mailTemplateData.put("eventName", event.getName());
+            mailTemplateData.put("eventStartDate", event.getStartDate().toString());
+            mailTemplateData.put("eventEndDate", event.getEndDate().toString());
+            mailTemplateData.put("eventLocation", event.getLocation());
+            mailTemplateData.put("eventNotificationDate", event.getNotificationDate().toString());
+            mailTemplateData.put("eventRegistrationLastDate", event.getRegistrationLastDate().toString());
             prepareAndSend(mailer,mailTemplateData);
         }
 

@@ -6,7 +6,8 @@ package com.matchpoint.enums;
 public enum PaymentStatusEnum {
     INIT(1,"Initialized"),
     SUCCESS(2,"Success"),
-    FAILED(3, "Failed");
+    FAILED(3, "Failed"),
+    PENDING(4, "Pending");
 
     private int statusCode;
     private String status;

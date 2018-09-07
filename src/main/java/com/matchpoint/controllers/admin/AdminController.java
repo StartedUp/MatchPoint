@@ -74,7 +74,7 @@ public class AdminController extends AdminRootController{
         if (bindingResult.hasErrors()){
             return "createEvent";
         }
-        eventManager.save(event);
+        event=eventManager.save(event);
         mailService.sendEventNotification(event);
         model.addAttribute("eventRegisterSuccess",true);
         return "redirect:/a/listEvents";

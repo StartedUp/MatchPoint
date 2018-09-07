@@ -15,7 +15,8 @@
 </style>
 
 <body id="page-top" class="index">
-    <!-- Navigation -->
+<input type="hidden" id="paymentStatus" th:value="${#httpServletRequest.getParameter('paymentStatus')}">
+    <!-- Navigation ok-->
   <div th:include="fragments/header :: header"></div>
 <h3 th:if="${registerSuccess}" class="error">Registered Successfully</h3>
 <h3 th:if="${logoutSuccess}" class="error">You are Logged off Successfully</h3>
@@ -194,13 +195,12 @@
 <div th:include="fragments/footer :: feedback"></div>
     <!-- Footer -->
 <div th:include="fragments/footer :: footer"></div>
-    <input type="hidden" id="paymentStatus" th:value="${param.paymentStatus!=null?param.paymentStatus:null}">
     <script>
         $(document).ready(function () {
             var paymentStatus = $('#paymentStatus').val()
             if (paymentStatus=='Success') {
                 var title='Alert Message'
-                var message='Payment is successful'
+                var message='Registration is successful'
                 messageAlertModal(title, message)
             }
             if (paymentStatus=='Failed') {

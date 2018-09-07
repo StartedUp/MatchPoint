@@ -40,6 +40,8 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
     private String instamojoClientId;
     @Value("${payment.online.instamojo.client.secret}")
     private String instamojoClientSecret;
+    @Value("${payment.ignore.pg}")
+    private boolean ignorePg;
 
     @Autowired
     private SessionUtil sessionUtil;
@@ -97,11 +99,20 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
             List<PlayingCategory> playingCategories = eventRegistration.getPlayingCategories();
             int totalFee = playingCategories.stream().mapToInt(playingCategory -> playingCategory.getFee().intValue()).sum();
             EventPayment payment = new EventPayment();
-            payment.setAmount(new BigDecimal(totalFee)).setDescription(event.getName()).setPaymentDate(new Date())
-                    .setPaymentStatus(PaymentStatusEnum.INIT.getStatus()).setPaymentMode(PaymentModeEnum.ONLINE.getMode()+"");
-            eventPaymentManager.saveOrUpdate(payment);
-            eventRegistration.setEventPayment(payment);
-            eventRegistration=eventRegistrationRepository.save(eventRegistration);
+            if (!ignorePg) {
+                payment.setAmount(new BigDecimal(totalFee)).setDescription(event.getName()).setPaymentDate(new Date())
+                        .setPaymentStatus(PaymentStatusEnum.INIT.getStatus()).setPaymentMode(PaymentModeEnum.ONLINE.getMode()+"");
+                eventPaymentManager.saveOrUpdate(payment);
+                eventRegistration.setEventPayment(payment);
+                eventRegistration=eventRegistrationRepository.save(eventRegistration);
+            } else {
+                payment.setAmount(new BigDecimal(totalFee)).setDescription(event.getName()).setPaymentDate(new Date())
+                        .setPaymentStatus(PaymentStatusEnum.PENDING.getStatus()).setPaymentMode(PaymentModeEnum.OFFLINE.getMode()+"");
+                eventPaymentManager.saveOrUpdate(payment);
+                eventRegistration.setEventPayment(payment);
+                eventRegistrationRepository.save(eventRegistration);
+                return "redirect:/?paymentStatus="+PaymentStatusEnum.SUCCESS.getStatus();
+            }
             return processPayment(eventRegistration);
         }
         return "exceptionError";

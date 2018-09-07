@@ -6,7 +6,8 @@ package com.matchpoint.enums;
 public enum PaymentModeEnum {
     CASH(1,"Cash"),
     ONLINE(2,"Online"),
-    CHEQUE(3, "Cheque");
+    CHEQUE(3, "Cheque"),
+    OFFLINE(4, "Offline");
 
     private int mode;
     private String description;
