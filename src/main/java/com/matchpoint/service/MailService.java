@@ -8,6 +8,7 @@ import com.matchpoint.Util.MailTemplateBuilder;
 import com.matchpoint.model.Event;
 import com.matchpoint.model.Mailer;
 import com.matchpoint.model.User;
+import org.apache.http.client.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,8 +90,8 @@ public class MailService {
             mailTemplateData.put("eventStartDate", event.getStartDate().toString());
             mailTemplateData.put("eventEndDate", event.getEndDate().toString());
             mailTemplateData.put("eventLocation", event.getLocation());
-            mailTemplateData.put("eventNotificationDate", event.getNotificationDate().toString());
-            mailTemplateData.put("eventRegistrationLastDate", event.getRegistrationLastDate().toString());
+            mailTemplateData.put("eventNotificationDate", DateUtils.formatDate(event.getNotificationDate(), "dd-MM-YYYY"));
+            mailTemplateData.put("eventRegistrationLastDate", DateUtils.formatDate(event.getRegistrationLastDate(), "dd-MM-YYYY"));
             prepareAndSend(mailer,mailTemplateData);
         }
 
