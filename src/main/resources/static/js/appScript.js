@@ -103,7 +103,7 @@ $(document).ready(function () {
 })
 function messageAlertModal(title, message) {
     $('#messageTitle').text(title)
-    $('#message').text(message)
+    $('#alertMessage').text(message)
     $('#messageModal').modal('show')
 }
 
