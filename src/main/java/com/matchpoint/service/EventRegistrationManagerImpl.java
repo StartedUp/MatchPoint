@@ -111,7 +111,7 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
                 eventPaymentManager.saveOrUpdate(payment);
                 eventRegistration.setEventPayment(payment);
                 eventRegistrationRepository.save(eventRegistration);
-                return "redirect:/?paymentStatus="+PaymentStatusEnum.SUCCESS.getStatus();
+                return "/?paymentStatus="+PaymentStatusEnum.SUCCESS.getStatus();
             }
             return processPayment(eventRegistration);
         }
