@@ -148,4 +148,11 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
         }
         return true;
     }
+
+    @Override
+    public List<EventRegistration> findByEvent_PlayingCategory(int playingCatId, int eventid) {
+        return eventRegistrationRepository.findByEvent_PlayingCategory(playingCatId,eventid);
+    }
+
+
 }

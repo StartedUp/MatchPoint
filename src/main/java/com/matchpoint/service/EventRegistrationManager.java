@@ -28,4 +28,6 @@ public interface EventRegistrationManager {
     EventRegistration findByPayment(EventPayment payment);
 
     boolean validateRegistration(EventRegistration eventRegistration, Model model);
+
+    List<EventRegistration> findByEvent_PlayingCategory(int playingCatId, int eventid);
 }
