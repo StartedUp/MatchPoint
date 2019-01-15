@@ -34,7 +34,8 @@
                     <div class="col-lg-12">
                         <h2>MatchPoint->Registration list<br></h2>
                         <h4 id="eventName" th:class="${event.name}" th:text="'Event Name : '+${event.name}"></h4>
-                        <br><div class="table-responsive">
+                        <br>
+                        <div class="table-responsive">
                             <table id="registeredMembers" style="border-style: solid"
                                    data-toggle="table"
                                    data-show-export="true"
@@ -67,6 +68,41 @@
                                     </td>
                                     <td th:text="${'Amount : Rs. '+ eventReg.eventPayment.amount+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
                                 </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="registeredMembersByPlayingCat" style="border-style: solid"
+                                   data-toggle="table"
+                                   data-show-export="true"
+                                   data-show-columns="true"
+                                   data-pagination="false" data-search="true"
+                                   class="table table-hover table-bordered" th:if="${!regsByPlayingCat.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>S.NO</th>
+                                    <th data-sortable="true">Name</th>
+                                    <th>DOB</th>
+                                    <th>KTTA Reg.No.</th>
+                                    <th>Email</th>
+                                    <th data-sortable="true">Mobile</th>
+                                    <th>Playing Categories</th>
+                                    <th>Payment Details</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="regsEntry : ${regsByPlayingCat}">
+                                    <tr style="color: #122b40" th:each="eventReg,stat : ${regsEntry.value}">
+                                        <td th:text="${stat.count}">1</td>
+                                        <td th:text="${eventReg.getPlayerName()} "></td>
+                                        <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
+                                        <td th:text="${eventReg.kttaRegNum}"></td>
+                                        <td th:text="${eventReg.getPlayerEmail()} "></td>
+                                        <td th:text="${eventReg.getPlayerMobile()} "></td>
+                                        <td th:text="${regsEntry.key.name}"></td>
+                                        <td th:text="${'Amount : Rs. '+ regsEntry.key.fee+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
+                                    </tr>
+                                </th:block>
                                 </tbody>
                             </table>
                         </div>

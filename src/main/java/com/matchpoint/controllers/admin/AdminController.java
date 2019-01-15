@@ -1,10 +1,7 @@
 package com.matchpoint.controllers.admin;
 
 import com.matchpoint.enums.EventTypesEnum;
-import com.matchpoint.model.Event;
-import com.matchpoint.model.EventRegistration;
-import com.matchpoint.model.Role;
-import com.matchpoint.model.User;
+import com.matchpoint.model.*;
 import com.matchpoint.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by gokul on 10/7/17.
@@ -93,8 +92,10 @@ public class AdminController extends AdminRootController{
         List<EventRegistration> eventRegistrations;
         Event event=eventManager.findById(eventId);
         eventRegistrations=eventRegistrationManager.findByEvent_id(eventId);
+        List<PlayingCategory> playingCategories = event.getPlayingCategories();
+        Map<PlayingCategory, List<EventRegistration>> collect = playingCategories.stream().collect(Collectors.toMap(o -> o, o -> eventRegistrationManager.findByEvent_PlayingCategory(o.getId(), eventId)));
         model.addAttribute("eventRegistrations",eventRegistrations);
-        model.addAttribute("event", event);
+        model.addAttribute("event", event).addAttribute("regsByPlayingCat", collect);
         return "registeredUsers";
     }
     @RequestMapping("/manageRoles")
