@@ -91,7 +91,7 @@ public class EventRegistrationController {
         }
         return "redirect:"+paymentUrl;
     }
-    @GetMapping("/myRegisteredEvents")
+    @GetMapping("/u/myRegisteredEvents")
     public String showMyEvents(Model model) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<EventRegistration> eventRegistrations = eventRegistrationManager.findByUser(user);

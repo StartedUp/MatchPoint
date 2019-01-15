@@ -24,7 +24,18 @@ public class LoginController {
     private PlayerCategoryService playerCategoryService;
 
     @GetMapping("/")
-    public String showHomePage() {
+    public String showHomePage(Model model) {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (!(auth instanceof AnonymousAuthenticationToken)) {
+                /* The user is logged in :) */
+                return "memberHome";
+            }
+        }catch (UsernameNotFoundException e){
+            e.printStackTrace();
+            model.addAttribute("userNotFound", true);
+            return "index";
+        }
         return "index";
     }
 
