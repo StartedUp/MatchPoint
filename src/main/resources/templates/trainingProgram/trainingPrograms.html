@@ -1,0 +1,59 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:include="fragments/header :: head"></head>
+
+    <body id="page-top" class="index">
+    <div th:include="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <style rel="stylesheet">
+            th{
+                text-align: center;
+            }
+        </style>
+
+        <section>
+            <div class="container" id="maincontent" tabindex="2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2>Table tennis Training Programs<a sec:authorize="hasRole('ROLE_admin')" th:href="@{/a/trainingProgram/showCreatePage}" style="float: right" class="btn btn-info btn-lg">Create Training Program</a><br></h2>
+                                <hr class="star-primary">
+                            </div>
+                        </div>
+                        <br><div class="table-responsive">
+                            <table style="border-style: solid" class="table table-hover table-bordered" th:if="${trainingPrograms!=null && !trainingPrograms.isEmpty()}">
+                                <thead>
+                                <tr style="color:#c7254e">
+                                    <th>Training Program Name</th>
+                                    <th>Description</th>
+                                    <th>Fee</th>
+                                    <th>Location</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Registration Last Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="color: #122b40" th:each="trainingProgram,stat : ${trainingPrograms}">
+                                    <td th:text="${trainingProgram.name}"></td>
+                                    <td th:text="${trainingProgram.description}"></td>
+                                    <td th:text="${trainingProgram.fee}"></td>
+                                    <td th:text="${trainingProgram.location}"></td>
+                                    <td th:text="${#dates.format(trainingProgram.fromDate,'dd-MMM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(trainingProgram.toDate,'dd-MMM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(trainingProgram.registrationLastDate,'dd-MMM-yyyy')}"></td>
+                                    <td><a th:href="@{'/a/trainingProgram/edit/'+${trainingProgram.id}}">Edit</a>/
+                                        <a th:href="@{'/a/trainingProgram/remove/'+${trainingProgram.id}}">Remove</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>
