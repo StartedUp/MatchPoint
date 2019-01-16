@@ -103,7 +103,7 @@ public class EventRegistrationController {
         return "myEvents";
     }
 
-    @GetMapping("/eventRegistration/paymentStatus")
+    @GetMapping("/u/eventRegistration/paymentStatus")
     public String paymentSuccessRedirect(
             @RequestParam("id") String paymentRequestId,
             @RequestParam("transaction_id") String transactionId,
@@ -133,7 +133,7 @@ public class EventRegistrationController {
         }
     }
 
-    @RequestMapping("/eventRegistration/success")
+    @RequestMapping("/u/eventRegistration/success")
     public String eventRegistrationSuccess(Model model, HttpSession session) {
         EventPayment payment = (EventPayment) session.getAttribute("payment");
         if(payment!=null){

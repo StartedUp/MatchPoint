@@ -129,7 +129,7 @@ public class OnlinePaymentProcessor {
         order.setCurrency("INR");
         order.setAmount(payment.getAmount().doubleValue());
         order.setDescription(payment.getDescription());
-        order.setRedirectUrl(domainName+"/eventRegistration/paymentStatus");
+        order.setRedirectUrl(domainName+"/u/eventRegistration/paymentStatus");
         //order.setWebhookUrl("http://www.google.com/");
         order.setTransactionId(payment.getTransactionId());
 
