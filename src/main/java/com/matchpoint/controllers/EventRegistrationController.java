@@ -75,6 +75,7 @@ public class EventRegistrationController {
     public String registerEvent(@ModelAttribute("eventRegistration") EventRegistration eventRegistration, BindingResult
             bindingResult, Model model) {
         String paymentUrl= "/exceptionError";
+        LOGGER.info("{} registering event {}", eventRegistration.getPlayerName(), eventRegistration.getEvent().getName());
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute(eventRegistration.getEvent());
@@ -103,7 +104,7 @@ public class EventRegistrationController {
         return "myEvents";
     }
 
-    @GetMapping("/u/eventRegistration/paymentStatus")
+    @GetMapping("/eventRegistration/paymentStatus")
     public String paymentSuccessRedirect(
             @RequestParam("id") String paymentRequestId,
             @RequestParam("transaction_id") String transactionId,
@@ -133,7 +134,7 @@ public class EventRegistrationController {
         }
     }
 
-    @RequestMapping("/u/eventRegistration/success")
+    @RequestMapping("/eventRegistration/success")
     public String eventRegistrationSuccess(Model model, HttpSession session) {
         EventPayment payment = (EventPayment) session.getAttribute("payment");
         if(payment!=null){
