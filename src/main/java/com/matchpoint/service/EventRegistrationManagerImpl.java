@@ -142,7 +142,7 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
     public boolean validateRegistration(EventRegistration eventRegistration, Model model) {
         EventRegistration eventRegistrationInDb=eventRegistrationRepository.findByEvent_idAndPlayerEmail(eventRegistration.getEvent().getId(), eventRegistration.getPlayerEmail());
         if (eventRegistrationInDb!=null && eventRegistrationInDb.getEventPayment().getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus())) {
-            model.addAttribute("eventRegistration", eventRegistration);
+            model.addAttribute("eventRegistration", eventRegistrationInDb);
             model.addAttribute("alreadyRegistered", true);
             return false;
         }
