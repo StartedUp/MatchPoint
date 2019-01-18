@@ -123,5 +123,12 @@ function validateFormFields() {
         valid=false
         return false
     }
+    var playerMobile=$('#playerMobile').val();
+    if (valid && !/^\d{10}$/.test(playerMobile)) {
+        messageAlertModal('Alert Message', 'Please enter only 10 digits of your mobile number')
+        $('#playerMobile').css("border-color", "red")
+        valid=false
+        return false
+    }
     return valid;
 }
