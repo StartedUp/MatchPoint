@@ -89,6 +89,8 @@
                                     <th>DOB</th>
                                     <th>KTTA Reg.No.</th>
                                     <th>Email</th>
+                                    <th>Team Name</th>
+                                    <th>Doubles Partner Name</th>
                                     <th data-sortable="true">Mobile</th>
                                     <th>Playing Categories</th>
                                     <th>Payment Details</th>
@@ -102,6 +104,8 @@
                                         <td th:text="${#dates.format(eventReg.userDob,'dd-MMM-yyyy')}"></td>
                                         <td th:text="${eventReg.kttaRegNum}"></td>
                                         <td th:text="${eventReg.getPlayerEmail()} "></td>
+                                        <td th:text="${eventReg.getTeamName()} "></td>
+                                        <td th:text="${eventReg.getDoublesPartnerName()} "></td>
                                         <td th:text="${eventReg.getPlayerMobile()} "></td>
                                         <td th:text="${regsEntry.key.name}"></td>
                                         <td th:text="${'Amount : Rs. '+ regsEntry.key.fee+', Status : '+eventReg.eventPayment.paymentStatus} "></td>
