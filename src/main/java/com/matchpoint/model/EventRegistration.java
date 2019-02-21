@@ -35,6 +35,8 @@ public class EventRegistration {
     @Column
     private String teamName;
     @Column
+    private String doublesPartnerName;
+    @Column
     private String kttaRegNum;
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "event_payment_id")
@@ -144,6 +146,14 @@ public class EventRegistration {
 
     public void setKttaRegNum(String kttaRegNum) {
         this.kttaRegNum = kttaRegNum;
+    }
+
+    public String getDoublesPartnerName() {
+        return doublesPartnerName;
+    }
+
+    public void setDoublesPartnerName(String doublesPartnerName) {
+        this.doublesPartnerName = doublesPartnerName;
     }
 
     @Override
