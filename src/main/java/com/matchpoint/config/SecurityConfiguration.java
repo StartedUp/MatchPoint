@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 //on authentication a new HTTP Session is created, the old one is invalidated and
                 // the attributes from the old session are copied over.
-                .sessionFixation().migrateSession()
+                .sessionFixation().none()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionUrl("/")
                 .maximumSessions(3);

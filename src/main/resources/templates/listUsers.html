@@ -53,44 +53,46 @@
                                 </thead>
                                 <tbody>
                                 <tr style="color: #122b40" th:each="user,stat : ${users}">
-                                    <form name="adminAccessForm" th:action="@{/a/manageRoles}" method="post">
-                                        <td th:text="${stat.count}">1</td>
-                                        <td th:text="${user.firstName}"></td>
-                                        <td th:text="${user.lastName}"></td>
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.mobile}"></td>
-                                        <td th:text="${user.getGenderName(user.gender)}"></td>
-                                        <td th:text="${user.playerCategory?.categoryName}"></td>
-                                        <td th:text="${user.active?'Active':'Blocked'}">
-                                        <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
-                                        <td><input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/>
-                                            <button type="submit" class="removebutton" name="action"
-                                                    th:value="${user.roles.contains(roleAdmin)
-                                                    ?'revokeAction':'grantAction'}"
-                                                    th:text="${user.roles.contains(roleAdmin)
-                                                    ?'Revoke Admin Access':'Grant Admin Access'}">
-                                                Grant Admin Access
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary" th:href="${user.active?
-                                            '/a/manageUser?block=true&email='+user.email:
-                                            '/a/manageUser?block=false&email='+user.email}"
-                                                    th:text="${user.active
-                                                    ?'Block User':'Unblock User'}">
-                                                Grant Admin Access
-                                            </a>
-                                        </td>
-                                        <td th:if="${user.active}"><a class="btn btn-primary" th:href="${'/a/view-payment/'+user.id}">View / Update payment</a></td>
-                                        <td th:text="${user.getCurrentMonthPayment()!=null?user.getCurrentMonthPayment().amount+'-'+user.getCurrentMonthPayment().paymentStatus:'Not Paid'}"></td>
-                                        <td th:if="${!user.active}">Please Unblock First!</td>
-                                        <td>
-                                            <label class="switch">
-                                                <input id="approveMember" th:value="${user.id}" type="checkbox" th:checked="${user.adminApproved}">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </td>
-                                </form>
+
+                                    <td th:text="${stat.count}">1</td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.mobile}"></td>
+                                    <td th:text="${user.getGenderName(user.gender)}"></td>
+                                    <td th:text="${user.playerCategory?.categoryName}"></td>
+                                    <td th:text="${user.active?'Active':'Blocked'}">
+                                    <td><span th:each="role :${user.roles}" th:text="${role}+' '"></span></td>
+                                    <td><form name="adminAccessForm" th:action="@{/a/manageRoles}" method="post">
+                                        <input th:id="g" type="hidden" th:value="${user.email}" name="userEmail"/>
+                                        <button type="submit" class="removebutton" name="action"
+                                                th:value="${user.roles.contains(roleAdmin)
+                                                ?'revokeAction':'grantAction'}"
+                                                th:text="${user.roles.contains(roleAdmin)
+                                                ?'Revoke Admin Access':'Grant Admin Access'}">
+                                            Grant Admin Access
+                                        </button>
+                                    </form>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" th:href="${user.active?
+                                        '/a/manageUser?block=true&email='+user.email:
+                                        '/a/manageUser?block=false&email='+user.email}"
+                                                th:text="${user.active
+                                                ?'Block User':'Unblock User'}">
+                                            Grant Admin Access
+                                        </a>
+                                    </td>
+                                    <td th:if="${user.active}"><a class="btn btn-primary" th:href="${'/a/view-payment/'+user.id}">View / Update payment</a></td>
+                                    <td th:text="${user.getCurrentMonthPayment()!=null?user.getCurrentMonthPayment().amount+'-'+user.getCurrentMonthPayment().paymentStatus:'Not Paid'}"></td>
+                                    <td th:if="${!user.active}">Please Unblock First!</td>
+                                    <td>
+                                        <label class="switch">
+                                            <input id="approveMember" th:value="${user.id}" type="checkbox" th:checked="${user.adminApproved}">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>
+
                                 </tr>
                                 </tbody>
                             </table>

@@ -75,6 +75,7 @@ public class EventRegistrationController {
     public String registerEvent(@ModelAttribute("eventRegistration") EventRegistration eventRegistration, BindingResult
             bindingResult, Model model) {
         String paymentUrl= "/exceptionError";
+        LOGGER.info("{} registering event {}", eventRegistration.getPlayerName(), eventRegistration.getEvent().getName());
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute(eventRegistration.getEvent());
@@ -91,7 +92,7 @@ public class EventRegistrationController {
         }
         return "redirect:"+paymentUrl;
     }
-    @GetMapping("/myRegisteredEvents")
+    @GetMapping("/u/myRegisteredEvents")
     public String showMyEvents(Model model) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<EventRegistration> eventRegistrations = eventRegistrationManager.findByUser(user);

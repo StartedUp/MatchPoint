@@ -70,8 +70,8 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
         for (Event event:eventList) {
            int eventId;
             eventId=event.getId();
-            System.out.println(event.toString());
-            System.out.println("event id is "+eventId);
+            LOGGER.info(event.getName());
+            LOGGER.info("event id is "+eventId);
             usersCount.add(eventRegistrationRepository.findByEvent_id(eventId).size()+"");
         }
         return usersCount;
@@ -123,7 +123,7 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
             EventPayment payment = eventRegistration.getEventPayment();
             String paymentUrl = null;
             payment.setPaymentDate(new Date())
-                    .setTransactionId(eventRegistration.getId()+""+eventRegistration.getEvent().getId()+eventRegistration.getPlayerEmail().hashCode());
+                    .setTransactionId(new Date().getTime()+"");
             payment=eventPaymentManager.saveOrUpdate(payment);
             paymentUrl = onlinePaymentProcessor.payForEventRegistration(eventRegistration);
             return paymentUrl != null ? paymentUrl : "exceptionError";
@@ -140,12 +140,14 @@ public class EventRegistrationManagerImpl implements EventRegistrationManager {
 
     @Override
     public boolean validateRegistration(EventRegistration eventRegistration, Model model) {
-        eventRegistration=eventRegistrationRepository.findByEvent_idAndPlayerEmail(eventRegistration.getEvent().getId(), eventRegistration.getPlayerEmail());
-        if (eventRegistration!=null && eventRegistration.getEventPayment().getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus())) {
-            model.addAttribute("eventRegistration", eventRegistration);
+        EventRegistration eventRegistrationInDb=eventRegistrationRepository.findByEvent_idAndPlayerEmail(eventRegistration.getEvent().getId(), eventRegistration.getPlayerEmail());
+        if (eventRegistrationInDb!=null && eventRegistrationInDb.getEventPayment().getPaymentStatus().equals(PaymentStatusEnum.SUCCESS.getStatus())) {
+            model.addAttribute("eventRegistration", eventRegistrationInDb);
             model.addAttribute("alreadyRegistered", true);
             return false;
         }
+        if (eventRegistrationInDb!=null && eventRegistrationInDb.getEventPayment().getPaymentStatus().equals(PaymentStatusEnum.INIT.getStatus()))
+            eventRegistration.setId(eventRegistrationInDb.getId());
         return true;
     }
 
