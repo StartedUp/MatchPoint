@@ -6,6 +6,7 @@ Designing an Exclusive web Application for Match Point Table Tennis Academy whic
 #Checkout Repo
 
 #To Build the application
+
 mvn install
 
 #Backend & Frontend -  SpringBoot + JPA + MVC + Thymeleaf
